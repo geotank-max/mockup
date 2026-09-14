@@ -1,0 +1,433 @@
+/* ====================================================
+   PRODUCT DETAIL PAGE STYLES (Matching Reference UI)
+   ==================================================== */
+
+.device-wrapper {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.mobile-frame {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 440px;
+  min-height: 880px;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(18, 48, 25, 0.2), 0 0 0 10px #1c2e22;
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 30px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Hero Image Container & Overlay Controls */
+.product-hero-container {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  background-color: #f1f5f9;
+  overflow: hidden;
+}
+
+.product-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-top-nav {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.hero-right-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.hero-icon-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+}
+
+.hero-icon-btn:hover {
+  transform: scale(1.05);
+  background: #ffffff;
+}
+
+.hero-icon-btn.liked svg {
+  stroke: #ef4444;
+  fill: #ef4444;
+}
+
+/* Pagination Dots */
+.hero-pagination-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+}
+
+.page-dash {
+  width: 18px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.page-dot {
+  width: 5px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* 2. Product Main Content Area */
+.product-main-content {
+  padding: 16px;
+  background: #ffffff;
+}
+
+.product-header-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-detail-title {
+  font-family: 'Siemreap', 'Kantumruy Pro', var(--font-family);
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.38;
+}
+
+.product-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.viewer-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #64748b;
+}
+
+.meta-pipe {
+  color: #cbd5e1;
+  font-weight: 300;
+}
+
+.location-tag {
+  color: #64748b;
+  font-family: 'Siemreap', var(--font-family);
+}
+
+.product-divider {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 12px 0 10px 0;
+}
+
+/* Price Line */
+.product-pricing-line {
+  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #22c55e;
+  letter-spacing: -0.2px;
+  margin-bottom: 14px;
+}
+
+/* Green Add to Card Button */
+.add-to-card-btn {
+  width: 100%;
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.25);
+  transition: all 0.2s ease;
+  margin-bottom: 18px;
+}
+
+.add-to-card-btn:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+.add-to-card-btn:active {
+  transform: translateY(0);
+}
+
+/* 3. Section Tabs Header */
+.product-tabs-header {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 14px;
+}
+
+.tab-item {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px 0;
+  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.tab-item.active {
+  color: #22c55e;
+  font-weight: 700;
+  border-bottom: 2.5px solid #22c55e;
+}
+
+/* 4. Tab Pane 1: Info Detail */
+.tab-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Seller Profile Card */
+.seller-profile-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.seller-profile-card:hover {
+  background-color: #f8fafc;
+}
+
+.seller-avatar-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-right: 12px;
+  flex-shrink: 0;
+  background: #e2e8f0;
+}
+
+.seller-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.seller-profile-info {
+  flex: 1;
+}
+
+.seller-name {
+  font-family: 'Siemreap', var(--font-family);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.seller-arrow-btn {
+  color: #64748b;
+  display: flex;
+  align-items: center;
+}
+
+/* Description & Hashtags */
+.product-desc-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.desc-hashtags {
+  font-family: 'Siemreap', 'Kantumruy Pro', var(--font-family);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.desc-text-content {
+  font-family: 'Siemreap', 'Kantumruy Pro', var(--font-family);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #334155;
+  margin-bottom: 6px;
+  text-align: justify;
+}
+
+.desc-text-content.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.read-more-trigger {
+  color: #22c55e;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-align: right;
+  cursor: pointer;
+  margin-top: 2px;
+  margin-bottom: 16px;
+}
+
+/* Read More Tags Row */
+.read-more-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.read-more-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.tag-chip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
+  font-size: 12px;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tag-chip:hover, .tag-chip.active {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Tab Pane 2: Other Products Grid */
+.other-products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.other-p-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.other-p-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.other-p-img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+
+.other-p-info {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.other-p-title {
+  font-family: 'Siemreap', var(--font-family);
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.other-p-price {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+    background-color: #ffffff;
+  }
+
+  .device-wrapper {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .mobile-frame {
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100vh;
+    max-width: 100%;
+    border: none;
+  }
+}

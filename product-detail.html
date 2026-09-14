@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ព័ត៌មានលម្អិតផលិតផល - Dam Ey</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Siemreap / Kantumruy Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product-detail.css" />
+
+  <!-- Auth Guard: Ensures user is authenticated & routes sellers directly to dashboard -->
+  <script>
+    (function() {
+      const isLoggedIn = localStorage.getItem('cropwise_logged_in') === 'true';
+      const userRole = localStorage.getItem('cropwise_user_role');
+      if (!isLoggedIn) {
+        window.location.replace('login.html');
+      } else if (userRole === 'seller') {
+        window.location.replace('seller-dashboard.html');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="device-wrapper">
+    <div class="mobile-frame">
+
+    <!-- Top Hero Image & Floating Controls -->
+    <div class="product-hero-container">
+      <img id="productMainImg" src="assets/images/fertilize (1) .jpg" alt="Product Image" class="product-hero-img" />
+
+      <!-- Floating Nav Overlay -->
+      <div class="hero-top-nav">
+        <button class="hero-icon-btn" id="backBtn" onclick="goBack()" title="ត្រឡប់ក្រោយ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="hero-right-actions">
+          <button class="hero-icon-btn" id="favBtn" onclick="toggleFavorite()" title="រក្សាទុក">
+            <svg id="heartIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8"
+              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+              </path>
+            </svg>
+          </button>
+
+          <button class="hero-icon-btn" id="shareBtn" onclick="shareProduct()" title="ចែករំលែក">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Gallery Pagination Dots -->
+      <div class="hero-pagination-dots">
+        <span class="page-dash active"></span>
+        <span class="page-dot"></span>
+        <span class="page-dot"></span>
+        <span class="page-dot"></span>
+        <span class="page-dot"></span>
+      </div>
+    </div>
+
+    <!-- Product Content Body -->
+    <div class="product-main-content">
+
+      <!-- Title & Views/Location Row -->
+      <div class="product-header-section">
+        <h1 class="product-detail-title" id="productTitle">ចំណីសត្វ ចំណីជ្រូក ត្រកួនផ្អាប់</h1>
+        
+        <div class="product-meta-row">
+          <div class="viewer-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>Viewer <span id="viewerCount">54</span></span>
+          </div>
+          <span class="meta-pipe">|</span>
+          <span class="location-tag" id="productLocation">Kandal</span>
+        </div>
+      </div>
+
+      <hr class="product-divider" />
+
+      <!-- Price & Quantity Tag Line -->
+      <div class="product-pricing-line" id="pricingLine">
+        1 Kilogram - 2,000៛ / 0.49$
+      </div>
+
+      <!-- Add to Card Green Button -->
+      <button class="add-to-card-btn" id="addToCardBtn" onclick="handleAddToCart()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span>Add to Card</span>
+      </button>
+
+      <!-- Section Tabs Navigation -->
+      <div class="product-tabs-header">
+        <button class="tab-item active" id="tabInfoDetail" onclick="switchTab('info')">
+          Info Detail
+        </button>
+        <button class="tab-item" id="tabOtherProducts" onclick="switchTab('other')">
+          Other Products
+        </button>
+      </div>
+
+      <!-- Tab 1: Info Detail -->
+      <div class="tab-pane active" id="paneInfoDetail">
+
+        <!-- Seller Profile Card -->
+        <div class="seller-profile-card" onclick="viewSellerProfile()">
+          <div class="seller-avatar-wrap">
+            <img src="assets/images/ad_soil_test.jpg" alt="Seller Avatar" class="seller-avatar-img" id="sellerAvatar" />
+          </div>
+          <div class="seller-profile-info">
+            <h4 class="seller-name" id="sellerName">ប្ញសី_សុផាយផល</h4>
+          </div>
+          <div class="seller-arrow-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Hashtags & Rich Description -->
+        <div class="product-desc-container">
+          <p class="desc-hashtags" id="descHashtags">
+            #ចំណីសត្វ_#ចំណីជ្រូក #ផ្អក់ត្រកួនប៉ូវប្រូតេអ៊ីន និងជាតិសរសៃងាយរំលាយ៖
+          </p>
+
+          <p class="desc-text-content" id="descBody">
+            ត្រកួនស្រស់មានជាតិទឹកច្រើន និងជាតិសរសៃដែលជ្រូករំលាយមិនអស់។ ដំណើរការផ្អាប់ ជួយបំបែកជាតិសរសៃ និងប្រូតេអ៊ីនស្មុគស្មាញ ឱ្យទៅជាអាស៊ីតអាមីនដែលក្រពះជ្រូកស្រូបយកបានលឿន។ បង្កើនបាក់តេរីល្អ៖ ផ្អក់ត្រកួនសម្បូរដោយ ឡាក់តូបាស៊ីល ដែលជួយសម្រួលប្រព័ន្ធរំលាយអាហារជ្រូក កាត់បន្ថយបញ្ហារាគរូស និងជំងឺពោះវៀន បានរហូតដល់ ៧០% កាត់បន្ថយបាក់តេរីអាក្រក់ និងក្លិនស្អុយ បង្កើនសាច់ណែន និងរសជាតិសាច់ឆ្ងាញ់ រក្សាទុកបានយូរ (៦ខែ)
+          </p>
+
+          <div class="read-more-trigger" id="readMoreTrigger" onclick="toggleReadMore()">
+            ...Read More
+          </div>
+        </div>
+
+        <!-- Read More Tags List -->
+        <div class="read-more-tags-row">
+          <span class="read-more-label">Read More:</span>
+          <button class="tag-chip active">Info Detail</button>
+          <button class="tag-chip">Experts</button>
+          <button class="tag-chip">+6</button>
+        </div>
+
+      </div>
+
+      <!-- Tab 2: Other Products -->
+      <div class="tab-pane" id="paneOtherProducts" style="display: none;">
+        <div class="other-products-grid" id="otherProductsGrid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Toast Notification Popup -->
+    <div class="toast-popup" id="toastPopup">
+      <span class="toast-icon">✓</span>
+      <span class="toast-msg" id="toastMsg">សារជូនដំណឹង</span>
+    </div>
+
+    </div>
+  </div>
+
+  <script src="js/product-detail.js"></script>
+</body>
+
+</html>

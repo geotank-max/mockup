@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dam Ey - Seller & Agro-Dealer Analytics Dashboard</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet">
+  <!-- Chart.js for high quality responsive analytics charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/seller-dashboard.css">
+
+  <!-- Auth Guard: Protects Seller Dashboard -->
+  <script>
+    (function () {
+      const isLoggedIn = localStorage.getItem('cropwise_logged_in') === 'true';
+      const userRole = localStorage.getItem('cropwise_user_role');
+      if (!isLoggedIn) {
+        window.location.replace('login.html');
+      } else if (userRole === 'farmer') {
+        window.location.replace('index.html');
+      }
+    })();
+  </script>
+</head>
+
+<body class="seller-body">
+
+  <div class="seller-layout">
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="seller-sidebar" id="sellerSidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-brand">
+        <div class="brand-logo-icon" style="background: transparent; box-shadow: none; padding: 0;">
+          <img src="assets/images/logo.png" alt="Dam Ey Logo"
+            style="width: 32px; height: 32px; object-fit: contain; border-radius: 8px;" />
+        </div>
+        <div class="brand-title-group">
+          <span class="brand-name">Dam Ey</span>
+          <span class="brand-role-tag">Seller Hub</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Main Navigation Menu -->
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="sidebar-link active" id="navDashboard" data-view="dashboard"
+          onclick="switchSellerView('dashboard', event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>ផ្ទាំងព័ត៌មាន</span>
+        </a>
+
+        <a href="#inventory" class="sidebar-link" id="navInventory" data-view="inventory"
+          onclick="switchSellerView('inventory', event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <polyline points="3.29 7 12 12 20.71 7" />
+            <line x1="12" y1="22" x2="12" y2="12" />
+          </svg>
+          <span>ស្តុកផលិតផល</span>
+        </a>
+
+        <a href="#sales" class="sidebar-link" id="navSales" data-view="sales"
+          onclick="switchSellerView('sales', event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span>ការលក់ & សំណួរ</span>
+        </a>
+
+        <a href="#demand" class="sidebar-link" id="navDemand" data-view="demand"
+          onclick="switchSellerView('demand', event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span>តម្រូវការដំណាំ</span>
+        </a>
+
+        <a href="#farmers" class="sidebar-link" id="navFarmers" data-view="farmers"
+          onclick="switchSellerView('farmers', event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>អតិថិជនកសិករ</span>
+        </a>
+
+        <a href="#settings" class="sidebar-link" id="navSettings" data-view="settings"
+          onclick="switchSellerView('settings', event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <span>ការកំណត់</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Logout Link -->
+      <div class="sidebar-footer-link">
+        <button onclick="logoutSeller()" class="proto-return-btn"
+          style="background: rgba(220, 38, 38, 0.1); color: #dc2626; border: 1.5px solid rgba(220, 38, 38, 0.25); width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; border-radius: 12px; font-family: 'Siemreap', sans-serif; font-size: 13px; font-weight: 700;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>ចាកចេញ (Logout)</span>
+        </button>
+      </div>
+
+      <!-- Seller Profile Box -->
+      <div class="sidebar-user-card">
+        <div class="user-avatar-circle">
+          <span>ក</span>
+        </div>
+        <div class="user-info-text">
+          <span class="user-shop-name">Kandal Agri-Center</span>
+          <span class="user-location">ខេត្តកណ្តាល</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="seller-main">
+
+      <!-- Top Bar Header -->
+      <header class="seller-top-bar">
+        <div class="top-left-group">
+          <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <div>
+            <h1 class="seller-page-title" id="pageMainTitle">ផ្ទាំងវិភាគអ្នកផ្គត់ផ្គង់</h1>
+            <p class="seller-welcome-text" id="pageSubTitle">ស្វាគមន៍មកកាន់ Kandal Agri-Center</p>
+          </div>
+        </div>
+
+        <div class="top-right-group">
+          <!-- Filter Time Period -->
+          <div class="time-filter-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <select id="timePeriodSelect">
+              <option value="month" selected>ខែនេះ</option>
+              <option value="monsoon">រដូវវស្សា 2026</option>
+              <option value="year">ឆ្នាំ 2026</option>
+            </select>
+          </div>
+
+          <button class="icon-btn-light" onclick="openToast('២ សំណើទិញថ្មីពីកសិករ')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="badge-dot-red"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: MAIN DASHBOARD OVERVIEW -->
+      <section id="viewDashboard" class="seller-view-section">
+        <!-- KPI METRIC CARDS ROW -->
+        <section class="kpi-cards-grid">
+
+          <!-- Card 1: Total Revenue -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">ចំណូលសរុប</span>
+              <div class="kpi-icon-wrap green-light">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-val-row">
+              <h3 class="kpi-val">$14,850.00</h3>
+              <span class="kpi-trend positive">+12.5%</span>
+            </div>
+            <p class="kpi-subtext">ធៀបនឹងខែមុន</p>
+          </div>
+
+          <!-- Card 2: Farmer Inquiries Matched -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">សំណួរពីកសិករ</span>
+              <div class="kpi-icon-wrap blue-light">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-val-row">
+              <h3 class="kpi-val">312 សំណើ</h3>
+              <span class="kpi-trend positive">+18.4%</span>
+            </div>
+            <p class="kpi-subtext">ផ្គូផ្គងចេញពី Dam Ey</p>
+          </div>
+
+          <!-- Card 3: Products Sold -->
+          <div class="kpi-card" style="cursor: pointer;" onclick="switchSellerView('inventory')">
+            <div class="kpi-card-top">
+              <span class="kpi-label">ផលិតផលលក់ចេញ</span>
+              <div class="kpi-icon-wrap amber-light">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-val-row">
+              <h3 class="kpi-val">1,450 មុខ</h3>
+              <span class="kpi-trend positive">+15.2%</span>
+            </div>
+            <p class="kpi-subtext">ចុចដើម្បីមើលស្តុកលម្អិត &rarr;</p>
+          </div>
+
+          <!-- Card 4: Active Farmer Reach -->
+          <div class="kpi-card">
+            <div class="kpi-card-top">
+              <span class="kpi-label">កសិករសកម្ម</span>
+              <div class="kpi-icon-wrap purple-light">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-val-row">
+              <h3 class="kpi-val">189 គ្រួសារ</h3>
+              <span class="kpi-trend positive">+10.1%</span>
+            </div>
+            <p class="kpi-subtext">ក្នុងខេត្តកណ្តាល & បាត់ដំបង</p>
+          </div>
+
+        </section>
+
+        <!-- CHARTS SECTION 1: REVENUE GROWTH & CROP DEMAND DONUT -->
+        <section class="charts-grid-row">
+
+          <!-- Revenue Growth Line Chart -->
+          <div class="chart-card flex-3">
+            <div class="chart-card-header">
+              <div class="chart-title-box">
+                <h3 class="chart-title">កំណើនចំណូលប្រចាំខែ</h3>
+                <p class="chart-sub" id="revenueChartSub">ប្រៀបធៀបប្រាក់ចំណូល និងចំនួនសំណើទិញពីកសិករ (ឆ្នាំ 2026)</p>
+              </div>
+              <div class="chart-header-actions" style="display: flex; align-items: center; gap: 14px;">
+                <div class="chart-legend-pills">
+                  <span class="legend-pill green-dot">ចំណូល ($)</span>
+                  <span class="legend-pill blue-dot">សំណើទិញ</span>
+                </div>
+                <div class="chart-filter-select-wrap">
+                  <select id="revenueYearSelect" class="chart-mini-select" onchange="changeRevenueYear(this.value)">
+                    <option value="2026" selected>ឆ្នាំ 2026</option>
+                    <option value="2025">ឆ្នាំ 2025</option>
+                    <option value="2024">ឆ្នាំ 2024</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Regional Crop Demand Share Donut Chart -->
+          <div class="chart-card flex-2">
+            <div class="chart-card-header">
+              <div class="chart-title-box">
+                <h3 class="chart-title">តម្រូវការដំណាំតាមខេត្ត</h3>
+                <p class="chart-sub" id="cropDemandSub">ភាគរយដំណាំដែលកសិករធ្វើតេស្តក្នុងខេត្តកណ្តាល</p>
+              </div>
+              <div class="chart-filter-select-wrap">
+                <select id="provinceSelect" class="chart-mini-select" onchange="changeProvinceCropDemand(this.value)">
+                  <option value="kandal" selected>ខេត្តកណ្តាល</option>
+                  <option value="battambang">ខេត្តបាត់ដំបង</option>
+                  <option value="takeo">ខេត្តតាកែវ</option>
+                  <option value="kampong_cham">ខេត្តកំពង់ចាម</option>
+                  <option value="siem_reap">ខេត្តសៀមរាប</option>
+                  <option value="all">ទូទាំងប្រទេស (សរុប)</option>
+                </select>
+              </div>
+            </div>
+            <div class="chart-canvas-container donut-wrap">
+              <canvas id="cropDemandChart"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- CHARTS SECTION 2: SEASONAL DEMAND & INVENTORY VELOCITY TABLE -->
+        <section class="charts-grid-row mt-4">
+
+          <!-- Inventory Velocity & Lead Table -->
+          <div class="chart-card flex-3">
+            <div class="chart-card-header">
+              <div class="chart-title-box">
+                <h3 class="chart-title">ស្ថានភាពស្តុក & ផលិតផលលក់ដាច់</h3>
+                <p class="chart-sub">តាមដានចំនួនស្តុក និងការផ្គូផ្គងសំណើទិញពីកសិករ</p>
+              </div>
+              <button class="table-btn-link" onclick="switchSellerView('inventory')">គ្រប់គ្រងស្តុក &rarr;</button>
+            </div>
+
+            <div class="table-container">
+              <table class="inventory-table">
+                <thead>
+                  <tr>
+                    <th>ឈ្មោះផលិតផល</th>
+                    <th>ស្តុកនៅសល់</th>
+                    <th>ការទាមទារ</th>
+                    <th>កម្រិតបញ្ជាទិញ</th>
+                    <th>សកម្មភាព</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardQuickStockBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Seasonal Category Bar Chart -->
+          <div class="chart-card flex-2">
+            <div class="chart-card-header">
+              <div class="chart-title-box">
+                <h3 class="chart-title">តម្រូវការតាមរដូវកាល</h3>
+                <p class="chart-sub" id="seasonalChartSub">ការប្រៀបធៀបជី ថ្នាំ និងពូជតាមរដូវ (ឆ្នាំ 2026)</p>
+              </div>
+              <div class="chart-filter-select-wrap">
+                <select id="seasonalYearSelect" class="chart-mini-select" onchange="changeSeasonalYear(this.value)">
+                  <option value="2026" selected>ឆ្នាំ 2026</option>
+                  <option value="2025">ឆ្នាំ 2025</option>
+                  <option value="2024">ឆ្នាំ 2024</option>
+                </select>
+              </div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="seasonalChart"></canvas>
+            </div>
+          </div>
+
+        </section>
+      </section>
+
+      <!-- VIEW 2: PRODUCT STOCK / INVENTORY MANAGEMENT -->
+      <section id="viewInventory" class="seller-view-section hidden-view">
+
+        <!-- Header Actions: Title + Add Stock Button -->
+        <div class="inv-header-actions">
+          <div class="inv-header-title-box">
+            <h2>គ្រប់គ្រងស្តុកទំនិញកសិកម្ម</h2>
+            <p>ពិនិត្យបរិមាណជី ថ្នាំកម្ចាត់សត្វល្អិត គ្រាប់ពូជ និងការបំពេញបន្ថែមស្តុក</p>
+          </div>
+          <div class="inv-primary-btn-group">
+            <button class="btn-secondary-inv" onclick="exportInventoryReport()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>នាំចេញរបាយការណ៍</span>
+            </button>
+            <button class="btn-primary-inv" onclick="openAddStockModal()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>បញ្ចូលស្តុកថ្មី</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 5 CATEGORY STOCK SUMMARY KPI CARDS (CLEAN TEXT & LARGE NUMBERS) -->
+        <div class="inv-summary-grid">
+
+          <!-- Card 1: Total Stock All Products -->
+          <div class="inv-cat-card active-filter" id="catCardAll" onclick="filterByCategory('all')">
+            <div class="inv-cat-title">ស្តុកទំនិញសរុប</div>
+            <div class="inv-cat-val-row">
+              <span class="inv-cat-units num-total" id="summaryTotalUnits">0</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Fertilizer Stock -->
+          <div class="inv-cat-card" id="catCardFertilizer" onclick="filterByCategory('fertilizer')">
+            <div class="inv-cat-title">ជីកសិកម្ម</div>
+            <div class="inv-cat-val-row">
+              <span class="inv-cat-units num-fertilizer" id="summaryFertilizerUnits">0</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Pesticide Stock -->
+          <div class="inv-cat-card" id="catCardPesticide" onclick="filterByCategory('pesticide')">
+            <div class="inv-cat-title">ថ្នាំកម្ចាត់សត្វល្អិត & ជំងឺ</div>
+            <div class="inv-cat-val-row">
+              <span class="inv-cat-units num-pesticide" id="summaryPesticideUnits">0</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Seeds Stock -->
+          <div class="inv-cat-card" id="catCardSeeds" onclick="filterByCategory('seeds')">
+            <div class="inv-cat-title">គ្រាប់ពូជដំណាំ</div>
+            <div class="inv-cat-val-row">
+              <span class="inv-cat-units num-seeds" id="summarySeedsUnits">0</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Booster & Hormones Stock -->
+          <div class="inv-cat-card" id="catCardBooster" onclick="filterByCategory('booster')">
+            <div class="inv-cat-title">អ័រម៉ូន & ជំនួយឫស/ផ្កា</div>
+            <div class="inv-cat-val-row">
+              <span class="inv-cat-units num-booster" id="summaryBoosterUnits">0</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SEARCH, CATEGORY TABS & FILTER BAR (NO ICONS) -->
+        <div class="inv-controls-card">
+          <div class="inv-controls-row">
+            <!-- Search input -->
+            <div class="inv-search-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input type="text" id="invSearchInput" placeholder="ស្វែងរកតាមឈ្មោះផលិតផល ឬ លេខកូដទំនិញ..."
+                oninput="applyInventoryFilters()" />
+            </div>
+
+            <!-- Filters -->
+            <div class="inv-filter-group">
+              <select id="invStatusFilter" class="inv-filter-select" onchange="applyInventoryFilters()">
+                <option value="all">ស្ថានភាពស្តុកទាំងអស់</option>
+                <option value="high">ស្តុកគ្រប់គ្រាន់ (High)</option>
+                <option value="medium">ស្តុកមធ្យម (Medium)</option>
+                <option value="low">ស្តុកជិតអស់ (Low Stock)</option>
+                <option value="out">អស់ពីស្តុក (Out of Stock)</option>
+              </select>
+
+              <select id="invSortFilter" class="inv-filter-select" onchange="applyInventoryFilters()">
+                <option value="stock-desc">ស្តុក: ច្រើន ➔ តិច</option>
+                <option value="stock-asc">ស្តុក: តិច ➔ ច្រើន</option>
+                <option value="price-desc">តម្លៃ: ខ្ពស់ ➔ ទាប</option>
+                <option value="price-asc">តម្លៃ: ទាប ➔ ខ្ពស់</option>
+                <option value="name">ឈ្មោះផលិតផល (A-Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category Pill Tabs (Clean, No Icons) -->
+          <div class="inv-pill-tabs">
+            <button class="inv-pill-tab active" data-cat="all" onclick="filterByCategory('all')">ទាំងអស់ (<span
+                id="tabCountAll">0</span>)</button>
+            <button class="inv-pill-tab" data-cat="fertilizer" onclick="filterByCategory('fertilizer')">ជីកសិកម្ម (<span
+                id="tabCountFertilizer">0</span>)</button>
+            <button class="inv-pill-tab" data-cat="pesticide" onclick="filterByCategory('pesticide')">ថ្នាំការពារដំណាំ
+              (<span id="tabCountPesticide">0</span>)</button>
+            <button class="inv-pill-tab" data-cat="seeds" onclick="filterByCategory('seeds')">គ្រាប់ពូជ (<span
+                id="tabCountSeeds">0</span>)</button>
+            <button class="inv-pill-tab" data-cat="booster" onclick="filterByCategory('booster')">អ័រម៉ូន & ជំនួយលូតលាស់
+              (<span id="tabCountBooster">0</span>)</button>
+          </div>
+        </div>
+
+        <!-- MAIN INVENTORY TABLE CARD -->
+        <div class="inv-table-card">
+          <div class="inv-table-header-info">
+            <span class="inv-count-badge">បង្ហាញផលិតផលក្នុងស្តុក: <strong id="displayedProductsCount">0</strong>
+              មុខ</span>
+            <span class="inv-count-badge">តម្លៃស្តុកសរុប: <strong id="totalInventoryValue">$0.00</strong></span>
+          </div>
+
+          <div class="table-container">
+            <table class="inventory-table">
+              <thead>
+                <tr>
+                  <th>ផលិតផល</th>
+                  <th>ប្រភេទ</th>
+                  <th>បរិមាណស្តុក</th>
+                  <th>តម្លៃឯកតា</th>
+                  <th>តម្លៃសរុប</th>
+                  <th>ស្ថានភាព</th>
+                  <th style="text-align: right;">សកម្មភាព</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryTableBody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State Container -->
+          <div id="invEmptyState" class="inv-empty-state" style="display: none;">
+            <h4 class="inv-empty-title">រកមិនឃើញផលិតផលក្នុងស្តុកទេ</h4>
+            <p class="inv-empty-sub">សូមសាកល្បងផ្លាស់ប្តូរពាក្យស្វែងរក ឬចុចប៊ូតុង "+ បញ្ចូលស្តុកថ្មី"
+              ដើម្បីបង្កើតទំនិញដំបូង</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- VIEW 3: SALES & INQUIRIES (PLACEHOLDER) -->
+      <section id="viewSales" class="seller-view-section hidden-view">
+        <div class="inv-controls-card" style="text-align: center; padding: 48px 20px;">
+          <h3 style="font-family: 'Siemreap', sans-serif; font-size: 18px; color: #184424; margin-bottom: 8px;">
+            កំណត់ត្រាការលក់ & សំណួរពីកសិករ</h3>
+          <p style="font-family: 'Siemreap', sans-serif; font-size: 13px; color: #637a6b;">មាន 312
+            សំណើទិញត្រូវបានផ្គូផ្គងជោគជ័យក្នុងខែនេះ។</p>
+          <button class="btn-primary-inv" style="margin: 20px auto 0 auto;"
+            onclick="switchSellerView('inventory')">ពិនិត្យស្តុកផលិតផល &rarr;</button>
+        </div>
+      </section>
+
+      <!-- VIEW 4: CROP DEMAND (PLACEHOLDER) -->
+      <section id="viewDemand" class="seller-view-section hidden-view">
+        <div class="inv-controls-card" style="text-align: center; padding: 48px 20px;">
+          <h3 style="font-family: 'Siemreap', sans-serif; font-size: 18px; color: #184424; margin-bottom: 8px;">
+            តម្រូវការដំណាំក្នុងតំបន់</h3>
+          <p style="font-family: 'Siemreap', sans-serif; font-size: 13px; color: #637a6b;">
+            កសិករក្នុងខេត្តកណ្តាលមានតម្រូវការខ្ពស់លើដំណាំស្រូវ (35%) និង ប៉េងប៉ោះ (28%)។</p>
+          <button class="btn-primary-inv" style="margin: 20px auto 0 auto;"
+            onclick="switchSellerView('inventory')">រៀបចំស្តុកសម្រាប់ដំណាំទាំងនេះ &rarr;</button>
+        </div>
+      </section>
+
+      <!-- VIEW 5: FARMER CUSTOMERS (PLACEHOLDER) -->
+      <section id="viewFarmers" class="seller-view-section hidden-view">
+        <div class="inv-controls-card" style="text-align: center; padding: 48px 20px;">
+          <h3 style="font-family: 'Siemreap', sans-serif; font-size: 18px; color: #184424; margin-bottom: 8px;">
+            បញ្ជីអតិថិជនកសិករសកម្ម</h3>
+          <p style="font-family: 'Siemreap', sans-serif; font-size: 13px; color: #637a6b;">មានកសិករចំនួន 189
+            គ្រួសារកំពុងភ្ជាប់ទំនាក់ទំនងជាមួយហាងរបស់អ្នក។</p>
+        </div>
+      </section>
+
+      <!-- VIEW 6: SETTINGS (PLACEHOLDER) -->
+      <section id="viewSettings" class="seller-view-section hidden-view">
+        <div class="inv-controls-card" style="padding: 24px;">
+          <h3 style="font-family: 'Siemreap', sans-serif; font-size: 18px; color: #184424; margin-bottom: 14px;">
+            ការកំណត់ហាង (Shop Profile)</h3>
+          <div class="modal-form-grid">
+            <div class="form-group">
+              <label>ឈ្មោះហាងកសិកម្ម</label>
+              <input type="text" class="form-control-input" value="Kandal Agri-Center" />
+            </div>
+            <div class="form-group">
+              <label>ទីតាំងហាង</label>
+              <input type="text" class="form-control-input" value="ក្រុងតាខ្មៅ ខេត្តកណ្តាល" />
+            </div>
+            <div class="form-group">
+              <label>លេខទូរស័ព្ទទំនាក់ទំនង</label>
+              <input type="text" class="form-control-input" value="012 345 678" />
+            </div>
+            <div class="form-group">
+              <label>ម៉ោងបើកដំណើរការ</label>
+              <input type="text" class="form-control-input" value="7:00 ព្រឹក - 6:00 ល្ងាច" />
+            </div>
+          </div>
+          <div style="margin-top: 18px; display: flex; justify-content: flex-end;">
+            <button class="btn-primary-inv" onclick="openToast('បានរក្សាទុកការកំណត់')">រក្សាទុកការកែប្រែ</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================
+       MODAL 1: ADD / EDIT PRODUCT STOCK MODAL DIALOG
+       ========================================================= -->
+  <div class="modal-backdrop" id="addStockModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <h3 id="modalFormTitle">បញ្ចូលទំនិញក្នុងស្តុកថ្មី</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeAddStockModal()" aria-label="Close">✕</button>
+      </div>
+
+      <form id="stockProductForm" onsubmit="handleSaveStockProduct(event)">
+        <input type="hidden" id="editProductId" value="" />
+
+        <div class="modal-body">
+          <div class="modal-form-grid">
+
+            <!-- Product Name -->
+            <div class="form-group form-field-full">
+              <label for="prodNameInput">ឈ្មោះផលិតផល <span style="color: #ef4444;">*</span></label>
+              <input type="text" id="prodNameInput" class="form-control-input"
+                placeholder="ឧទាហរណ៍៖ Bio-NPK 16-16-8 + Humic" required />
+            </div>
+
+            <!-- Product Category -->
+            <div class="form-group">
+              <label for="prodCategorySelect">ប្រភេទផលិតផល <span style="color: #ef4444;">*</span></label>
+              <select id="prodCategorySelect" class="form-control-select" required>
+                <option value="fertilizer">ជីកសិកម្ម (Fertilizer)</option>
+                <option value="pesticide">ថ្នាំការពារ & កម្ចាត់សត្វល្អិត</option>
+                <option value="seeds">គ្រាប់ពូជដំណាំ (Seeds)</option>
+                <option value="booster">អ័រម៉ូន & ជំនួយលូតលាស់</option>
+                <option value="other">ផ្សេងៗ</option>
+              </select>
+            </div>
+
+            <!-- SKU / Code -->
+            <div class="form-group">
+              <label for="prodSkuInput">លេខកូដទំនិញ (SKU)</label>
+              <input type="text" id="prodSkuInput" class="form-control-input" placeholder="ឧ. FERT-101" />
+            </div>
+
+            <!-- Initial Stock Quantity -->
+            <div class="form-group">
+              <label for="prodStockInput">ចំនួនស្តុក <span style="color: #ef4444;">*</span></label>
+              <input type="number" id="prodStockInput" class="form-control-input" min="0" placeholder="100" required />
+            </div>
+
+            <!-- Unit of Measurement -->
+            <div class="form-group">
+              <label for="prodUnitSelect">ឯកតារង្វាស់ <span style="color: #ef4444;">*</span></label>
+              <select id="prodUnitSelect" class="form-control-select" required>
+                <option value="បាវ">បាវ (Bags - 50kg)</option>
+                <option value="ដប">ដប (Bottles - 1L)</option>
+                <option value="កញ្ចប់">កញ្ចប់ (Packs)</option>
+                <option value="ធុង">ធុង (Buckets / 20L)</option>
+                <option value="គីឡូ">គីឡូក្រាម (Kg)</option>
+              </select>
+            </div>
+
+            <!-- Unit Price USD -->
+            <div class="form-group">
+              <label for="prodPriceInput">តម្លៃលក់ក្នុង 1 ឯកតា ($) <span style="color: #ef4444;">*</span></label>
+              <input type="number" id="prodPriceInput" class="form-control-input" step="0.01" min="0.1"
+                placeholder="32.00" required />
+            </div>
+
+            <!-- Low Stock Alert Threshold -->
+            <div class="form-group">
+              <label for="prodMinAlertInput">កម្រិតរោទិ៍ស្តុកជិតអស់</label>
+              <input type="number" id="prodMinAlertInput" class="form-control-input" min="1" value="20"
+                placeholder="20" />
+            </div>
+
+            <!-- Product Image Upload / Dropzone -->
+            <div class="form-group form-field-full">
+              <label>រូបភាពផលិតផល</label>
+
+              <!-- Drag & Drop Zone -->
+              <div class="img-dropzone" id="imgDropzone" onclick="document.getElementById('prodImgFileInput').click()"
+                ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDropImage(event)">
+                <input type="file" id="prodImgFileInput" accept="image/*" style="display: none;"
+                  onchange="handleFileSelect(event)" />
+
+                <div class="dropzone-empty" id="dropzoneEmpty">
+                  <div class="dropzone-icon-circle">
+                    <img src="assets/icons/file-forward-dual-tone-icon.svg" alt="Upload file"
+                      style="width: 28px; height: 28px;" />
+                  </div>
+                  <div class="dropzone-text">
+                    <span class="dropzone-title">អូស & ទម្លាក់រូបភាពនៅទីនេះ ឬ <span
+                        class="dropzone-link">ចុចដើម្បីជ្រើសរើសរូប</span></span>
+                    <span class="dropzone-hint">គាំទ្រប្រភេទ PNG, JPG, JPEG, WEBP (ទំហំអតិបរមា 5MB)</span>
+                  </div>
+                </div>
+
+                <div class="dropzone-preview" id="dropzonePreview" style="display: none;">
+                  <img id="imgPreviewTarget" src="" alt="Selected Preview" />
+                  <div class="preview-overlay">
+                    <span class="btn-change-img">ប្តូររូបភាព</span>
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" id="selectedImgSrc" value="assets/images/ad_fertilizer.jpg" />
+            </div>
+
+            <!-- Short Description -->
+            <div class="form-group form-field-full">
+              <label for="prodDescInput">ការពិពណ៌នាសង្ខេប / ការណែនាំប្រើប្រាស់</label>
+              <textarea id="prodDescInput" class="form-control-textarea" rows="2"
+                placeholder="ព័ត៌មានលម្អិតនៃសារធាតុចិញ្ចឹម ឬ វិធីប្រើ..."></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-modal-cancel" onclick="closeAddStockModal()">បោះបង់</button>
+          <button type="submit" class="btn-modal-submit" id="modalSubmitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>រក្សាទុកចូលស្តុក</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: QUICK RESTOCK MODAL DIALOG
+       ========================================================= -->
+  <div class="modal-backdrop" id="quickRestockModal">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <h3>បន្ថែមចំនួនស្តុកទំនិញ</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeQuickRestockModal()" aria-label="Close">✕</button>
+      </div>
+
+      <form onsubmit="handleQuickRestockSubmit(event)">
+        <input type="hidden" id="quickRestockProdId" value="" />
+
+        <div class="modal-body">
+          <div class="quick-restock-info">
+            <img id="quickRestockImg" src="assets/images/ad_fertilizer.jpg" alt="Product"
+              style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover;" />
+            <div>
+              <strong id="quickRestockTitle"
+                style="font-family: 'Siemreap', sans-serif; font-size: 13.5px; color: #163e21; display: block;">Bio-NPK</strong>
+              <span id="quickRestockCurrent"
+                style="font-family: 'Siemreap', sans-serif; font-size: 11.5px; color: #5c7564;">ស្តុកបច្ចុប្បន្ន: 210
+                បាវ</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 12px;">
+            <label for="quickRestockQty">ចំនួនដែលត្រូវបន្ថែមចូលស្តុក (<span
+                id="quickRestockUnitLabel">បាវ</span>)</label>
+            <input type="number" id="quickRestockQty" class="form-control-input" min="1" placeholder="បញ្ចូលចំនួន..."
+              required autofocus />
+
+            <!-- Quick Chips -->
+            <div class="quick-chip-row">
+              <button type="button" class="quick-chip-btn" onclick="setQuickRestockAmount(10)">+ 10</button>
+              <button type="button" class="quick-chip-btn" onclick="setQuickRestockAmount(25)">+ 25</button>
+              <button type="button" class="quick-chip-btn" onclick="setQuickRestockAmount(50)">+ 50</button>
+              <button type="button" class="quick-chip-btn" onclick="setQuickRestockAmount(100)">+ 100</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-modal-cancel" onclick="closeQuickRestockModal()">បោះបង់</button>
+          <button type="submit" class="btn-modal-submit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>យល់ព្រមបន្ថែម</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Alert -->
+  <div class="toast-popup" id="toastPopup">
+    <span class="toast-icon">✓</span>
+    <span class="toast-msg" id="toastMsg">Action completed</span>
+  </div>
+
+  <script src="js/seller-dashboard.js"></script>
+</body>
+
+</html>
