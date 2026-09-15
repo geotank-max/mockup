@@ -1,0 +1,797 @@
+/* ==========================================================================
+   ORDER DELIVERY TRACKING STYLES (css/order-tracking.css)
+   ========================================================================== */
+
+/* Main Page Layout */
+.tracking-header {
+  background: #ffffff;
+  border-bottom: 1px solid #eef3ef;
+  padding: 14px 16px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.tracking-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tracking-back-btn,
+.tracking-info-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f4f8f5;
+  border: 1px solid #e0ece3;
+  color: #1a4224;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tracking-back-btn:hover,
+.tracking-info-btn:hover {
+  background: #e6f4ea;
+  border-color: #bfe3ca;
+  color: #15803d;
+  transform: translateY(-1px);
+}
+
+.tracking-header-title-box {
+  flex: 1;
+  text-align: left;
+}
+
+.tracking-page-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.tracking-order-id {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Scrollable Container */
+.tracking-main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #f8faf8;
+}
+
+/* --------------------------------------------------------------------------
+   CARD 1: STATUS & ETA CARD (Top Card)
+   -------------------------------------------------------------------------- */
+.eta-summary-card {
+  background: #ffffff;
+  border: 1.5px solid #e2ece4;
+  border-radius: 20px;
+  padding: 18px 16px;
+  box-shadow: 0 4px 14px rgba(22, 60, 32, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.eta-status-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.in-transit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eafaf1;
+  color: #15803d;
+  border: 1px solid #b7ebd0;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pulse-dot-green {
+  width: 8px;
+  height: 8px;
+  background: #16a34a;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(22, 163, 74, 0.5);
+  animation: pulseGreen 1.8s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+.updated-timestamp {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.eta-main-headline-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eta-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.eta-time-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #15803d;
+}
+
+.eta-time-row svg {
+  color: #16a34a;
+}
+
+.eta-dashed-divider {
+  height: 1px;
+  border-top: 1.5px dashed #e5ede7;
+  margin: 2px 0;
+}
+
+/* Goods Info Row */
+.delivering-goods-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.goods-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.goods-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.goods-meta-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.goods-item-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.goods-weight-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   CARD 2: LIVE MAP PREVIEW CARD
+   -------------------------------------------------------------------------- */
+.live-map-card {
+  background: #ffffff;
+  border: 1.5px solid #e2ece4;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(22, 60, 32, 0.04);
+}
+
+.map-view-viewport {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #e8ede8;
+}
+
+.map-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.live-map-card:hover .map-bg-img {
+  transform: scale(1.02);
+}
+
+/* Floating Live Route Badge */
+.live-route-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 20px;
+  padding: 5px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.live-pulse-red {
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: pulseRed 1.6s infinite;
+}
+
+@keyframes pulseRed {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Floating Remaining Distance Chip */
+.distance-remaining-pill {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: #1e293b;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 5px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.distance-remaining-pill svg {
+  color: #10b981;
+}
+
+/* Map Footer Bar */
+.map-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #ffffff;
+  border-top: 1px solid #edf4ee;
+}
+
+.map-position-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  color: #475569;
+}
+
+.map-position-text strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.expand-map-btn {
+  background: none;
+  border: none;
+  padding: 4px 6px;
+  color: #16a34a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+
+.expand-map-btn:hover {
+  color: #15803d;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   CARD 3: DELIVERY MILESTONES (Timeline)
+   -------------------------------------------------------------------------- */
+.milestones-card {
+  background: #ffffff;
+  border: 1.5px solid #e2ece4;
+  border-radius: 20px;
+  padding: 18px 16px;
+  box-shadow: 0 4px 14px rgba(22, 60, 32, 0.04);
+}
+
+.milestones-card-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 800;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.vertical-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  position: relative;
+  padding-bottom: 22px;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+/* Connecting vertical line */
+.timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: #cbd5e1;
+}
+
+.timeline-item.completed:not(:last-child)::before {
+  background: #16a34a;
+}
+
+.timeline-item.active-step:not(:last-child)::before {
+  background: #cbd5e1;
+}
+
+/* Step Node Circle */
+.step-node-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+  background: #ffffff;
+}
+
+.step-node-icon.check-done {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.step-node-icon.active-node {
+  background: #ffffff;
+  border: 3px solid #16a34a;
+}
+
+.active-inner-dot {
+  width: 8px;
+  height: 8px;
+  background: #16a34a;
+  border-radius: 50%;
+}
+
+.step-node-icon.pending-node {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  color: #cbd5e1;
+}
+
+.pending-inner-dot {
+  width: 6px;
+  height: 6px;
+  background: #cbd5e1;
+  border-radius: 50%;
+}
+
+/* Step Content */
+.step-details-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.step-details-box.active-card-box {
+  background: #f6fcf8;
+  border: 1.5px solid #c7ebd4;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.step-header-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.step-title-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.step-title-text.active-green {
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-title-text.text-muted {
+  color: #64748b;
+}
+
+.step-time-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.step-desc-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.road-condition-chip {
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1px solid #d4ecd9;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  color: #2e5339;
+  line-height: 1.35;
+}
+
+.road-condition-chip svg {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   CARD 4: DRIVER PROFILE & ACTIONS
+   -------------------------------------------------------------------------- */
+.driver-profile-card {
+  background: #ffffff;
+  border: 1.5px solid #e2ece4;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(22, 60, 32, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.driver-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.driver-avatar-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #16a34a;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.driver-avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.driver-details-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.driver-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.driver-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.verified-driver-check {
+  color: #16a34a;
+  display: inline-flex;
+}
+
+.driver-role-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #166534;
+}
+
+.driver-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  color: #475569;
+}
+
+.star-rating {
+  color: #d97706;
+  font-weight: 700;
+}
+
+/* Vehicle Chip */
+.vehicle-info-bar {
+  background: #f8faf8;
+  border: 1px solid #e2ece4;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vehicle-desc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.vehicle-desc svg {
+  color: #64748b;
+}
+
+.license-plate-tag {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-family: 'Plus Jakarta Sans', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.3px;
+}
+
+/* Call & Chat Buttons */
+.driver-action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-call-driver {
+  background: #1f6b32;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 11px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 3px 8px rgba(31, 107, 50, 0.25);
+  transition: background 0.2s ease;
+}
+
+.btn-call-driver:hover {
+  background: #175226;
+}
+
+.btn-chat-driver {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  padding: 11px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-chat-driver:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   FULL MAP MODAL & QUICK CHAT MODAL
+   -------------------------------------------------------------------------- */
+.expand-map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.expand-map-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.expand-map-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.expand-map-header h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.expand-map-body {
+  width: 100%;
+  height: 380px;
+  position: relative;
+  background: #e2ece4;
+}
+
+.expand-map-body img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.expand-map-footer {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+}
+
+/* Pulsing Truck Indicator on Map */
+.map-pulse-marker {
+  position: absolute;
+  top: 66%;
+  left: 38%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+.pulse-ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.35);
+  position: absolute;
+  animation: mapPulse 2s infinite;
+}
+
+.pulse-center-pin {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #15803d;
+  border: 2px solid #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes mapPulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}

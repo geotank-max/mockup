@@ -1290,3 +1290,539 @@
 .nav-next-btn:active {
   transform: scale(0.98);
 }
+
+/* ==============================================
+   SATELLITE SOIL SCAN CARD (Step 2 auto-detect)
+   ============================================== */
+.sat-scan-card {
+  background: #ffffff;
+  border: 1.5px solid #e1ece3;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(20, 73, 34, 0.06);
+}
+
+/* Satellite viewport (image + scan animation) */
+.sat-scan-viewport {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background: #0f2417;
+}
+
+.sat-scan-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.sat-scan-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 36, 23, 0.15) 0%, rgba(15, 36, 23, 0.45) 100%);
+  pointer-events: none;
+}
+
+/* Corner framing brackets */
+.sat-frame-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.85);
+  z-index: 3;
+}
+.sat-frame-corner.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-radius: 4px 0 0 0; }
+.sat-frame-corner.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-radius: 0 4px 0 0; }
+.sat-frame-corner.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 4px; }
+.sat-frame-corner.br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 4px 0; }
+
+/* Plot pin */
+.sat-plot-pin {
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translate(-50%, -100%);
+  z-index: 4;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+/* Sweeping scan line */
+.sat-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #6ee7a0, #ffffff, #6ee7a0, transparent);
+  box-shadow: 0 0 16px 4px rgba(110, 231, 160, 0.75);
+  opacity: 0;
+  z-index: 5;
+}
+
+.sat-scan-card.scanning .sat-scan-line {
+  opacity: 1;
+  animation: satSweep 1.15s ease-in-out infinite;
+}
+
+@keyframes satSweep {
+  0%   { top: 6%; }
+  50%  { top: 92%; }
+  100% { top: 6%; }
+}
+
+/* Status tag (idle) */
+.sat-status-tag {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 36, 23, 0.7);
+  backdrop-filter: blur(4px);
+  color: #eafff1;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 6;
+  letter-spacing: 0.3px;
+}
+
+.sat-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+  animation: satPulse 1.6s infinite;
+}
+
+@keyframes satPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+  70%  { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+/* Scanning progress box */
+.sat-progress-box {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(15, 36, 23, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 7;
+}
+
+.sat-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #6ee7a0;
+  border-radius: 50%;
+  animation: satSpin 0.75s linear infinite;
+}
+
+@keyframes satSpin {
+  to { transform: rotate(360deg); }
+}
+
+.sat-progress-text {
+  color: #eafff1;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Body row (info + button) */
+.sat-scan-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  flex-wrap: wrap;
+}
+
+.sat-scan-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.sat-scan-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eef7f0;
+  color: var(--primary-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sat-scan-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sat-scan-title {
+  font-size: 13.5px;
+  color: #143a1f;
+  font-weight: 700;
+}
+
+.sat-scan-sub {
+  font-size: 11px;
+  color: #6b8172;
+  line-height: 1.45;
+}
+
+.sat-scan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--primary-green);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(31, 107, 50, 0.28);
+}
+
+.sat-scan-btn:hover {
+  background: #185427;
+  transform: translateY(-1px);
+}
+
+.sat-scan-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Detected result panel */
+.sat-result-panel {
+  border-top: 1px dashed #d5e5d9;
+  padding: 14px;
+  background: #f6fbf7;
+  animation: satFadeIn 0.4s ease;
+}
+
+@keyframes satFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sat-result-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sat-result-check {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primary-green);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sat-result-title-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+}
+
+.sat-result-label {
+  font-size: 10.5px;
+  color: #6b8172;
+  font-weight: 600;
+}
+
+.sat-result-value {
+  font-size: 16px;
+  color: #143a1f;
+  font-weight: 800;
+}
+
+.sat-confidence {
+  background: #e3f4e8;
+  color: var(--primary-green);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.sat-metrics-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.sat-metric {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e1ece3;
+  border-radius: 10px;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.sat-metric-label {
+  font-size: 10px;
+  color: #6b8172;
+  font-weight: 600;
+}
+
+.sat-metric-val {
+  font-size: 15px;
+  color: #143a1f;
+  font-weight: 800;
+}
+
+.sat-metric-val.sat-ok {
+  color: var(--primary-green);
+}
+
+.sat-result-note {
+  margin-top: 11px;
+  font-size: 11px;
+  color: #3d7a4e;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ==============================================
+   TAP-TO-EXPAND HINT (on scan viewport)
+   ============================================== */
+.sat-scan-viewport {
+  cursor: pointer;
+}
+
+.sat-expand-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 36, 23, 0.72);
+  backdrop-filter: blur(4px);
+  color: #eafff1;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 5px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  transition: background 0.2s;
+}
+
+.sat-scan-viewport:hover .sat-expand-hint {
+  background: rgba(31, 107, 50, 0.9);
+}
+
+/* Hide hint while scanning */
+.sat-scan-card.scanning .sat-expand-hint {
+  display: none;
+}
+
+/* ==============================================
+   INTERACTIVE SATELLITE MAP MODAL (Leaflet)
+   ============================================== */
+.geo-map-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: rgba(10, 24, 15, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  animation: geoFadeIn 0.25s ease;
+}
+
+@keyframes geoFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.geo-map-sheet {
+  width: 100%;
+  max-height: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+  animation: geoSlideUp 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@keyframes geoSlideUp {
+  from { transform: translateY(14px); opacity: 0.6; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Top bar */
+.geo-map-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(175deg, #1b5329 0%, #164823 100%);
+  color: #ffffff;
+}
+
+.geo-map-title-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.geo-map-title-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.geo-map-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.geo-map-sub {
+  font-size: 11px;
+  color: #c9e6d1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.geo-map-close {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.geo-map-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Leaflet mount */
+.geo-map-canvas {
+  flex: 1;
+  min-height: 340px;
+  width: 100%;
+  background: #0f2417;
+}
+
+/* Leaflet control tweaks to fit small frame */
+.geo-map-canvas .leaflet-control-attribution {
+  font-size: 9px;
+}
+
+/* Footer */
+.geo-map-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px;
+  border-top: 1px solid #e6efe8;
+  background: #f8fbf8;
+}
+
+.geo-map-legend {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #47624f;
+  font-weight: 500;
+}
+
+.geo-legend-swatch {
+  width: 18px;
+  height: 10px;
+  border-radius: 3px;
+  border: 2px dashed #2f9bff;
+  background: rgba(47, 155, 255, 0.18);
+  flex-shrink: 0;
+}
+
+.geo-map-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-green);
+  color: #ffffff;
+  border: none;
+  border-radius: 11px;
+  padding: 9px 15px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.geo-map-confirm:hover {
+  background: #185427;
+}
+
+/* Plot boundary label marker */
+.geo-plot-label {
+  background: #1f6b32;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 14px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #ffffff;
+}

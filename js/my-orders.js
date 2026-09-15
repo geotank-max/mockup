@@ -1,4 +1,4 @@
-﻿/**
+/**
  * my-orders.js - Logic for Farmer Order History & Pending Purchases
  */
 
@@ -61,6 +61,9 @@ const mockOrdersData = [
     statusLabel: 'កំពុងដឹកជញ្ជូន',
     statusClass: 'status-shipping',
     date: '12 កញ្ញា 2026',
+    orderDate: '2 May',
+    dispatchDate: '2 May',
+    trackingProgress: 68,
     seller: {
       name: 'មជ្ឈមណ្ឌល ធាតុចូលកសិកម្ម សៀមរាប',
       province: 'ខេត្តសៀមរាប',
@@ -104,6 +107,7 @@ const mockOrdersData = [
 ];
 
 let currentFilter = 'pending';
+let activeTargetOrderId = '#ORD-9750';
 
 function renderOrders() {
   const container = document.getElementById('ordersCardsContainer');
@@ -153,6 +157,59 @@ function renderOrders() {
         <span>${ord.date}</span>
       </div>
 
+      ${ord.status === 'shipping' ? `
+        <!-- Delivery Tracking Widget (Matching Reference Design) -->
+        <div class="delivery-tracking-card">
+          <div class="dt-header-row">
+            <div class="dt-title-group" onclick="location.href='order-tracking.html?id=${encodeURIComponent(ord.id)}'" style="cursor: pointer;">
+              <h3 class="dt-title">Delivery Tracking</h3>
+            </div>
+            <div class="dt-status-group">
+              <div class="dt-arriving-badge" onclick="location.href='order-tracking.html?id=${encodeURIComponent(ord.id)}'" style="cursor: pointer;">Arriving today</div>
+              <div class="dt-action-links">
+                <button type="button" class="dt-link-btn" onclick="openCancellationModal('${ord.id}')">Request cancellation</button>
+                <span class="dt-pipe">|</span>
+                <button type="button" class="dt-link-btn" onclick="openInstructionsModal('${ord.id}')">Provide delivery instructions</button>
+              </div>
+              <div class="dt-out-delivery">It's out for delivery</div>
+            </div>
+          </div>
+
+          <!-- Progress Tracker Bar (Clickable to view detail) -->
+          <div class="dt-progress-wrapper" onclick="location.href='order-tracking.html?id=${encodeURIComponent(ord.id)}'" style="cursor: pointer;" title="ចុចដើម្បីមើលព័ត៌មានលម្អិត">
+            <div class="dt-track">
+              <div class="dt-track-fill" style="width: ${ord.trackingProgress || 68}%;"></div>
+              <div class="dt-track-dot" style="left: ${ord.trackingProgress || 68}%;"></div>
+              <div class="dt-track-target"></div>
+            </div>
+
+            <!-- Milestones Below Progress Bar -->
+            <div class="dt-milestones-row">
+              <div class="dt-milestone dt-start">
+                <span class="dt-step-name">Ordered</span>
+                <span class="dt-step-date">${ord.orderDate || '2 May'}</span>
+              </div>
+              <div class="dt-milestone dt-mid">
+                <span class="dt-step-name">Dispatched</span>
+                <span class="dt-step-date">${ord.dispatchDate || '2 May'}</span>
+              </div>
+              <div class="dt-milestone dt-end">
+                <span class="dt-step-name dt-green">Arriving today</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Route Details CTA Banner -->
+          <a href="order-tracking.html?id=${encodeURIComponent(ord.id)}" class="dt-view-live-btn" title="មើលផ្លូវដឹកជញ្ជូនបន្តផ្ទាល់">
+            <div class="dt-live-tag">
+              <span class="pulse-dot-green"></span>
+              <span>Live Route: Battambang Farmland</span>
+            </div>
+            <span class="dt-view-text">មើលលម្អិត & ផែនទី →</span>
+          </a>
+        </div>
+      ` : ''}
+
       <div class="order-items-list">
         ${ord.items.map(it => `
           <div class="order-item-row">
@@ -191,6 +248,69 @@ function switchOrderTab(status) {
   renderOrders();
 }
 
+// Modal Handlers
+function openInstructionsModal(orderId) {
+  activeTargetOrderId = orderId;
+  const modal = document.getElementById('deliveryInstructionsModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    const input = document.getElementById('deliveryNotesInput');
+    if (input) input.value = '';
+  }
+}
+
+function closeInstructionsModal() {
+  const modal = document.getElementById('deliveryInstructionsModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function setInstructionText(text) {
+  const input = document.getElementById('deliveryNotesInput');
+  if (input) {
+    input.value = text;
+  }
+}
+
+function saveDeliveryInstructions() {
+  const input = document.getElementById('deliveryNotesInput');
+  closeInstructionsModal();
+  openToast('✓ បានរក្សាទុកការណែនាំដឹកជញ្ជូនដោយជោគជ័យ!');
+}
+
+function openCancellationModal(orderId) {
+  activeTargetOrderId = orderId;
+  const modal = document.getElementById('requestCancellationModal');
+  const text = document.getElementById('cancelOrderIdText');
+  if (text) text.textContent = orderId;
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeCancellationModal() {
+  const modal = document.getElementById('requestCancellationModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function confirmCancellationRequest() {
+  closeCancellationModal();
+  openToast('✓ បានផ្ញើសំណើសុំបោះបង់ទៅកាន់អ្នកផ្គត់ផ្គង់រួចរាល់!');
+}
+
+// Toast Alert Helper
+let toastTimeout = null;
+function openToast(message) {
+  const toast = document.getElementById('toastPopup');
+  const toastMsg = document.getElementById('toastMsg');
+  if (!toast || !toastMsg) return;
+
+  toastMsg.textContent = message;
+  toast.classList.add('show');
+
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2600);
+}
+
 function goBack() {
   if (window.history.length > 1) {
     window.history.back();
@@ -200,5 +320,11 @@ function goBack() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderOrders();
+  const urlParams = new URLSearchParams(window.location.search);
+  const tabParam = urlParams.get('tab') || urlParams.get('status');
+  if (tabParam && ['pending', 'shipping', 'completed', 'all'].includes(tabParam)) {
+    switchOrderTab(tabParam);
+  } else {
+    renderOrders();
+  }
 });

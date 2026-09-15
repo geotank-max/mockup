@@ -1,14 +1,29 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    AUTHENTICATION STYLES (auth.css)
    Clean, modern mobile layout for Login, Register & Forgot Password
    ========================================================================== */
 
 .auth-wrapper {
-  min-height: 100vh;
+  height: 920px;
+  min-height: 920px;
+  max-height: 920px;
   display: flex;
   flex-direction: column;
   background: #f7faf8;
   overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.auth-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .auth-wrapper {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+  }
 }
 
 .auth-header-bar {

@@ -11,6 +11,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
     rel="stylesheet">
+  <!-- Leaflet (interactive satellite map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/run-test.css">
 
@@ -32,6 +36,29 @@
 
   <div class="device-wrapper">
     <div class="mobile-frame">
+
+      <!-- iOS Status Bar with Dynamic Island (media_1789400171940.png) -->
+      <div class="ios-status-bar dark-bg">
+        <span class="status-time">9:41</span>
+        <div class="dynamic-island"></div>
+        <div class="status-icons">
+          <svg class="status-icon" width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+            <rect x="0" y="8" width="2.4" height="3" rx="0.6"/>
+            <rect x="4" y="5.5" width="2.4" height="5.5" rx="0.6"/>
+            <rect x="8" y="3" width="2.4" height="8" rx="0.6"/>
+            <rect x="12" y="0.5" width="2.4" height="10.5" rx="0.6"/>
+          </svg>
+          <svg class="status-icon" width="15" height="11" viewBox="0 0 16 12" fill="currentColor">
+            <path d="M8 12a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5-3a5.002 5.002 0 017 0 .75.75 0 101.06-1.06 6.502 6.502 0 00-9.12 0 .75.75 0 101.06 1.06zm-2.5-3a8.503 8.503 0 0112 0 .75.75 0 101.06-1.06 10.003 10.003 0 00-14.12 0 .75.75 0 101.06 1.06z"/>
+          </svg>
+          <div class="battery-icon">
+            <div class="battery-body">
+              <div class="battery-level"></div>
+            </div>
+            <div class="battery-tip"></div>
+          </div>
+        </div>
+      </div>
 
       <!-- Top Header with Back Navigation & Progress -->
       <header class="test-header">
@@ -251,50 +278,113 @@
             <p class="step-desc">ព័ត៌មានពីលក្ខណៈដី និងការបង្ហូរទឹកក្នុងស្រែ/ចម្ការ</p>
           </div>
 
-          <!-- Soil Texture Selector -->
-          <div class="form-section-card">
-            <label class="section-label">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 22h20" />
-                <path d="M6 18H4a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-2" />
-                <path d="M6 14V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8" />
-              </svg>
-              <span>ប្រភេទសាច់ដី</span>
-            </label>
+          <!-- ==============================================
+               SATELLITE SOIL SCAN (Auto-detect soil for the farmer)
+               ============================================== -->
+          <div class="sat-scan-card" id="satScanCard">
+            <div class="sat-scan-viewport" id="satScanViewport" role="button" tabindex="0"
+              title="ចុចដើម្បីមើលផែនទីពេញ" aria-label="បើកផែនទីអន្តរកម្ម">
+              <img src="assets/images/map1.png" alt="ផ្ទៃដីតាមផ្កាយរណប" class="sat-scan-img">
+              <div class="sat-scan-overlay"></div>
 
-            <div class="selection-card-grid" id="soilTextureGrid">
-              <button type="button" class="card-select-btn" data-soil="clay">
-                <div class="card-btn-indicator"></div>
-                <div class="card-btn-content">
-                  <strong class="btn-kh">ដីឥដ្ឋ</strong>
-                  <span class="btn-sub">ស្អិតពេលសើម រឹងពេលស្ងួត ផ្ទុកជាតិទឹកខ្ពស់</span>
-                </div>
-              </button>
+              <!-- Tap-to-expand hint -->
+              <div class="sat-expand-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <polyline points="9 21 3 21 3 15"></polyline>
+                  <line x1="21" y1="3" x2="14" y2="10"></line>
+                  <line x1="3" y1="21" x2="10" y2="14"></line>
+                </svg>
+                <span>មើលផែនទីពេញ</span>
+              </div>
 
-              <button type="button" class="card-select-btn selected" data-soil="loam">
-                <div class="card-btn-indicator"></div>
-                <div class="card-btn-content">
-                  <strong class="btn-kh">ដីល្បាប់</strong>
-                  <span class="btn-sub">ដីផុសល្អ សម្បូរសារធាតុចិញ្ចឹម សមស្របដំណាំទូទៅ</span>
-                </div>
-              </button>
+              <!-- Corner framing brackets -->
+              <span class="sat-frame-corner tl"></span>
+              <span class="sat-frame-corner tr"></span>
+              <span class="sat-frame-corner bl"></span>
+              <span class="sat-frame-corner br"></span>
 
-              <button type="button" class="card-select-btn" data-soil="sandy">
-                <div class="card-btn-indicator"></div>
-                <div class="card-btn-content">
-                  <strong class="btn-kh">ដីខ្សាច់</strong>
-                  <span class="btn-sub">បង្ហូរទឹកលឿន ងាយបាត់បង់ជីវជាតិដី</span>
-                </div>
-              </button>
+              <!-- Sweeping scan line (animated during scan) -->
+              <div class="sat-scan-line" id="satScanLine"></div>
 
-              <button type="button" class="card-select-btn" data-soil="peat">
-                <div class="card-btn-indicator"></div>
-                <div class="card-btn-content">
-                  <strong class="btn-kh">ដីសរីរាង្គខ្ពស់</strong>
-                  <span class="btn-sub">ដីខ្មៅល្បាយកំប៉ុស ជីជាតិខ្លាំង</span>
+              <!-- Plot pin -->
+              <div class="sat-plot-pin">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="#1f6b32" stroke="#ffffff" stroke-width="1.8">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3" fill="#ffffff"></circle>
+                </svg>
+              </div>
+
+              <!-- Idle state badge -->
+              <div class="sat-status-tag" id="satIdleTag">
+                <span class="sat-live-dot"></span>
+                <span>ផ្កាយរណប Sentinel-2</span>
+              </div>
+
+              <!-- Scanning progress text (hidden until scanning) -->
+              <div class="sat-progress-box" id="satProgressBox" style="display:none;">
+                <div class="sat-spinner"></div>
+                <span class="sat-progress-text" id="satProgressText">កំពុងវិភាគរូបភាពផ្កាយរណប...</span>
+              </div>
+            </div>
+
+            <!-- Info + trigger row -->
+            <div class="sat-scan-body">
+              <div class="sat-scan-info">
+                <div class="sat-scan-icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12h5l2 6 4-14 2 8h7" />
+                  </svg>
                 </div>
+                <div class="sat-scan-copy">
+                  <strong class="sat-scan-title">ស្កេនដីស្វ័យប្រវត្តិ</strong>
+                  <span class="sat-scan-sub">មិនដឹងប្រភេទដី? ចុចស្កេនតាមផ្កាយរណប យើងវិភាគសាច់ដីជូនអ្នក</span>
+                </div>
+              </div>
+              <button type="button" class="sat-scan-btn" id="satScanBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <span id="satScanBtnText">ស្កេនដីតាមផ្កាយរណប</span>
               </button>
+            </div>
+
+            <!-- Detected result panel (hidden until scan completes) -->
+            <div class="sat-result-panel" id="satResultPanel" style="display:none;">
+              <div class="sat-result-head">
+                <div class="sat-result-check">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div class="sat-result-title-col">
+                  <span class="sat-result-label">ប្រភេទដីដែលរកឃើញ</span>
+                  <strong class="sat-result-value" id="satDetectedSoil">ដីល្បាប់</strong>
+                </div>
+                <span class="sat-confidence" id="satConfidence">ទំនុកចិត្ត ៩២%</span>
+              </div>
+              <div class="sat-metrics-row">
+                <div class="sat-metric">
+                  <span class="sat-metric-label">កម្រិត pH</span>
+                  <strong class="sat-metric-val">៦.៥</strong>
+                </div>
+                <div class="sat-metric">
+                  <span class="sat-metric-label">សំណើមដី</span>
+                  <strong class="sat-metric-val">៣៨%</strong>
+                </div>
+                <div class="sat-metric">
+                  <span class="sat-metric-label">ស្ថានភាព</span>
+                  <strong class="sat-metric-val sat-ok">ល្អ</strong>
+                </div>
+              </div>
+              <p class="sat-result-note">
+                ✓ បានបំពេញព័ត៌មានដីជូនអ្នកដោយស្វ័យប្រវត្តិ។ អ្នកអាចកែប្រែខាងក្រោមបើចង់។
+              </p>
             </div>
           </div>
 
@@ -733,9 +823,57 @@
         <span class="toast-msg" id="toastMsg">Action completed</span>
       </div>
 
+      <!-- ==============================================
+           INTERACTIVE SATELLITE MAP MODAL (Leaflet)
+           ============================================== -->
+      <div class="geo-map-modal" id="geoMapModal" style="display:none;" aria-hidden="true">
+        <div class="geo-map-sheet">
+          <div class="geo-map-topbar">
+            <div class="geo-map-title-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div class="geo-map-title-col">
+                <strong class="geo-map-title">ផែនទីផ្កាយរណបផ្ទៃដី</strong>
+                <span class="geo-map-sub" id="geoMapCoords">13.0957° N, 103.2022° E · បាត់ដំបង</span>
+              </div>
+            </div>
+            <button type="button" class="geo-map-close" id="geoMapCloseBtn" aria-label="បិទ">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Leaflet mounts here -->
+          <div class="geo-map-canvas" id="geoMapCanvas"></div>
+
+          <div class="geo-map-footer">
+            <div class="geo-map-legend">
+              <span class="geo-legend-swatch"></span>
+              <span>ព្រំប្រទល់ដីរបស់អ្នក · ~1.0 ហិកតា</span>
+            </div>
+            <button type="button" class="geo-map-confirm" id="geoMapConfirmBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>យល់ព្រម</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
+  <!-- Leaflet library (interactive satellite map) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="js/run-test.js"></script>
 </body>
 

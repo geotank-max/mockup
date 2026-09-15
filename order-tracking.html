@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Delivery Tracking - Dam Ey Ag-Logistics</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Siemreap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/order-tracking.css" />
+
+  <!-- Auth Guard -->
+  <script>
+    (function () {
+      const isLoggedIn = localStorage.getItem('cropwise_logged_in') === 'true';
+      const userRole = localStorage.getItem('cropwise_user_role');
+      if (!isLoggedIn) {
+        window.location.replace('login.html');
+      } else if (userRole === 'seller') {
+        window.location.replace('seller-dashboard.html');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="device-wrapper">
+    <div class="mobile-frame">
+
+      <!-- Header Section -->
+      <header class="tracking-header">
+        <div class="tracking-nav-row">
+          <button type="button" class="tracking-back-btn" onclick="goBack()" title="ត្រឡប់ក្រោយ" aria-label="ត្រឡប់ក្រោយ">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="tracking-header-title-box">
+            <h1 class="tracking-page-title">Delivery Tracking</h1>
+            <span class="tracking-order-id" id="trackingOrderId">Order #ORD-9750</span>
+          </div>
+          <button type="button" class="tracking-info-btn" onclick="openInfoModal()" title="ព័ត៌មានដឹកជញ្ជូន" aria-label="ព័ត៌មានដឹកជញ្ជូន">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Tracking Content -->
+      <main class="tracking-main-content">
+
+        <!-- ==============================================
+             CARD 1: ETA & DELIVERING GOODS SUMMARY CARD
+             ============================================== -->
+        <section class="eta-summary-card">
+          <!-- Top Row: In Transit Badge & Timestamp -->
+          <div class="eta-status-top-row">
+            <div class="in-transit-pill">
+              <span class="pulse-dot-green"></span>
+              <span>In Transit</span>
+            </div>
+            <span class="updated-timestamp" id="updatedTimeText">Updated 1 min ago</span>
+          </div>
+
+          <!-- Main ETA Headline -->
+          <div class="eta-main-headline-box">
+            <h2 class="eta-headline">Arriving in 25 mins</h2>
+            <div class="eta-time-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Estimated today, 2:45 PM</span>
+            </div>
+          </div>
+
+          <!-- Dashed Separator -->
+          <div class="eta-dashed-divider"></div>
+
+          <!-- Goods Details Row -->
+          <div class="delivering-goods-row">
+            <div class="goods-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <div class="goods-text-group">
+              <span class="goods-meta-label">Delivering Goods</span>
+              <h3 class="goods-item-name">Organic Fertilizer & NPK Mix</h3>
+              <span class="goods-weight-tag">(15 Bags · 750 kg total weight)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             CARD 2: LIVE ROUTE MAP PREVIEW CARD
+             ============================================== -->
+        <section class="live-map-card">
+          <div class="map-view-viewport" onclick="openExpandMap()" style="cursor: pointer;">
+            <img src="assets/images/delivery_route_battambang.jpg" alt="Delivery Route: Battambang Farmland"
+              class="map-bg-img" />
+
+            <!-- Floating Top-Left Badge -->
+            <div class="live-route-badge">
+              <span class="live-pulse-red"></span>
+              <span>Live Route: Battambang Farmland</span>
+            </div>
+
+            <!-- Pulsing Pin on Sangkae River Route -->
+            <div class="map-pulse-marker" title="Current Driver Position">
+              <div class="pulse-ring"></div>
+              <div class="pulse-center-pin"></div>
+            </div>
+
+            <!-- Floating Bottom-Right Distance Chip -->
+            <div class="distance-remaining-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>4.2 km remaining</span>
+            </div>
+          </div>
+
+          <!-- Bottom Position Bar -->
+          <div class="map-footer-bar">
+            <span class="map-position-text">Current position: <strong>Sangkae River Crossing</strong></span>
+            <button type="button" class="expand-map-btn" onclick="openExpandMap()">
+              <span>Expand Map</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             CARD 3: DELIVERY MILESTONES (Vertical Timeline)
+             ============================================== -->
+        <section class="milestones-card">
+          <h4 class="milestones-card-title">Delivery Milestones</h4>
+
+          <div class="vertical-timeline">
+
+            <!-- Step 1: Order Confirmed (Completed) -->
+            <div class="timeline-item completed">
+              <div class="step-node-icon check-done">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="step-details-box">
+                <div class="step-header-line">
+                  <span class="step-title-text">Order Confirmed</span>
+                  <span class="step-time-tag">09:30 AM</span>
+                </div>
+                <p class="step-desc-text">Agriculture supplies verified and prepared for transport</p>
+              </div>
+            </div>
+
+            <!-- Step 2: Dispatched from Hub (Completed) -->
+            <div class="timeline-item completed">
+              <div class="step-node-icon check-done">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="step-details-box">
+                <div class="step-header-line">
+                  <span class="step-title-text">Dispatched from Hub</span>
+                  <span class="step-time-tag">11:15 AM</span>
+                </div>
+                <p class="step-desc-text">Departed CropWise Battambang Central Distribution</p>
+              </div>
+            </div>
+
+            <!-- Step 3: In Transit with Driver (Active Step!) -->
+            <div class="timeline-item active-step">
+              <div class="step-node-icon active-node">
+                <div class="active-inner-dot"></div>
+              </div>
+              <div class="step-details-box active-card-box">
+                <div class="step-header-line">
+                  <span class="step-title-text active-green">
+                    <span class="pulse-dot-green"></span>
+                    <span>In Transit with Driver</span>
+                  </span>
+                  <span class="step-time-tag">01:40 PM</span>
+                </div>
+                <p class="step-desc-text">Driver is 4.2 km away on Sangkae Road</p>
+
+                <div class="road-condition-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <span>Clear rural road conditions, traveling at normal speed.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Delivered to Farm Plot (Pending Destination) -->
+            <div class="timeline-item pending">
+              <div class="step-node-icon pending-node">
+                <div class="pending-inner-dot"></div>
+              </div>
+              <div class="step-details-box">
+                <div class="step-header-line">
+                  <span class="step-title-text text-muted">Delivered to Farm Plot</span>
+                  <span class="step-time-tag">Est. 02:45 PM</span>
+                </div>
+                <p class="step-desc-text">Plot #3 - Bay Damram agricultural unloading site</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==============================================
+             CARD 4: DRIVER PROFILE & ACTIONS
+             ============================================== -->
+        <section class="driver-profile-card">
+          <!-- Driver Info Row -->
+          <div class="driver-info-row">
+            <div class="driver-avatar-box">
+              <img src="assets/images/driver_sovan_rath.png" alt="Driver Sovan Rath" />
+            </div>
+            <div class="driver-details-col">
+              <div class="driver-name-row">
+                <h4 class="driver-name">Sovan Rath</h4>
+                <span class="verified-driver-check" title="Verified Driver">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#16a34a" stroke="#ffffff" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" fill="#16a34a"></circle>
+                    <polyline points="9 12 11 14 15 10" stroke="#ffffff"></polyline>
+                  </svg>
+                </span>
+              </div>
+              <span class="driver-role-title">Verified Ag-Logistics Driver</span>
+              <div class="driver-rating-row">
+                <span class="star-rating">★ 4.9</span>
+                <span>·</span>
+                <span>142 farm runs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Info Bar -->
+          <div class="vehicle-info-bar">
+            <div class="vehicle-desc">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13"></rect>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+              </svg>
+              <span>Green Isuzu 2.5T Truck</span>
+            </div>
+            <span class="license-plate-tag">Battambang 3A-8921</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="driver-action-buttons">
+            <button type="button" class="btn-call-driver" onclick="callDriver()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>Call Driver</span>
+            </button>
+
+            <button type="button" class="btn-chat-driver" onclick="openDriverChat()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Chat</span>
+            </button>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- ==============================================
+           MODAL 1: EXPAND FULL MAP MODAL
+           ============================================== -->
+      <div class="expand-map-modal" id="expandMapModal" style="display: none;">
+        <div class="expand-map-card">
+          <div class="expand-map-header">
+            <h4>Live Route: Battambang Farmland</h4>
+            <button type="button" class="modal-close-btn" onclick="closeExpandMap()" aria-label="Close Map">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="expand-map-body">
+            <img src="assets/images/delivery_route_battambang.jpg" alt="Full Delivery Route" />
+          </div>
+          <div class="expand-map-footer">
+            <span class="map-position-text">Distance: <strong>4.2 km remaining to Farm Plot #3</strong></span>
+            <button type="button" class="orders-modal-btn confirm" style="padding: 6px 14px; font-size: 12px;" onclick="closeExpandMap()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==============================================
+           MODAL 2: DRIVER QUICK CHAT MODAL
+           ============================================== -->
+      <div class="expand-map-modal" id="driverChatModal" style="display: none;">
+        <div class="expand-map-card" style="max-height: 90vh;">
+          <div class="expand-map-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img src="assets/images/driver_sovan_rath.png" style="width: 28px; height: 28px; border-radius: 50%;" alt="Driver" />
+              <h4>Chat with Sovan Rath</h4>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeDriverChat()" aria-label="Close Chat">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div style="padding: 14px; background: #f8fafc; height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;" id="chatMessagesList">
+            <div style="align-self: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px 12px 12px 2px; padding: 9px 12px; max-width: 85%;">
+              <p style="margin: 0; font-size: 12px; color: #1e293b; font-family: 'Siemreap', sans-serif;">សួស្តីបង! ខ្ញុំកំពុងដឹកជី និងសម្ភារកសិកម្មទៅកសិដ្ឋានរបស់បង។</p>
+              <span style="font-size: 10px; color: #94a3b8; margin-top: 4px; display: block;">01:42 PM</span>
+            </div>
+          </div>
+
+          <!-- Quick presets -->
+          <div style="padding: 8px 14px; background: #ffffff; border-top: 1px solid #e2e8f0; display: flex; gap: 6px; overflow-x: auto;">
+            <button type="button" class="instruction-chip" style="font-size: 11px; padding: 4px 8px; white-space: nowrap;" onclick="sendPresetMessage('ជម្រាបសួរ តើទំនិញដឹកដល់ណាហើយ?')">ដល់ណាហើយ?</button>
+            <button type="button" class="instruction-chip" style="font-size: 11px; padding: 4px 8px; white-space: nowrap;" onclick="sendPresetMessage('ខ្ញុំកំពុងរង់ចាំនៅច្រកចូលមុខស្រែ')">ចាំនៅមុខស្រែ</button>
+            <button type="button" class="instruction-chip" style="font-size: 11px; padding: 4px 8px; white-space: nowrap;" onclick="sendPresetMessage('សូមទូរស័ព្ទមកមុនពេលមកដល់ ៥ នាទី')">តេមកមុន ៥ នាទី</button>
+          </div>
+
+          <!-- Input bar -->
+          <div style="padding: 10px 14px; background: #ffffff; display: flex; gap: 8px; border-top: 1px solid #e2e8f0;">
+            <input type="text" id="customChatInput" placeholder="សរសេរសារ..." style="flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 20px; font-size: 12px; outline: none;" onkeydown="if(event.key==='Enter') sendCustomChatMessage();" />
+            <button type="button" class="orders-modal-btn confirm" style="flex: none; padding: 8px 14px; border-radius: 20px;" onclick="sendCustomChatMessage()">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==============================================
+           MODAL 3: INFO MODAL
+           ============================================== -->
+      <div class="expand-map-modal" id="trackingInfoModal" style="display: none;">
+        <div class="expand-map-card">
+          <div class="expand-map-header">
+            <h4>Delivery Logistics Info</h4>
+            <button type="button" class="modal-close-btn" onclick="closeInfoModal()" aria-label="Close Info">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div style="padding: 18px 16px; font-family: 'Siemreap', 'Plus Jakarta Sans', sans-serif; font-size: 12px; color: #334155; line-height: 1.5;">
+            <p style="margin-bottom: 8px;"><strong>អំពីការដឹកជញ្ជូនកសិកម្ម Dam Ey:</strong></p>
+            <p>• ប្រព័ន្ធ Live GPS តាមដានរថយន្តដឹកជញ្ជូនផ្ទាល់តាមពេលវេលាពិតប្រាកដ។</p>
+            <p>• ធានាការដឹកជញ្ជូនជី និងធាតុចូលកសិកម្មដល់មុខចម្ការដោយសុវត្ថិភាព។</p>
+            <p>• បើមានចម្ងល់ ឬតម្រូវការបន្ទាន់ សូមទាក់ទងអ្នកបើកបរដោយផ្ទាល់តាមរយៈប៊ូតុង <strong>Call Driver</strong>។</p>
+          </div>
+          <div class="expand-map-footer">
+            <button type="button" class="orders-modal-btn confirm" style="width: 100%;" onclick="closeInfoModal()">
+              យល់ព្រម
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Alert -->
+      <div class="toast-popup" id="toastPopup">
+        <span class="toast-icon">✓</span>
+        <span class="toast-msg" id="toastMsg">Action completed</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/order-tracking.js"></script>
+</body>
+
+</html>

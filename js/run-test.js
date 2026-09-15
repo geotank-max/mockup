@@ -78,16 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Soil Texture (Step 2)
-  const soilBtns = document.querySelectorAll('#soilTextureGrid .card-select-btn');
-  soilBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      soilBtns.forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      testState.soil = btn.getAttribute('data-soil');
-    });
-  });
-
   // Drainage & pH (Step 2)
   const drainageBtns = document.querySelectorAll('#drainageSelector .pill-btn');
   drainageBtns.forEach(btn => {
@@ -106,6 +96,177 @@ document.addEventListener('DOMContentLoaded', () => {
       testState.ph = btn.getAttribute('data-ph');
     });
   });
+
+  // ==============================================
+  // Satellite Soil Scan (Step 2 auto-detect)
+  // ==============================================
+  const satScanCard = document.getElementById('satScanCard');
+  const satScanBtn = document.getElementById('satScanBtn');
+  const satScanBtnText = document.getElementById('satScanBtnText');
+  const satIdleTag = document.getElementById('satIdleTag');
+  const satProgressBox = document.getElementById('satProgressBox');
+  const satProgressText = document.getElementById('satProgressText');
+  const satResultPanel = document.getElementById('satResultPanel');
+
+  // Detected values for the demo (Khmer only, auto-fill loam + neutral pH)
+  const SAT_DETECTED = { soil: 'loam', ph: 'neutral' };
+  const SAT_PROGRESS_STEPS = [
+    'កំពុងភ្ជាប់ផ្កាយរណប Sentinel-2...',
+    'កំពុងវិភាគរូបភាពផ្កាយរណប...',
+    'កំពុងវាស់សំណើម និងកម្រិត pH...',
+    'កំពុងកំណត់ប្រភេទសាច់ដី...'
+  ];
+
+  function selectSoilByValue(value) {
+    // Soil type is now detected by the satellite scan (manual selector removed)
+    testState.soil = value;
+  }
+
+  function selectPhByValue(value) {
+    phBtns.forEach(b => {
+      const match = b.getAttribute('data-ph') === value;
+      b.classList.toggle('selected', match);
+    });
+    testState.ph = value;
+  }
+
+  if (satScanBtn && satScanCard) {
+    satScanBtn.addEventListener('click', () => {
+      // Enter scanning state
+      satScanCard.classList.add('scanning');
+      satScanBtn.disabled = true;
+      satScanBtnText.textContent = 'កំពុងស្កេន...';
+      if (satIdleTag) satIdleTag.style.display = 'none';
+      if (satResultPanel) satResultPanel.style.display = 'none';
+      if (satProgressBox) satProgressBox.style.display = 'flex';
+
+      // Cycle progress messages
+      let stepIdx = 0;
+      if (satProgressText) satProgressText.textContent = SAT_PROGRESS_STEPS[0];
+      const progressTimer = setInterval(() => {
+        stepIdx += 1;
+        if (stepIdx < SAT_PROGRESS_STEPS.length && satProgressText) {
+          satProgressText.textContent = SAT_PROGRESS_STEPS[stepIdx];
+        }
+      }, 650);
+
+      // Complete scan after ~2.6s
+      setTimeout(() => {
+        clearInterval(progressTimer);
+        satScanCard.classList.remove('scanning');
+        if (satProgressBox) satProgressBox.style.display = 'none';
+        if (satIdleTag) satIdleTag.style.display = 'inline-flex';
+
+        // Auto-fill the form for the farmer
+        selectSoilByValue(SAT_DETECTED.soil);
+        selectPhByValue(SAT_DETECTED.ph);
+
+        // Reveal detected result panel
+        if (satResultPanel) satResultPanel.style.display = 'block';
+
+        // Update button to allow re-scan
+        satScanBtn.disabled = false;
+        satScanBtnText.textContent = 'ស្កេនម្តងទៀត';
+      }, 2600);
+    });
+  }
+
+  // ==============================================
+  // Interactive Satellite Map (Leaflet) — tap viewport to open
+  // ==============================================
+  const satScanViewport = document.getElementById('satScanViewport');
+  const geoMapModal = document.getElementById('geoMapModal');
+  const geoMapCloseBtn = document.getElementById('geoMapCloseBtn');
+  const geoMapConfirmBtn = document.getElementById('geoMapConfirmBtn');
+  const geoMapCanvas = document.getElementById('geoMapCanvas');
+
+  // Demo plot: a farmland parcel in Battambang province
+  const PLOT_CENTER = [13.0957, 103.2022];
+  const PLOT_BOUNDARY = [
+    [13.0962, 103.2014],
+    [13.0963, 103.2031],
+    [13.0951, 103.2032],
+    [13.0950, 103.2013]
+  ];
+
+  let geoMap = null;
+
+  function initGeoMap() {
+    if (geoMap || typeof L === 'undefined' || !geoMapCanvas) return;
+
+    geoMap = L.map(geoMapCanvas, {
+      center: PLOT_CENTER,
+      zoom: 16,
+      zoomControl: true,
+      attributionControl: true
+    });
+
+    // Esri World Imagery — real satellite landscape, no API key required
+    L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        maxZoom: 19,
+        attribution: 'Imagery © Esri, Maxar, Earthstar Geographics'
+      }
+    ).addTo(geoMap);
+
+    // Plot boundary polygon (dashed blue, matching the pin-boundary look)
+    L.polygon(PLOT_BOUNDARY, {
+      color: '#2f9bff',
+      weight: 3,
+      dashArray: '8 6',
+      fillColor: '#2f9bff',
+      fillOpacity: 0.12
+    }).addTo(geoMap);
+
+    // Center pin marker with label
+    L.marker(PLOT_CENTER).addTo(geoMap);
+    L.marker(PLOT_CENTER, {
+      icon: L.divIcon({
+        className: '',
+        html: '<span class="geo-plot-label">ដីរបស់អ្នក</span>',
+        iconSize: [0, 0],
+        iconAnchor: [30, 34]
+      })
+    }).addTo(geoMap);
+  }
+
+  function openGeoMap() {
+    if (!geoMapModal) return;
+    geoMapModal.style.display = 'flex';
+    geoMapModal.setAttribute('aria-hidden', 'false');
+    initGeoMap();
+    // Leaflet needs a size recalculation after the container becomes visible
+    setTimeout(() => {
+      if (geoMap) {
+        geoMap.invalidateSize();
+        geoMap.setView(PLOT_CENTER, 16);
+      }
+    }, 120);
+  }
+
+  function closeGeoMap() {
+    if (!geoMapModal) return;
+    geoMapModal.style.display = 'none';
+    geoMapModal.setAttribute('aria-hidden', 'true');
+  }
+
+  if (satScanViewport) {
+    satScanViewport.addEventListener('click', openGeoMap);
+    satScanViewport.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openGeoMap();
+      }
+    });
+  }
+  if (geoMapCloseBtn) geoMapCloseBtn.addEventListener('click', closeGeoMap);
+  if (geoMapConfirmBtn) geoMapConfirmBtn.addEventListener('click', closeGeoMap);
+  if (geoMapModal) {
+    geoMapModal.addEventListener('click', (e) => {
+      if (e.target === geoMapModal) closeGeoMap();
+    });
+  }
 
   // Season (Step 3)
   const seasonChips = document.querySelectorAll('#seasonSelectorGrid .select-chip');
