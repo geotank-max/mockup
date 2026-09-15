@@ -111,20 +111,60 @@
           </div>
         </div>
 
-        <!-- Banner Headline & Short Description -->
-        <div class="header-hero">
-          <h1 class="hero-title">
-            រកធាតុចូលកសិកម្មដែលសមស្រប<br>
-            សម្រាប់កសិដ្ឋានរបស់អ្នក
-          </h1>
-          <p class="hero-desc">
-            ប្រាប់យើងពីដំណាំ និងបញ្ហា — យើងជួយភ្ជាប់អ្នកទៅកាន់ផលិតផល និងអ្នកផ្គត់ផ្គង់ដែលសមស្រប។
-          </p>
-        </div>
       </header>
 
       <!-- Scrollable Main Content -->
       <main class="main-content" id="mainContent">
+
+        <!-- 0a. Persistent Search Bar -->
+        <section class="home-search-section">
+          <div class="home-search-box">
+            <svg class="home-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="homeSearchInput" placeholder="ចង់រកអ្វីថ្ងៃនេះ?" autocomplete="off" />
+            <button type="button" class="home-search-btn" id="homeSearchBtn">ស្វែងរក</button>
+          </div>
+        </section>
+
+        <!-- 0b. Discount / Promo Banner Strip -->
+        <section class="promo-banner-section">
+          <div class="promo-banner-header">
+            <span class="promo-accent-bar"></span>
+            <h3 class="promo-banner-title">ប្រម៉ូសិន និងការបញ្ចុះតម្លៃ</h3>
+          </div>
+          <div class="promo-banner-scroll" id="promoBannerScroll">
+
+            <div class="promo-banner-card promo-red" role="button" tabindex="0" onclick="openToast('ការផ្តល់ជូនពិសេស!')">
+              <div class="promo-banner-text">
+                <span class="promo-tag">ថ្ងៃនេះ</span>
+                <strong class="promo-headline">បញ្ចុះតម្លៃពិសេស</strong>
+                <span class="promo-sub">លើជី និងគ្រាប់ពូជ</span>
+              </div>
+              <span class="promo-big-off">-30%</span>
+            </div>
+
+            <div class="promo-banner-card promo-green" role="button" tabindex="0" onclick="openToast('ការដឹកជញ្ជូនឥតគិតថ្លៃ!')">
+              <div class="promo-banner-text">
+                <span class="promo-tag">សប្តាហ៍នេះ</span>
+                <strong class="promo-headline">ដឹកជញ្ជូនឥតគិតថ្លៃ</strong>
+                <span class="promo-sub">ការបញ្ជាទិញលើសពី $50</span>
+              </div>
+              <span class="promo-big-off">FREE</span>
+            </div>
+
+            <div class="promo-banner-card promo-amber" role="button" tabindex="0" onclick="openToast('ថ្នាំកសិកម្មបញ្ចុះតម្លៃ!')">
+              <div class="promo-banner-text">
+                <span class="promo-tag">ដំណាំរដូវ</span>
+                <strong class="promo-headline">ថ្នាំការពារដំណាំ</strong>
+                <span class="promo-sub">ទិញ ២ ថែម ១</span>
+              </div>
+              <span class="promo-big-off">2+1</span>
+            </div>
+
+          </div>
+        </section>
 
         <!-- 1. The Big Action Box (Custom grid requested by user) -->
         <section class="action-card-section">
@@ -139,8 +179,8 @@
               <!-- [2 COLS] Longest Box: Primary Hero CTA - Farmer Run Testing Form -->
               <div class="action-item action-item-full" id="runTestingCard" role="button" tabindex="0">
                 <div class="action-item-inner">
-                  <div class="action-icon-pill green-pill">
-                    <img src="assets/icons/farm-color-icon.svg" alt="Farm Icon" class="action-icon-img" />
+                  <div class="action-icon-pill green-pill green-pill-bare">
+                    <img src="assets/icons/advisory-sprout-icon.svg" alt="Advisory Icon" class="action-icon-img green-pill-img-full" />
                   </div>
                   <div class="action-text-group">
                     <div class="action-main-title">
@@ -159,8 +199,8 @@
 
               <!-- [1:1 ROW] Products & Seller -->
               <div class="action-item" id="productsCard" role="button" tabindex="0">
-                <div class="action-icon-box cyan-bg">
-                  <img src="assets/icons/test-svgrepo-com.svg" alt="Test & Products Icon" class="action-icon-img" />
+                <div class="action-icon-box icon-box-bare">
+                  <img src="assets/icons/field-handbook-icon.svg" alt="Field Handbook Icon" class="action-icon-img action-icon-img-full" />
                 </div>
                 <div class="action-meta">
                   <h3 class="action-name">ប្រវត្តិធ្វើតេស្ត & ផលិតផលណែនាំ</h3>
@@ -178,8 +218,8 @@
 
               <!-- [1:1 ROW] History & More (..) -->
               <div class="action-item" id="historyCard" role="button" tabindex="0">
-                <div class="action-icon-box amber-bg">
-                  <img src="assets/icons/parcel-box-package-icon.svg" alt="My Orders Icon" class="action-icon-img" />
+                <div class="action-icon-box icon-box-bare">
+                  <img src="assets/icons/harvest-basket-icon.svg" alt="My Orders Icon" class="action-icon-img action-icon-img-full" />
                 </div>
                 <div class="action-meta">
                   <h3 class="action-name">ការបញ្ជាទិញរបស់ខ្ញុំ</h3>
@@ -195,121 +235,44 @@
                 </div>
               </div>
 
-            </div>
-          </div>
-        </section>
-
-        <!-- 2. Ad Display Section with Auto Carousel and < > buttons -->
-        <section class="ad-carousel-section">
-          <div class="section-title-row">
-            <h3 class="section-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#257e3c" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
-              </svg>
-              <span>ការផ្តល់ជូន & ព័ត៌មានកសិកម្ម</span>
-            </h3>
-            <div class="carousel-nav-controls">
-              <button class="carousel-btn prev-btn" id="prevAdBtn" aria-label="Previous advertisement">&lt;</button>
-              <button class="carousel-btn next-btn" id="nextAdBtn" aria-label="Next advertisement">&gt;</button>
-            </div>
-          </div>
-
-          <div class="carousel-container" id="adCarouselContainer">
-            <div class="carousel-track" id="carouselTrack">
-              
-              <!-- Slide 1: Real Generated Image Banner -->
-              <div class="carousel-slide">
-                <div class="ad-card-banner">
-                  <img src="assets/images/ad_fertilizer.jpg" alt="Bio-Grow Organic Fertilizer" class="ad-banner-img" />
-                  <div class="ad-banner-overlay">
-                    <span class="ad-badge">Promoted</span>
-                    <h4 class="ad-title">ជីសរីរាង្គគុណភាពខ្ពស់</h4>
-                    <p class="ad-desc">បញ្ចុះតម្លៃ ២០% លើជីកំប៉ុសធម្មជាតិ និងសារធាតុបំប៉នដី</p>
-                    <button class="ad-cta-btn" onclick="openToast('Discount code COP20 applied!')">មើលលម្អិត</button>
-                  </div>
+              <!-- [1:1 ROW] Weather & Market Prices -->
+              <div class="action-item" id="weatherCard" role="button" tabindex="0">
+                <div class="action-icon-box icon-box-bare">
+                  <img src="assets/icons/weather-forecast-icon.svg" alt="Weather Icon" class="action-icon-img action-icon-img-full" />
+                </div>
+                <div class="action-meta">
+                  <h3 class="action-name">អាកាសធាតុ & ព្យាករណ៍</h3>
                 </div>
               </div>
 
-              <!-- Slide 2: Real Generated Image Banner -->
-              <div class="carousel-slide">
-                <div class="ad-card-banner">
-                  <img src="assets/images/ad_seeds.jpg" alt="Certified High-Yield Rice Seeds" class="ad-banner-img" />
-                  <div class="ad-banner-overlay">
-                    <span class="ad-badge">New Arrival</span>
-                    <h4 class="ad-title">ពូជស្រូវធន់នឹងជំងឺ</h4>
-                    <p class="ad-desc">ទិន្នផលខ្ពស់ ធន់រាំងស្ងួត និងបានបញ្ជាក់គុណភាពត្រឹមត្រូវ</p>
-                    <button class="ad-cta-btn" onclick="openToast('Checking certified seed stock...')">បញ្ជាទិញឥឡូវ</button>
-                  </div>
+              <div class="action-item" id="marketPriceCard" role="button" tabindex="0">
+                <div class="action-icon-box amber-bg">
+                  <img src="assets/icons/parcel-box-package-icon.svg" alt="Market Prices Icon" class="action-icon-img" />
+                </div>
+                <div class="action-meta">
+                  <h3 class="action-name">ផលិតផល</h3>
                 </div>
               </div>
 
-              <!-- Slide 3: Real Generated Image Banner -->
-              <div class="carousel-slide">
-                <div class="ad-card-banner">
-                  <img src="assets/images/ad_soil_test.jpg" alt="Digital Soil pH & Nutrient Testing" class="ad-banner-img" />
-                  <div class="ad-banner-overlay">
-                    <span class="ad-badge">Expert Service</span>
-                    <h4 class="ad-title">ឧបករណ៍តេស្ត pH ដីឥតគិតថ្លៃ</h4>
-                    <p class="ad-desc">វិភាគសុខភាពដី និងការណែនាំពីអ្នកជំនាញកសិកម្មផ្ទាល់</p>
-                    <button class="ad-cta-btn" onclick="openRunModal()">សាកល្បង</button>
-                  </div>
+              <!-- [1:1 ROW] Knowledge & Promotions -->
+              <div class="action-item" id="knowledgeCard" role="button" tabindex="0">
+                <div class="action-icon-box icon-box-bare">
+                  <img src="assets/icons/agri-knowledge-icon.svg" alt="Knowledge Hub Icon" class="action-icon-img action-icon-img-full" />
+                </div>
+                <div class="action-meta">
+                  <h3 class="action-name">ចំណេះដឹងកសិកម្ម</h3>
                 </div>
               </div>
 
-            </div>
-
-            <!-- Carousel Pagination Dots -->
-            <div class="carousel-dots" id="carouselDots">
-              <span class="dot active" data-index="0"></span>
-              <span class="dot" data-index="1"></span>
-              <span class="dot" data-index="2"></span>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3. Recent Request Status Card (as shown in reference image) -->
-        <section class="status-section">
-          <div class="status-card">
-            <div class="status-header">
-              <div class="status-title-group">
-                <h4 class="status-title">ស្ថានភាពសំណើចុងក្រោយ</h4>
-                <div class="status-meta-line">
-                  <span class="status-id">សំណើ #0001</span>
-                  <span class="status-badge-chip">កំពុងផ្គូផ្គង</span>
+              <div class="action-item" id="promotionsCard" role="button" tabindex="0">
+                <div class="action-icon-box icon-box-bare">
+                  <img src="assets/icons/special-offer-tag-icon.svg" alt="Promotions Icon" class="action-icon-img action-icon-img-full" />
+                </div>
+                <div class="action-meta">
+                  <h3 class="action-name">ការផ្តល់ជូនពិសេស</h3>
                 </div>
               </div>
-            </div>
 
-            <!-- Progress Bar -->
-            <div class="progress-bar-wrap">
-              <div class="progress-fill" style="width: 68%;"></div>
-            </div>
-
-            <div class="status-footer">
-              <div class="crop-info">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e04f4f" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                  <circle cx="12" cy="10" r="3"/>
-                </svg>
-                <span class="info-text">ដំណាំ: <strong>ប៉េងប៉ោះ</strong> &bull; ខេត្តកណ្តាល</span>
-              </div>
-              <button class="view-status-btn" onclick="openToast('ពិនិត្យមើលព័ត៌មានលម្អិតសំណើ #0001')">ពិនិត្យមើល</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- 4. MVP Info Notice (matches bottom card in reference image) -->
-        <section class="notice-section">
-          <div class="info-banner">
-            <div class="bulb-icon-wrap">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 18h6"/>
-                <path d="M10 22h4"/>
-                <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
-              </svg>
-            </div>
-            <div class="banner-text">
-              <strong>MVP នេះផ្តោតលើ ៣ ក្រុមធាតុចូល:</strong> គ្រាប់ពូជ, ជី និងផលិតផលការពារដំណាំ។
             </div>
           </div>
         </section>

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('prevAdBtn');
   const nextBtn = document.getElementById('nextAdBtn');
   const dotsContainer = document.getElementById('carouselDots');
-  const dots = dotsContainer.querySelectorAll('.dot');
+  const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
   
   const searchBtn = document.getElementById('searchBtn');
   const searchDrawer = document.getElementById('searchDrawer');
@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 1. AD CAROUSEL FUNCTIONALITY ---
   function updateCarousel(index) {
+    if (!track) return;
     if (index < 0) {
       currentSlide = totalSlides - 1;
     } else if (index >= totalSlides) {
@@ -57,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function startAutoSlide() {
+    if (!track) return;
     stopAutoSlide();
     autoSlideTimer = setInterval(() => {
       updateCarousel(currentSlide + 1);
@@ -161,6 +163,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (productsCard) {
     productsCard.addEventListener('click', () => {
       openToast('បើកកាតាឡុកផលិតផលណែនាំ');
+    });
+  }
+
+  // ផលិតផល Card -> Opens Products (store list) page
+  const marketPriceCard = document.getElementById('marketPriceCard');
+  if (marketPriceCard) {
+    marketPriceCard.addEventListener('click', () => {
+      window.location.href = 'products.html';
     });
   }
 
@@ -544,3 +554,24 @@ window.openToast = function(message) {
     toast.classList.remove('show');
   }, 2800);
 };
+
+// Home persistent search bar handler
+document.addEventListener('DOMContentLoaded', () => {
+  const homeSearchBtn = document.getElementById('homeSearchBtn');
+  const homeSearchInput = document.getElementById('homeSearchInput');
+  if (!homeSearchBtn || !homeSearchInput) return;
+
+  const runSearch = () => {
+    const q = homeSearchInput.value.trim();
+    if (q) {
+      openToast(`កំពុងស្វែងរក "${q}"...`);
+    } else {
+      openToast('សូមបញ្ចូលពាក្យស្វែងរក');
+    }
+  };
+
+  homeSearchBtn.addEventListener('click', runSearch);
+  homeSearchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') runSearch();
+  });
+});
