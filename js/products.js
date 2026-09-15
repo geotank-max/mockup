@@ -1,4 +1,4 @@
-// --- PRODUCTS PAGE (ផលិតផល) ---
+﻿// --- PRODUCTS PAGE (ផលិតផល) ---
 
 // Toast notification helper
 let toastTimeout = null;
@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Sort / Filter chips ---
   const filterLabels = {
-    category: 'ត្រង​តាមប្រភេទ',
-    sort: 'តម្រៀបតាម',
-    location: 'ត្រង​តាមតំបន់',
+    category: 'ត្រង​តាមមុខទំនិញ',
+    sort: 'តម្រៀបតាមការពេញនិយម',
+    location: 'ការកំណត់តំបន់',
     rating: 'តម្រៀបតាមវាយតម្លៃខ្ពស់',
     promo: 'បង្ហាញតែការផ្តល់ជូន'
   };
@@ -51,16 +51,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Store card clicks -> product detail ---
+  // --- Store card clicks -> product detail with store info ---
   const storeCards = document.querySelectorAll('.store-card');
   storeCards.forEach(card => {
     const openStore = () => {
-      const name = card.querySelector('.store-name');
-      openToast(name ? `កំពុងបើកហាង ${name.textContent.trim()}...` : 'កំពុងបើកហាង...');
+      const name = card.querySelector('.store-name')?.textContent.trim() || '';
+      const img = card.querySelector('.store-banner-img')?.getAttribute('src') || '';
+      const rating = card.querySelector('.store-rating-pill span:last-child')?.textContent.trim() || '4.8';
+      const fee = card.querySelector('.store-fee-current')?.textContent.trim() || '$0.45';
+      const oldFee = card.querySelector('.store-fee-old')?.textContent.trim() || '$1.00';
+
+      openToast(name ? `កំពុងបើក ${name}...` : 'កំពុងបើកហាង...');
+
+      const queryParams = new URLSearchParams({
+        store: name,
+        img: img,
+        rating: rating,
+        fee: fee,
+        oldFee: oldFee,
+        dist: '1.08km',
+        time: '26នាទី'
+      });
+
       // Navigate to the product/store detail page
       setTimeout(() => {
-        window.location.href = 'product-detail.html';
-      }, 500);
+        window.location.href = `product-detail.html?${queryParams.toString()}`;
+      }, 400);
     };
 
     card.addEventListener('click', openStore);

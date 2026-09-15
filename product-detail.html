@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="km">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ព័ត៌មានលម្អិតផលិតផល - Dam Ey</title>
+  <title>ព័ត៌មានលម្អិតហាង & ផលិតផល - Dam Ey</title>
 
-  <!-- Google Fonts: Plus Jakarta Sans & Siemreap / Kantumruy Pro -->
+  <!-- Google Fonts: Plus Jakarta Sans & Siemreap -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/product-detail.css" />
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link rel="stylesheet" href="css/product-detail.css?v=4" />
 
   <!-- Auth Guard: Ensures user is authenticated & routes sellers directly to dashboard -->
   <script>
@@ -34,8 +34,8 @@
   <div class="device-wrapper">
     <div class="mobile-frame">
 
-      <!-- iOS Status Bar with Dynamic Island (media_1789400171940.png) -->
-      <div class="ios-status-bar" style="background: #ffffff; color: #1e293b;">
+      <!-- iOS Status Bar with Dynamic Island -->
+      <div class="ios-status-bar dark-bg">
         <span class="status-time">9:41</span>
         <div class="dynamic-island"></div>
         <div class="status-icons">
@@ -57,159 +57,315 @@
         </div>
       </div>
 
-      <!-- Top Hero Image & Floating Controls -->
-    <div class="product-hero-container">
-      <img id="productMainImg" src="assets/images/fertilize (1) .jpg" alt="Product Image" class="product-hero-img" />
+      <!-- 1. Top Hero Banner from Product Card with Floating Nav Controls -->
+      <div class="store-hero-banner-wrap">
+        <img id="storeBannerImg" src="assets/images/banner (3).jpg" alt="Store Banner" class="store-hero-img" />
 
-      <!-- Floating Nav Overlay -->
-      <div class="hero-top-nav">
-        <button class="hero-icon-btn" id="backBtn" onclick="goBack()" title="ត្រឡប់ក្រោយ">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.8"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
+        <!-- Floating Nav Bar: Back, Search, Favorite, Share -->
+        <div class="hero-floating-nav">
+          <button class="nav-icon-circle-btn" onclick="goBack()" title="ត្រឡប់ក្រោយ">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <div class="hero-floating-right">
+            <button class="nav-icon-circle-btn" onclick="openToast('ស្វែងរកក្នុងហាង')" title="ស្វែងរក">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </button>
+            <button class="nav-icon-circle-btn" id="btnFav" onclick="toggleStoreFav()" title="រក្សាទុកហាង">
+              <svg id="favHeartIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </button>
+            <button class="nav-icon-circle-btn" onclick="openToast('ចែករំលែកព័ត៌មានហាង')" title="ចែករំលែក">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Floating Promo Ribbon on Banner -->
+        <div class="hero-promo-ribbon" id="promoRibbon">
+          <span>រក្សាទុកហាងដើម្បីទទួលបានប័ណ្ណបញ្ចុះតម្លៃហាង~</span>
+          <button class="ribbon-close" onclick="closePromoRibbon()">&times;</button>
+        </div>
+      </div>
+
+      <!-- 2. Store Info Header Card (Overlapping Banner) -->
+      <div class="store-info-card">
+        <!-- Row 1: Brand Name + Orange U+ Badge + Star Rating -->
+        <div class="store-info-title-row">
+          <div class="store-info-brand">
+            <div class="store-brand-uplus">U+</div>
+            <h1 class="store-brand-title" id="storeBrandTitle">ហាងកសិកម្ម បឹងកេងកង</h1>
+          </div>
+          <div class="store-info-rating" onclick="openToast('ការវាយតម្លៃ: 4.8 ផ្កាយ (2,450 នាក់)')">
+            <span class="star">★</span>
+            <span id="storeRatingVal">4.8</span>
+            <span style="color: #9ab0a1; font-size: 14px;">&rsaquo;</span>
+          </div>
+        </div>
+
+        <!-- Row 2: Slogan / About Store & Group Order Button -->
+        <div class="store-slogan-row">
+          <p class="store-slogan-text">អំពីហាង: យើងមានតែជីកសិកម្ម និងផលិតផលធម្មជាតិគុណភាពខ្ពស់!</p>
+          <button class="btn-group-order" onclick="openToast('បើកដំណើរការការកុម្ម៉ង់ជាក្រុម')">ការកុម្ម៉ង់ជាក្រុម</button>
+        </div>
+
+        <!-- Row 3: Delivery Metrics: Motorbike Icon + Minutes + Distance + Discounted Delivery Fee -->
+        <div class="store-delivery-metrics">
+          <span>🛵</span>
+          <span id="storeMinutes">26នាទី</span>
+          <span style="color: #b8c9bd;">•</span>
+          <span id="storeDistance">1.08km</span>
+          <span style="color: #b8c9bd;">•</span>
+          <span class="delivery-fee-bold" id="storeDeliveryFee">$0.45</span>
+          <span class="delivery-fee-strike" id="storeDeliveryFeeOld">$1.00</span>
+        </div>
+
+        <!-- Row 4: Special Offers Tags -->
+        <div class="store-detail-offers">
+          <div class="detail-offer-tags">
+            <span class="detail-offer-pill">សេវាដឹកជញ្ជូនត្រឹមតែ $0.45</span>
+            <span class="detail-offer-pill">ការកុម្ម៉ង់គ្រប់ $10 បញ្ចុះតម្លៃ $1</span>
+          </div>
+          <div class="detail-more-deals" onclick="openToast('មាន ៥ ប្រូម៉ូសិនពិសេសផ្សេងទៀត')">
+            <span>ច្រើនទៀត</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Sticky Horizontal Menu Tabs -->
+      <div class="store-menu-tabs-bar">
+        <div class="menu-tabs-scroll">
+          <button class="menu-tab-item active" onclick="filterMenuTab('all', this)">ជីកសិកម្មពេញនិយម</button>
+          <button class="menu-tab-item" onclick="filterMenuTab('compost', this)">ជីកំប៉ុស្ត៍ & ធម្មជាតិ</button>
+          <button class="menu-tab-item" onclick="filterMenuTab('urea', this)">ជីអ៊ុយរ៉េ & អាសូត</button>
+          <button class="menu-tab-item" onclick="filterMenuTab('combo', this)">ឈុតប្រូម៉ូសិន Combo</button>
+        </div>
+        <button class="menu-grid-btn" onclick="openToast('ប្តូរទិដ្ឋភាពមុខទំនិញ')" title="បញ្ជី">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
+      </div>
 
-        <div class="hero-right-actions">
-          <button class="hero-icon-btn" id="favBtn" onclick="toggleFavorite()" title="រក្សាទុក">
-            <svg id="heartIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8"
-              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
+      <!-- 4. Horizontal Product Cards List -->
+      <div class="store-products-list-wrap">
+        <h3 class="category-section-title">ជីកសិកម្មពេញនិយម</h3>
+
+        <!-- Horizontal Product Card 1: Fertilizer 1 -->
+        <article class="horizontal-product-card" data-prod-id="f1">
+          <!-- Left: Clean Image without PROMO overlay -->
+          <div class="h-prod-img-wrap">
+            <img src="assets/images/fertilize (1) .jpg" alt="ជីកសិកម្ម ១" class="h-prod-img" />
+          </div>
+
+          <!-- Right: Details -->
+          <div class="h-prod-details">
+            <h4 class="h-prod-title">ជីកសិកម្ម ១: Bio-NPK 16-16-8 + Humic Acid</h4>
+            
+            <!-- Special offer in green box -->
+            <div class="h-prod-tags-row">
+              <span class="h-offer-box">បញ្ចុះតម្លៃ</span>
+              <span class="h-offer-box">ចំនួនកុម្ម៉ង់មានកំណត់ ២</span>
+            </div>
+
+            <!-- Number of sold out & likes -->
+            <div class="h-prod-stats-row">
+              <span>បានលក់ 3000+</span>
+              <span>1034 Like</span>
+            </div>
+
+            <!-- Price with discount & + Button -->
+            <div class="h-prod-price-row">
+              <div class="h-price-group">
+                <span class="h-current-price">$24.00</span>
+                <span class="h-old-price">$32.00</span>
+              </div>
+              <button class="btn-h-add-cart" onclick="addToCart('ជីកសិកម្ម ១', 24.00)" title="បន្ថែម">+</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Horizontal Product Card 2: Fertilizer 2 -->
+        <article class="horizontal-product-card" data-prod-id="f2">
+          <!-- Left: Clean Image without PROMO overlay -->
+          <div class="h-prod-img-wrap">
+            <img src="assets/images/fertilizer (2) .jpg" alt="ជីកសិកម្ម ២" class="h-prod-img" />
+          </div>
+
+          <!-- Right: Details -->
+          <div class="h-prod-details">
+            <h4 class="h-prod-title">ជីកសិកម្ម ២: ជីអ៊ុយរ៉េ កំហាប់ខ្ពស់ Urea 46-0-0</h4>
+            
+            <!-- Special offer in green box -->
+            <div class="h-prod-tags-row">
+              <span class="h-offer-box">បញ្ចុះតម្លៃ</span>
+              <span class="h-offer-box">ចំនួនកុម្ម៉ង់មានកំណត់ ២</span>
+            </div>
+
+            <!-- Number of sold out & likes -->
+            <div class="h-prod-stats-row">
+              <span>បានលក់ 7000+</span>
+              <span>2530 Like</span>
+            </div>
+
+            <!-- Price with discount & + Button -->
+            <div class="h-prod-price-row">
+              <div class="h-price-group">
+                <span class="h-current-price">$26.50</span>
+                <span class="h-old-price">$35.00</span>
+              </div>
+              <button class="btn-h-add-cart" onclick="addToCart('ជីកសិកម្ម ២', 26.50)" title="បន្ថែម">+</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Horizontal Product Card 3: Fertilizer 3 -->
+        <article class="horizontal-product-card" data-prod-id="f3">
+          <!-- Left: Clean Image without PROMO overlay -->
+          <div class="h-prod-img-wrap">
+            <img src="assets/images/fertilize (3) .jpg" alt="ជីកសិកម្ម ៣" class="h-prod-img" />
+          </div>
+
+          <!-- Right: Details -->
+          <div class="h-prod-details">
+            <h4 class="h-prod-title">ជីកសិកម្ម ៣: ជីសរីរាង្គកំប៉ុស្ត៍ជន្លេន ធម្មជាតិ 100%</h4>
+            
+            <!-- Special offer in green box -->
+            <div class="h-prod-tags-row">
+              <span class="h-offer-box">បញ្ចុះតម្លៃ</span>
+              <span class="h-offer-box">ចំនួនកុម្ម៉ង់មានកំណត់ ២</span>
+            </div>
+
+            <!-- Number of sold out & likes -->
+            <div class="h-prod-stats-row">
+              <span>បានលក់ 1000+</span>
+              <span>366 Like</span>
+            </div>
+
+            <!-- Price with discount & + Button -->
+            <div class="h-prod-price-row">
+              <div class="h-price-group">
+                <span class="h-current-price">$14.00</span>
+                <span class="h-old-price">$20.00</span>
+              </div>
+              <button class="btn-h-add-cart" onclick="addToCart('ជីកសិកម្ម ៣', 14.00)" title="បន្ថែម">+</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Horizontal Product Card 4: Neem Spray -->
+        <article class="horizontal-product-card" data-prod-id="f4">
+          <!-- Left: Clean Image without PROMO overlay -->
+          <div class="h-prod-img-wrap">
+            <img src="assets/images/ad_seeds.jpg" alt="ថ្នាំការពារដំណាំ" class="h-prod-img" />
+          </div>
+
+          <!-- Right: Details -->
+          <div class="h-prod-details">
+            <h4 class="h-prod-title">ថ្នាំការពារដំណាំ Neem Bio-Defense Spray (ប្រេងស្តៅ)</h4>
+            
+            <!-- Special offer in green box -->
+            <div class="h-prod-tags-row">
+              <span class="h-offer-box">បញ្ចុះ 20%</span>
+              <span class="h-offer-box">ដឹកឥតគិតថ្លៃ</span>
+            </div>
+
+            <!-- Number of sold out & likes -->
+            <div class="h-prod-stats-row">
+              <span>បានលក់ 5200+</span>
+              <span>1890 Like</span>
+            </div>
+
+            <!-- Price with discount & + Button -->
+            <div class="h-prod-price-row">
+              <div class="h-price-group">
+                <span class="h-current-price">$12.50</span>
+                <span class="h-old-price">$18.00</span>
+              </div>
+              <button class="btn-h-add-cart" onclick="addToCart('ថ្នាំការពារដំណាំ Neem', 12.50)" title="បន្ថែម">+</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Horizontal Product Card 5: Seeds -->
+        <article class="horizontal-product-card" data-prod-id="f5">
+          <!-- Left: Clean Image without PROMO overlay -->
+          <div class="h-prod-img-wrap">
+            <img src="assets/images/ad_fertilizer.jpg" alt="គ្រាប់ពូជស្រូវផ្ការំដួល" class="h-prod-img" />
+          </div>
+
+          <!-- Right: Details -->
+          <div class="h-prod-details">
+            <h4 class="h-prod-title">គ្រាប់ពូជស្រូវផ្ការំដួលសុទ្ធ Phka Rumduol Grade A</h4>
+            
+            <!-- Special offer in green box -->
+            <div class="h-prod-tags-row">
+              <span class="h-offer-box">ទិញ 5 ថែម 1</span>
+              <span class="h-offer-box">ធានាដំណុះ 98%</span>
+            </div>
+
+            <!-- Number of sold out & likes -->
+            <div class="h-prod-stats-row">
+              <span>បានលក់ 8500+</span>
+              <span>3210 Like</span>
+            </div>
+
+            <!-- Price with discount & + Button -->
+            <div class="h-prod-price-row">
+              <div class="h-price-group">
+                <span class="h-current-price">$22.00</span>
+                <span class="h-old-price">$28.00</span>
+              </div>
+              <button class="btn-h-add-cart" onclick="addToCart('គ្រាប់ពូជស្រូវផ្ការំដួល', 22.00)" title="បន្ថែម">+</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Floating Bottom Cart Bar -->
+      <div class="floating-bottom-cart-bar" id="floatingCartBar" style="display: none;" onclick="openCheckout()">
+        <div class="cart-bar-left">
+          <div class="cart-icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
-          </button>
-
-          <button class="hero-icon-btn" id="shareBtn" onclick="shareProduct()" title="ចែករំលែក">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"></circle>
-              <circle cx="6" cy="12" r="3"></circle>
-              <circle cx="18" cy="19" r="3"></circle>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Hero Gallery Pagination Dots -->
-      <div class="hero-pagination-dots">
-        <span class="page-dash active"></span>
-        <span class="page-dot"></span>
-        <span class="page-dot"></span>
-        <span class="page-dot"></span>
-        <span class="page-dot"></span>
-      </div>
-    </div>
-
-    <!-- Product Content Body -->
-    <div class="product-main-content">
-
-      <!-- Title & Views/Location Row -->
-      <div class="product-header-section">
-        <h1 class="product-detail-title" id="productTitle">ចំណីសត្វ ចំណីជ្រូក ត្រកួនផ្អាប់</h1>
-        
-        <div class="product-meta-row">
-          <div class="viewer-tag">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-            <span>Viewer <span id="viewerCount">54</span></span>
+            <span class="cart-items-count" id="cartItemCount">0</span>
           </div>
-          <span class="meta-pipe">|</span>
-          <span class="location-tag" id="productLocation">Kandal</span>
+          <span class="cart-price-sum" id="cartPriceSum">$0.00</span>
+        </div>
+        <div class="cart-bar-right">
+          <span>ពិនិត្យកន្ត្រកទំនិញ</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </div>
       </div>
 
-      <hr class="product-divider" />
-
-      <!-- Price & Quantity Tag Line -->
-      <div class="product-pricing-line" id="pricingLine">
-        1 Kilogram - 2,000៛ / 0.49$
+      <!-- Toast Alert -->
+      <div class="toast-popup" id="toastPopup">
+        <span class="toast-icon">✓</span>
+        <span class="toast-msg" id="toastMsg">Action completed</span>
       </div>
-
-      <!-- Add to Card Green Button -->
-      <button class="add-to-card-btn" id="addToCardBtn" onclick="handleAddToCart()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-          stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span>Add to Card</span>
-      </button>
-
-      <!-- Section Tabs Navigation -->
-      <div class="product-tabs-header">
-        <button class="tab-item active" id="tabInfoDetail" onclick="switchTab('info')">
-          Info Detail
-        </button>
-        <button class="tab-item" id="tabOtherProducts" onclick="switchTab('other')">
-          Other Products
-        </button>
-      </div>
-
-      <!-- Tab 1: Info Detail -->
-      <div class="tab-pane active" id="paneInfoDetail">
-
-        <!-- Seller Profile Card -->
-        <div class="seller-profile-card" onclick="viewSellerProfile()">
-          <div class="seller-avatar-wrap">
-            <img src="assets/images/ad_soil_test.jpg" alt="Seller Avatar" class="seller-avatar-img" id="sellerAvatar" />
-          </div>
-          <div class="seller-profile-info">
-            <h4 class="seller-name" id="sellerName">ប្ញសី_សុផាយផល</h4>
-          </div>
-          <div class="seller-arrow-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Hashtags & Rich Description -->
-        <div class="product-desc-container">
-          <p class="desc-hashtags" id="descHashtags">
-            #ចំណីសត្វ_#ចំណីជ្រូក #ផ្អក់ត្រកួនប៉ូវប្រូតេអ៊ីន និងជាតិសរសៃងាយរំលាយ៖
-          </p>
-
-          <p class="desc-text-content" id="descBody">
-            ត្រកួនស្រស់មានជាតិទឹកច្រើន និងជាតិសរសៃដែលជ្រូករំលាយមិនអស់។ ដំណើរការផ្អាប់ ជួយបំបែកជាតិសរសៃ និងប្រូតេអ៊ីនស្មុគស្មាញ ឱ្យទៅជាអាស៊ីតអាមីនដែលក្រពះជ្រូកស្រូបយកបានលឿន។ បង្កើនបាក់តេរីល្អ៖ ផ្អក់ត្រកួនសម្បូរដោយ ឡាក់តូបាស៊ីល ដែលជួយសម្រួលប្រព័ន្ធរំលាយអាហារជ្រូក កាត់បន្ថយបញ្ហារាគរូស និងជំងឺពោះវៀន បានរហូតដល់ ៧០% កាត់បន្ថយបាក់តេរីអាក្រក់ និងក្លិនស្អុយ បង្កើនសាច់ណែន និងរសជាតិសាច់ឆ្ងាញ់ រក្សាទុកបានយូរ (៦ខែ)
-          </p>
-
-          <div class="read-more-trigger" id="readMoreTrigger" onclick="toggleReadMore()">
-            ...Read More
-          </div>
-        </div>
-
-        <!-- Read More Tags List -->
-        <div class="read-more-tags-row">
-          <span class="read-more-label">Read More:</span>
-          <button class="tag-chip active">Info Detail</button>
-          <button class="tag-chip">Experts</button>
-          <button class="tag-chip">+6</button>
-        </div>
-
-      </div>
-
-      <!-- Tab 2: Other Products -->
-      <div class="tab-pane" id="paneOtherProducts" style="display: none;">
-        <div class="other-products-grid" id="otherProductsGrid">
-          <!-- Dynamically populated -->
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Toast Notification Popup -->
-    <div class="toast-popup" id="toastPopup">
-      <span class="toast-icon">✓</span>
-      <span class="toast-msg" id="toastMsg">សារជូនដំណឹង</span>
-    </div>
 
     </div>
   </div>

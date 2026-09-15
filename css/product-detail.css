@@ -1,5 +1,5 @@
-/* ====================================================
-   PRODUCT DETAIL PAGE STYLES (Matching Reference UI)
+﻿/* ====================================================
+   PRODUCT DETAIL PAGE STYLES (Store & Menu - Dam Ey Green Theme)
    ==================================================== */
 
 .device-wrapper {
@@ -12,15 +12,15 @@
 }
 
 .mobile-frame {
-  background-color: #ffffff;
+  background-color: #f7faf8;
   width: 430px;
   max-width: 430px;
   min-width: 430px;
-  height: 920px;
-  max-height: 920px;
-  min-height: 920px;
-  border-radius: 44px;
-  box-shadow: 0 20px 60px rgba(18, 48, 25, 0.2), 0 0 0 10px #1c2e22;
+  height: 932px;
+  max-height: 932px;
+  min-height: 932px;
+  border-radius: 48px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3), 0 0 0 11px #141c15, 0 0 0 12.5px #273729;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
@@ -28,422 +28,550 @@
   display: flex;
   flex-direction: column;
   scrollbar-width: none;
+  font-family: 'Siemreap', 'Plus Jakarta Sans', sans-serif;
 }
 
 .mobile-frame::-webkit-scrollbar {
   display: none;
 }
 
-/* 1. Hero Image Container & Overlay Controls */
-.product-hero-container {
+/* 1. Hero Banner Area */
+.store-hero-banner-wrap {
   position: relative;
   width: 100%;
-  height: 290px;
-  background-color: #f1f5f9;
-  overflow: hidden;
+  height: 190px;
+  background: #15381f;
+  flex-shrink: 0;
 }
 
-.product-hero-img {
+.store-hero-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.hero-top-nav {
+/* Floating Top Controls over Banner */
+.hero-floating-nav {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  right: 14px;
+  top: 10px;
+  left: 12px;
+  right: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 10;
 }
 
-.hero-right-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.hero-icon-btn {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
+.nav-icon-circle-btn {
+  width: 34px;
+  height: 34px;
+  background: rgba(18, 48, 25, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #ffffff;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   transition: all 0.2s ease;
 }
 
-.hero-icon-btn:hover {
+.nav-icon-circle-btn:hover {
+  background: rgba(18, 48, 25, 0.9);
   transform: scale(1.05);
-  background: #ffffff;
 }
 
-.hero-icon-btn.liked svg {
-  stroke: #ef4444;
-  fill: #ef4444;
-}
-
-/* Pagination Dots */
-.hero-pagination-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  z-index: 10;
-}
-
-.page-dash {
-  width: 18px;
-  height: 4px;
-  background: #ffffff;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.page-dot {
-  width: 5px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* 2. Product Main Content Area */
-.product-main-content {
-  padding: 16px;
-  background: #ffffff;
-}
-
-.product-header-section {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.product-detail-title {
-  font-family: 'Siemreap', 'Kantumruy Pro', var(--font-family);
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e293b;
-  line-height: 1.38;
-}
-
-.product-meta-row {
+.hero-floating-right {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 2px;
 }
 
-.viewer-tag {
+/* Floating Announcement Pill on Banner */
+.hero-promo-ribbon {
+  position: absolute;
+  bottom: 22px;
+  left: 12px;
+  right: 12px;
+  background: rgba(30, 109, 52, 0.95);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 5px;
-  color: #64748b;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 8;
 }
 
-.meta-pipe {
-  color: #cbd5e1;
-  font-weight: 300;
-}
-
-.location-tag {
-  color: #64748b;
-  font-family: 'Siemreap', var(--font-family);
-}
-
-.product-divider {
+.ribbon-close {
+  background: none;
   border: none;
-  border-top: 1px solid #e2e8f0;
-  margin: 12px 0 10px 0;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0 4px;
 }
 
-/* Price Line */
-.product-pricing-line {
-  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #22c55e;
-  letter-spacing: -0.2px;
-  margin-bottom: 14px;
+/* 2. Store Info Header Card (Overlapping the banner) */
+.store-info-card {
+  position: relative;
+  margin: -16px 10px 0 10px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 14px 12px 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #edf2ee;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
-/* Green Add to Card Button */
-.add-to-card-btn {
-  width: 100%;
-  background: #22c55e;
+/* Title & Rating */
+.store-info-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.store-info-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.store-brand-uplus {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.store-brand-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #122216;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.store-info-rating {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #1a2e1e;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.store-info-rating span.star {
+  color: #ffb800;
+  font-size: 13px;
+}
+
+/* Store Slogan / Subtext & Group Order Button */
+.store-slogan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.store-slogan-text {
+  font-size: 11.5px;
+  color: #637a6b;
+  margin: 0;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-group-order {
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
   color: #ffffff;
   border: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
-  font-size: 14px;
+  border-radius: 14px;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 11px;
   font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(30, 109, 52, 0.25);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.btn-group-order:hover {
+  background: linear-gradient(135deg, #165629 0%, #23763a 100%);
+}
+
+/* Delivery Metrics */
+.store-delivery-metrics {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #44604e;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.delivery-fee-bold {
+  color: #1e6d34;
+  font-weight: 700;
+}
+
+.delivery-fee-strike {
+  color: #9db0a2;
+  text-decoration: line-through;
+  font-size: 11px;
+}
+
+/* Offers Pills */
+.store-detail-offers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.detail-offer-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.detail-offer-pill {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1.3;
+}
+
+.detail-more-deals {
+  font-size: 11px;
+  color: #1e6d34;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 3. Sticky Horizontal Menu Tabs */
+.store-menu-tabs-bar {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid #e8ede9;
+  z-index: 20;
+  margin-top: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  flex-shrink: 0;
+}
+
+.menu-tabs-scroll {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 10px 0;
+}
+
+.menu-tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-tab-item {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #556c5c;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.menu-tab-item.active {
+  color: #1e6d34;
+  font-weight: 800;
+}
+
+.menu-tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: #1e6d34;
+  border-radius: 2px;
+}
+
+.menu-grid-btn {
+  background: none;
+  border: none;
+  color: #556c5c;
+  cursor: pointer;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.25);
-  transition: all 0.2s ease;
-  margin-bottom: 18px;
 }
 
-.add-to-card-btn:hover {
-  background: #16a34a;
-  transform: translateY(-1px);
-}
-
-.add-to-card-btn:active {
-  transform: translateY(0);
-}
-
-/* 3. Section Tabs Header */
-.product-tabs-header {
-  display: flex;
-  border-bottom: 1px solid #e2e8f0;
-  margin-bottom: 14px;
-}
-
-.tab-item {
+/* 4. Horizontal Product Cards List */
+.store-products-list-wrap {
   flex: 1;
-  background: transparent;
-  border: none;
-  padding: 10px 0;
-  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #64748b;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s;
-  text-align: center;
-}
-
-.tab-item.active {
-  color: #22c55e;
-  font-weight: 700;
-  border-bottom: 2.5px solid #22c55e;
-}
-
-/* 4. Tab Pane 1: Info Detail */
-.tab-pane {
+  padding: 12px 12px 110px 12px;
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
-/* Seller Profile Card */
-.seller-profile-card {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
+.category-section-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #122216;
+  margin: 4px 0 2px 0;
+}
+
+/* Horizontal Product Card */
+.horizontal-product-card {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  margin-bottom: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  border-radius: 14px;
+  padding: 12px;
+  border: 1px solid #edf2ee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.seller-profile-card:hover {
-  background-color: #f8fafc;
+.horizontal-product-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 109, 52, 0.08);
 }
 
-.seller-avatar-wrap {
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
+/* Product Thumbnail (Left) - Clean without Promo text */
+.h-prod-img-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
   overflow: hidden;
-  margin-right: 12px;
+  background: #f1f6f2;
   flex-shrink: 0;
-  background: #e2e8f0;
+  border: 1px solid #e1ebe3;
 }
 
-.seller-avatar-img {
+.h-prod-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.seller-profile-info {
+/* Product Details (Right) */
+.h-prod-details {
   flex: 1;
-}
-
-.seller-name {
-  font-family: 'Siemreap', var(--font-family);
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.seller-arrow-btn {
-  color: #64748b;
-  display: flex;
-  align-items: center;
-}
-
-/* Description & Hashtags */
-.product-desc-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.desc-hashtags {
-  font-family: 'Siemreap', 'Kantumruy Pro', var(--font-family);
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #1e293b;
-  line-height: 1.5;
-  margin-bottom: 6px;
-}
-
-.desc-text-content {
-  font-family: 'Siemreap', 'Kantumruy Pro', var(--font-family);
-  font-size: 13px;
-  line-height: 1.6;
-  color: #334155;
-  margin-bottom: 6px;
-  text-align: justify;
-}
-
-.desc-text-content.collapsed {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.read-more-trigger {
-  color: #22c55e;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  text-align: right;
-  cursor: pointer;
-  margin-top: 2px;
-  margin-bottom: 16px;
-}
-
-/* Read More Tags Row */
-.read-more-tags-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.read-more-label {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.tag-chip {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
-  padding: 4px 12px;
-  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
-  font-size: 12px;
-  color: #475569;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.tag-chip:hover, .tag-chip.active {
-  background: #f1f5f9;
-  color: #0f172a;
-  font-weight: 600;
-}
-
-/* Tab Pane 2: Other Products Grid */
-.other-products-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.other-p-card {
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #ffffff;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.other-p-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-}
-
-.other-p-img {
-  width: 100%;
-  height: 110px;
-  object-fit: cover;
-  display: block;
-}
-
-.other-p-info {
-  padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
-.other-p-title {
-  font-family: 'Siemreap', var(--font-family);
-  font-size: 12px;
-  font-weight: 700;
-  color: #1e293b;
-  white-space: nowrap;
+.h-prod-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #14281a;
+  line-height: 1.35;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.other-p-price {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
+/* Green offer boxes / tags */
+.h-prod-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.h-offer-box {
+  font-size: 10px;
+  font-weight: 600;
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 1.5px 6px;
+  border-radius: 3px;
+  line-height: 1.25;
+}
+
+/* Sold count and likes */
+.h-prod-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #597361;
+}
+
+/* Price & Plus Button Row */
+.h-prod-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.h-price-group {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.h-current-price {
+  font-size: 15px;
+  font-weight: 900;
+  color: #1e6d34;
+}
+
+.h-old-price {
+  font-size: 11.5px;
+  color: #9baea1;
+  text-decoration: line-through;
+}
+
+/* Plus button (+) - Green theme */
+.btn-h-add-cart {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30, 109, 52, 0.35);
+  transition: transform 0.15s ease;
+  font-size: 16px;
   font-weight: 700;
-  color: #22c55e;
+  line-height: 1;
 }
 
-@media (max-width: 480px) {
-  body {
-    padding: 0;
-    background-color: #ffffff;
-  }
+.btn-h-add-cart:hover {
+  transform: scale(1.1);
+}
 
-  .device-wrapper {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-  }
+.btn-h-add-cart:active {
+  transform: scale(0.92);
+}
 
-  .mobile-frame {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-  }
+/* Floating Bottom Cart Bar */
+.floating-bottom-cart-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
+  color: #ffffff;
+  border-radius: 30px;
+  padding: 10px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(30, 109, 52, 0.4);
+  z-index: 50;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.floating-bottom-cart-bar:hover {
+  transform: translateY(-1px);
+}
+
+.cart-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-icon-badge {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-items-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff5252;
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #1e6d34;
+}
+
+.cart-price-sum {
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.cart-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
 }

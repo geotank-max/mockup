@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dam Ey - ការគ្រប់គ្រងមុខទំនិញ</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/seller-dashboard.css">
+  <link rel="stylesheet" href="css/seller-products.css">
+
+  <!-- Auth Guard: Protects Seller Portal -->
+  <script>
+    (function () {
+      const isLoggedIn = localStorage.getItem('cropwise_logged_in') === 'true';
+      const userRole = localStorage.getItem('cropwise_user_role');
+      if (!isLoggedIn) {
+        window.location.replace('login.html');
+      } else if (userRole === 'farmer') {
+        window.location.replace('index.html');
+      }
+    })();
+  </script>
+</head>
+
+<body class="seller-body">
+
+  <div class="seller-layout">
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="seller-sidebar" id="sellerSidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-brand">
+        <div class="brand-logo-icon" style="background: transparent; box-shadow: none; padding: 0;">
+          <img src="assets/images/logo.png" alt="Dam Ey Logo"
+            style="width: 32px; height: 32px; object-fit: contain; border-radius: 8px;" />
+        </div>
+        <div class="brand-title-group">
+          <span class="brand-name">Dam Ey</span>
+          <span class="brand-role-tag">Seller Hub</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Main Navigation Menu -->
+      <nav class="sidebar-nav">
+        <a href="seller-dashboard.html#dashboard" class="sidebar-link" id="navDashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <span>ផ្ទាំងព័ត៌មាន</span>
+        </a>
+
+        <a href="seller-products.html" class="sidebar-link active" id="navProducts">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span>គ្រប់គ្រងមុខទំនិញ</span>
+        </a>
+
+        <a href="seller-dashboard.html#inventory" class="sidebar-link" id="navInventory">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <polyline points="3.29 7 12 12 20.71 7" />
+            <line x1="12" y1="22" x2="12" y2="12" />
+          </svg>
+          <span>ស្តុកផលិតផល</span>
+        </a>
+
+        <a href="seller-dashboard.html#sales" class="sidebar-link" id="navSales">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span>ការលក់ & សំណួរ</span>
+        </a>
+
+        <a href="seller-dashboard.html#demand" class="sidebar-link" id="navDemand">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span>តម្រូវការដំណាំ</span>
+        </a>
+
+        <a href="seller-dashboard.html#farmers" class="sidebar-link" id="navFarmers">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>អតិថិជនកសិករ</span>
+        </a>
+
+        <a href="seller-dashboard.html#settings" class="sidebar-link" id="navSettings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <span>ការកំណត់</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Logout Link -->
+      <div class="sidebar-footer-link">
+        <button onclick="logoutSeller()" class="proto-return-btn"
+          style="background: rgba(220, 38, 38, 0.1); color: #dc2626; border: 1.5px solid rgba(220, 38, 38, 0.25); width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; border-radius: 12px; font-family: 'Siemreap', sans-serif; font-size: 13px; font-weight: 700;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>ចាកចេញ</span>
+        </button>
+      </div>
+
+      <!-- Seller Profile Box -->
+      <div class="sidebar-user-card">
+        <div class="user-avatar-circle">
+          <span>ក</span>
+        </div>
+        <div class="user-info-text">
+          <span class="user-shop-name">Kandal Agri-Center</span>
+          <span class="user-location">ខេត្តកណ្តាល</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="seller-main">
+
+      <!-- Top Bar Header -->
+      <header class="seller-top-bar">
+        <div class="top-left-group">
+          <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <div>
+            <h1 class="seller-page-title">គ្រប់គ្រងមុខទំនិញ</h1>
+            <p class="seller-welcome-text">ស្វាគមន៍មកកាន់ Kandal Agri-Center Portal</p>
+          </div>
+        </div>
+
+        <div class="top-right-group">
+          <button class="icon-btn-light" onclick="openToast('២ សំណើទិញថ្មីពីកសិករ')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="badge-dot-red"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- PRODUCT MANAGEMENT SECTION -->
+      <div class="pm-page-container">
+
+        <!-- Header Row (Matches Reference Screenshot) -->
+        <div class="pm-header-row">
+          <div class="pm-header-title-box">
+            <h1>គ្រប់គ្រងមុខទំនិញ & ផលិតផល</h1>
+            <p>កែប្រែព័ត៌មានមុខទំនិញ តម្លៃ និងរូបភាពផលិតផលរបស់អ្នកយ៉ាងងាយស្រួល</p>
+          </div>
+
+          <!-- Outlet / Shop Selector Dropdown Card -->
+          <div class="pm-outlet-card" onclick="openToast('ហាងបច្ចុប្បន្ន: ហាង A - Kandal Agri-Center')">
+            <div class="pm-outlet-info">
+              <span class="pm-outlet-name">ហាង A</span>
+              <span class="pm-outlet-tag">សាខាហាង</span>
+            </div>
+            <svg class="pm-outlet-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Horizontal Tabs Navigation Bar (Matches Reference Screenshot) -->
+        <div class="pm-nav-tabs-bar">
+          <div class="pm-tabs-left">
+            <button class="pm-tab-btn active">ទិដ្ឋភាពទូទៅ</button>
+            <button class="pm-tab-btn" onclick="openToast('បើកផ្ទាំង ក្រុមជម្រើស')">ក្រុមជម្រើស</button>
+            <button class="pm-tab-btn" onclick="openToast('មាន ២៤ ការផ្លាស់ប្តូរថ្មី')">
+              ការផ្លាស់ប្តូរ <span class="pm-tab-badge">២៤</span>
+            </button>
+            <button class="pm-tab-btn" onclick="openToast('បើកវិចិត្រសាលរូបភាពផលិតផល')">រូបភាព</button>
+            <button class="pm-tab-btn" onclick="openToast('ការកំណត់ការជូនដំណឹង')">ការជូនដំណឹង</button>
+          </div>
+
+          <div class="pm-tabs-right">
+            <span class="pm-draft-link" onclick="openToast('មិនទាន់មានព្រាងត្រូវផ្សព្វផ្សាយទេ')">ផ្សព្វផ្សាយព្រាង (០)</span>
+            <div class="pm-lang-switcher">
+              <span class="active">ខ្មែរ</span> | <span>EN</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN PRODUCT CATALOG CARD -->
+        <div class="pm-main-card">
+
+          <!-- Card Header: Title + Add New Button -->
+          <div class="pm-catalog-header">
+            <div class="pm-catalog-title-group">
+              <h2>បញ្ជីមុខទំនិញមេ</h2>
+              <div class="pm-catalog-meta">
+                <span>រៀងរាល់ថ្ងៃ ម៉ោង 12:01 ព្រឹក - 11:59 យប់</span>
+                <a href="javascript:void(0)" class="pm-edit-menu-link" onclick="openToast('កែប្រែកាលវិភាគលក់')">កែប្រែកាលវិភាគ</a>
+              </div>
+            </div>
+
+            <!-- Prominent ADD NEW Button with Dropdown -->
+            <div class="pm-add-dropdown-wrap">
+              <button class="btn-add-new-main" id="btnAddDropdown">
+                <span>+ បន្ថែមថ្មី</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+
+              <!-- Dropdown actions -->
+              <div class="pm-dropdown-menu" id="pmAddDropdownMenu">
+                <button class="pm-dropdown-item" onclick="openAddProductModal()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>បញ្ចូលមុខទំនិញថ្មី</span>
+                </button>
+                <button class="pm-dropdown-item" onclick="editCategoryName('fertilizer')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span>បន្ថែមប្រភេទផលិតផល</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search Section -->
+          <div class="pm-search-section">
+            <div class="pm-search-input-wrap">
+              <input type="text" id="pmSearchInput" placeholder="ស្វែងរកតាមឈ្មោះផលិតផល ឬ លេខកូដទំនិញ..." />
+              <svg class="pm-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Dynamic Products Catalog Container (Accordion Categories & Fertilizer 1 to 3 rows) -->
+          <div id="pmCatalogContainer">
+            <!-- Dynamically populated by seller-products.js -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================
+       MODAL: ADD / EDIT PRODUCT
+       ========================================================= -->
+  <div class="modal-backdrop" id="pmAddProductModal">
+    <div class="modal-card" style="max-width: 620px;">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <h3 id="pmModalTitle">បញ្ចូលមុខទំនិញថ្មី</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closePmModal()" aria-label="Close">✕</button>
+      </div>
+
+      <form id="pmProductForm" onsubmit="handlePmFormSubmit(event)">
+        <input type="hidden" id="pmEditProductId" value="" />
+        <input type="hidden" id="pmSelectedImg" value="assets/images/fertilize (1) .jpg" />
+
+        <div class="modal-body">
+          <div class="modal-form-grid">
+
+            <!-- Product Name -->
+            <div class="form-group form-field-full">
+              <label for="pmNameInput">ឈ្មោះផលិតផល <span style="color: #ef4444;">*</span></label>
+              <input type="text" id="pmNameInput" class="form-control-input"
+                placeholder="ឧ. ជីកសិកម្ម ១: Bio-NPK 16-16-8 + Humic" required />
+            </div>
+
+            <!-- Product Category -->
+            <div class="form-group">
+              <label for="pmCategorySelect">ប្រភេទផលិតផល <span style="color: #ef4444;">*</span></label>
+              <select id="pmCategorySelect" class="form-control-select" required>
+                <option value="fertilizer" selected>ជីកសិកម្ម</option>
+                <option value="pesticide">ថ្នាំការពារដំណាំ & កម្ចាត់សត្វល្អិត</option>
+                <option value="seeds">គ្រាប់ពូជដំណាំកសិកម្ម</option>
+                <option value="booster">អ័រម៉ូន & ជំនួយការលូតលាស់</option>
+                <option value="other">សម្ភារៈកសិកម្មផ្សេងៗ</option>
+              </select>
+            </div>
+
+            <!-- SKU / Code -->
+            <div class="form-group">
+              <label for="pmSkuInput">លេខកូដទំនិញ SKU</label>
+              <input type="text" id="pmSkuInput" class="form-control-input" placeholder="ឧ. FERT-NPK16" />
+            </div>
+
+            <!-- Price & Currency -->
+            <div class="form-group">
+              <label for="pmPriceInput">តម្លៃលក់ក្នុង ១ ឯកតា <span style="color: #ef4444;">*</span></label>
+              <input type="number" id="pmPriceInput" class="form-control-input" step="0.01" min="0.01"
+                placeholder="32.00" required />
+            </div>
+
+            <div class="form-group">
+              <label for="pmCurrencySelect">រូបិយប័ណ្ណ</label>
+              <select id="pmCurrencySelect" class="form-control-select">
+                <option value="USD" selected>ដុល្លារ ($)</option>
+                <option value="KHR">រៀល (៛)</option>
+                <option value="SGD">ដុល្លារសិង្ហបុរី</option>
+              </select>
+            </div>
+
+            <!-- Initial Stock Quantity & Unit -->
+            <div class="form-group">
+              <label for="pmStockInput">ចំនួនក្នុងស្តុក <span style="color: #ef4444;">*</span></label>
+              <input type="number" id="pmStockInput" class="form-control-input" min="0" placeholder="100" value="100" required />
+            </div>
+
+            <div class="form-group">
+              <label for="pmUnitSelect">ឯកតារង្វាស់ <span style="color: #ef4444;">*</span></label>
+              <select id="pmUnitSelect" class="form-control-select" required>
+                <option value="បាវ" selected>បាវ</option>
+                <option value="ដប">ដប</option>
+                <option value="កញ្ចប់">កញ្ចប់</option>
+                <option value="ធុង">ធុង</option>
+                <option value="គីឡូ">គីឡូក្រាម</option>
+              </select>
+            </div>
+
+            <!-- Product Image Dropzone & Preset Selectors -->
+            <div class="form-group form-field-full">
+              <label>រូបភាពផលិតផល</label>
+
+              <!-- Quick Presets -->
+              <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center; flex-wrap: wrap;">
+                <span style="font-size: 11.5px; color: #5c7564; font-weight: 600;">ជ្រើសរូបភាពគំរូ:</span>
+                <img src="assets/images/fertilize (1) .jpg" alt="ជីកសិកម្ម ១" class="pm-preset-thumb active" onclick="selectPresetImg('assets/images/fertilize (1) .jpg', this)" style="width: 38px; height: 38px; border-radius: 6px; cursor: pointer; border: 2px solid #1e6d34; object-fit: cover;" title="ជីកសិកម្ម ១" />
+                <img src="assets/images/fertilizer (2) .jpg" alt="ជីកសិកម្ម ២" class="pm-preset-thumb" onclick="selectPresetImg('assets/images/fertilizer (2) .jpg', this)" style="width: 38px; height: 38px; border-radius: 6px; cursor: pointer; border: 2px solid #dfe5e1; object-fit: cover;" title="ជីកសិកម្ម ២" />
+                <img src="assets/images/fertilize (3) .jpg" alt="ជីកសិកម្ម ៣" class="pm-preset-thumb" onclick="selectPresetImg('assets/images/fertilize (3) .jpg', this)" style="width: 38px; height: 38px; border-radius: 6px; cursor: pointer; border: 2px solid #dfe5e1; object-fit: cover;" title="ជីកសិកម្ម ៣" />
+                <img src="assets/images/ad_seeds.jpg" alt="គ្រាប់ពូជ" class="pm-preset-thumb" onclick="selectPresetImg('assets/images/ad_seeds.jpg', this)" style="width: 38px; height: 38px; border-radius: 6px; cursor: pointer; border: 2px solid #dfe5e1; object-fit: cover;" title="គ្រាប់ពូជ" />
+              </div>
+
+              <!-- Upload Drag Zone -->
+              <div class="img-dropzone" onclick="document.getElementById('pmImgFileInput').click()" style="cursor: pointer;">
+                <input type="file" id="pmImgFileInput" accept="image/*" style="display: none;" onchange="handlePmFileSelect(event)" />
+                
+                <div id="pmDropzoneEmpty" class="dropzone-empty" style="display: none;">
+                  <span style="font-size: 12px; color: #5c7564;">ចុចដើម្បីជ្រើសរូបភាពពីកុំព្យូទ័រ</span>
+                </div>
+
+                <div id="pmDropzonePreview" style="display: block; text-align: center;">
+                  <img id="pmImgPreview" src="assets/images/fertilize (1) .jpg" alt="Preview" style="max-height: 100px; border-radius: 8px; object-fit: contain;" />
+                  <span style="display: block; font-size: 11px; color: #1e6d34; font-weight: 700; margin-top: 4px;">ចុចដើម្បីប្តូររូបភាព</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group form-field-full">
+              <label for="pmDescInput">ការពិពណ៌នាសង្ខេប / វិធីប្រើប្រាស់</label>
+              <textarea id="pmDescInput" class="form-control-textarea" rows="2"
+                placeholder="ព័ត៌មានលម្អិតនៃសារធាតុចិញ្ចឹម របៀបប្រើប្រាស់..."></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-modal-cancel" onclick="closePmModal()">បោះបង់</button>
+          <button type="submit" class="btn-modal-submit" style="background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%); border: none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>រក្សាទុកផលិតផល</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Alert -->
+  <div class="toast-popup" id="toastPopup">
+    <span class="toast-icon">✓</span>
+    <span class="toast-msg" id="toastMsg">Action completed</span>
+  </div>
+
+  <script src="js/seller-products.js"></script>
+</body>
+
+</html>
