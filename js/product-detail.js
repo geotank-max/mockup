@@ -1,7 +1,8 @@
-﻿// --- PRODUCT DETAIL & STORE MENU (product-detail.js) ---
+// --- PRODUCT DETAIL & STORE MENU (product-detail.js) ---
 
-let cartCount = 0;
-let cartTotal = 0.00;
+// Cart State tracking: { prodId: { id, name, price, qty } }
+const cartState = {};
+
 let toastTimeout = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,7 +50,80 @@ document.addEventListener('DOMContentLoaded', () => {
     const oldFeeEl = document.getElementById('storeDeliveryFeeOld');
     if (oldFeeEl) oldFeeEl.textContent = storeOldFee;
   }
+
+  // Initial render of cart bar (hidden when empty)
+  updateCartBar();
 });
+
+// Change Product Quantity (+ or -)
+window.changeQty = function(prodId, delta, name, price) {
+  if (!cartState[prodId]) {
+    cartState[prodId] = { id: prodId, name: name, price: Number(price), qty: 0 };
+  }
+
+  cartState[prodId].qty += delta;
+
+  if (cartState[prodId].qty <= 0) {
+    delete cartState[prodId];
+  }
+
+  updateProductUI(prodId, name, price);
+  updateCartBar();
+};
+
+// Update individual product button / stepper UI
+function updateProductUI(prodId, name, price) {
+  const wrap = document.getElementById(`qtyWrap-${prodId}`);
+  if (!wrap) return;
+
+  const currentItem = cartState[prodId];
+  const qty = currentItem ? currentItem.qty : 0;
+
+  if (qty > 0) {
+    wrap.innerHTML = `
+      <div class="qty-stepper-pill">
+        <button class="btn-qty-minus" onclick="changeQty('${prodId}', -1, '${name}', ${price})" aria-label="ដក">&minus;</button>
+        <span class="qty-value" id="qtyVal-${prodId}">${qty}</span>
+        <button class="btn-qty-plus" onclick="changeQty('${prodId}', 1, '${name}', ${price})" aria-label="បន្ថែម">&#43;</button>
+      </div>
+    `;
+  } else {
+    wrap.innerHTML = `
+      <button class="btn-h-add-cart" onclick="changeQty('${prodId}', 1, '${name}', ${price})" title="បន្ថែម">+</button>
+    `;
+  }
+}
+
+// Update docked bottom cart bar (Types Count + Total Price, show if > 0, hide if 0)
+function updateCartBar() {
+  const typesEl = document.getElementById('cartTypesCount');
+  const priceEl = document.getElementById('cartPriceSum');
+  const cartBar = document.getElementById('floatingCartBar');
+
+  let totalCost = 0;
+  let uniqueTypes = 0;
+
+  for (const id in cartState) {
+    if (cartState[id].qty > 0) {
+      uniqueTypes += 1;
+      totalCost += cartState[id].qty * cartState[id].price;
+    }
+  }
+
+  if (typesEl) typesEl.textContent = `${uniqueTypes} មុខ`;
+  if (priceEl) priceEl.textContent = `សរុប:$${totalCost.toFixed(2)}`;
+
+  if (cartBar) {
+    if (uniqueTypes > 0) {
+      cartBar.style.display = 'flex';
+      cartBar.classList.remove('cart-bump');
+      void cartBar.offsetWidth; // Trigger reflow for bump animation
+      cartBar.classList.add('cart-bump');
+    } else {
+      cartBar.style.display = 'none';
+    }
+  }
+}
 
 // Navigation Back
 window.goBack = function() {
@@ -90,32 +164,39 @@ window.filterMenuTab = function(category, element) {
   openToast(`បានជ្រើសរើស: ${element.textContent.trim()}`);
 };
 
-// Add to Cart
-window.addToCart = function(productName, price) {
-  cartCount += 1;
-  cartTotal += Number(price);
+// Open Checkout (Buy button "រួចរាល់" -> Go to Payment page)
+window.openCheckout = function() {
+  let totalCost = 0;
+  let uniqueTypes = 0;
+  const items = [];
 
-  const cartBar = document.getElementById('floatingCartBar');
-  const countEl = document.getElementById('cartItemCount');
-  const priceEl = document.getElementById('cartPriceSum');
-
-  if (countEl) countEl.textContent = cartCount;
-  if (priceEl) priceEl.textContent = `$${cartTotal.toFixed(2)}`;
-
-  if (cartBar) {
-    cartBar.style.display = 'flex';
-    cartBar.style.animation = 'cartBounce 0.3s ease';
+  for (const id in cartState) {
+    if (cartState[id].qty > 0) {
+      uniqueTypes += 1;
+      totalCost += cartState[id].qty * cartState[id].price;
+      items.push({
+        id: id,
+        name: cartState[id].name,
+        price: cartState[id].price,
+        qty: cartState[id].qty
+      });
+    }
   }
 
-  openToast(`បានបន្ថែម "${productName}" ទៅក្នុងកន្ត្រក`);
-};
+  if (uniqueTypes === 0) {
+    openToast('សូមជ្រើសរើសទំនិញយ៉ាងហោចណាស់ ១ មុខ');
+    return;
+  }
 
-// Open Checkout
-window.openCheckout = function() {
-  openToast(`កំពុងដំណើរការបញ្ជាទិញ (${cartCount} មុខទំនិញ - សរុប $${cartTotal.toFixed(2)})`);
-  setTimeout(() => {
-    window.location.href = 'order-tracking.html';
-  }, 1000);
+  // Save selected cart items & store name for payment page
+  const storeTitle = document.getElementById('storeBrandTitle');
+  if (storeTitle) {
+    localStorage.setItem('cropwise_cart_store', storeTitle.textContent.trim());
+  }
+  localStorage.setItem('cropwise_cart_items', JSON.stringify(items));
+  localStorage.setItem('cropwise_cart_total', totalCost.toFixed(2));
+
+  window.location.href = 'payment.html';
 };
 
 // Toast notification

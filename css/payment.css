@@ -1,0 +1,534 @@
+/* ====================================================
+   PAYMENT / CHECKOUT PAGE STYLES (Dam Ey Green Theme)
+   ==================================================== */
+
+.device-wrapper {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-frame {
+  background-color: #f5f8f5;
+  width: 430px;
+  max-width: 430px;
+  min-width: 430px;
+  height: 932px;
+  max-height: 932px;
+  min-height: 932px;
+  border-radius: 48px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3), 0 0 0 11px #141c15, 0 0 0 12.5px #273729;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Siemreap', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Header */
+.payment-header {
+  height: 52px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5ede7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.payment-back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f0f7f2;
+  border: none;
+  color: #1e6d34;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.payment-back-btn:hover {
+  background: #e1efe4;
+  transform: scale(1.05);
+}
+
+.payment-page-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #152619;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  letter-spacing: -0.2px;
+}
+
+.header-placeholder {
+  width: 36px;
+}
+
+/* Scrollable Container */
+.payment-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 14px 14px 150px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.payment-scroll-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Section Cards */
+.payment-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e6eee8;
+  padding: 14px 16px;
+  box-shadow: 0 2px 10px rgba(18, 48, 25, 0.04);
+}
+
+/* 1. Location & Delivery Method Section */
+.delivery-location-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f5f1;
+}
+
+.location-info-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.location-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  color: #1e6d34;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.location-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a2d1f;
+  margin: 0;
+}
+
+.location-subtext {
+  font-size: 11.5px;
+  color: #667c6e;
+  margin: 2px 0 0 0;
+}
+
+.location-chevron {
+  color: #9cb1a2;
+}
+
+/* Delivery Mode Options */
+.delivery-mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.delivery-mode-pill {
+  border: 1.5px solid #d2e7d7;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.delivery-mode-pill.active {
+  border-color: #1e6d34;
+  background: #f0fdf4;
+}
+
+.delivery-mode-pill-text {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #162a1b;
+}
+
+.delivery-mode-pill.active .delivery-mode-pill-text {
+  color: #1e6d34;
+}
+
+.delivery-time-select {
+  font-size: 12px;
+  color: #7a9182;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.delivery-mode-pill.active .delivery-time-select {
+  color: #1e6d34;
+}
+
+/* 2. Store & Order Items Card */
+.store-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f5f1;
+  cursor: pointer;
+}
+
+.store-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.store-uplus-badge {
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.store-name-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #172b1c;
+  margin: 0;
+}
+
+/* Ordered Item Row */
+.order-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f5f1;
+}
+
+.order-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.order-item-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #f1f6f2;
+  border: 1px solid #e1ebe3;
+  flex-shrink: 0;
+}
+
+.order-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-item-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #152619;
+  margin: 0 0 4px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order-item-qty {
+  font-size: 12px;
+  color: #6e8475;
+  font-weight: 600;
+}
+
+.order-item-price-col {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.order-item-current-price {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e6d34;
+  display: block;
+}
+
+.order-item-old-price {
+  font-size: 11px;
+  color: #9cb1a2;
+  text-decoration: line-through;
+}
+
+/* Price Breakdown */
+.price-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.price-breakdown-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #4a6352;
+}
+
+.price-breakdown-row.total-row {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #152619;
+  padding-top: 8px;
+  border-top: 1px dashed #e2ede5;
+}
+
+.breakdown-fee-val {
+  font-weight: 700;
+  color: #1e6d34;
+}
+
+.info-fee-icon {
+  font-size: 11px;
+  color: #8fa596;
+  cursor: pointer;
+  margin-left: 2px;
+}
+
+/* 3. Payment Method Selection Card */
+.payment-methods-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-method-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #172b1c;
+  margin: 0 0 4px 0;
+}
+
+.payment-option-pill {
+  border: 1.5px solid #dcefe1;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.payment-option-pill.active {
+  border-color: #1e6d34;
+  background: #f0fdf4;
+}
+
+.payment-option-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.payment-logo-badge {
+  width: 32px;
+  height: 24px;
+  border-radius: 6px;
+  background: #1e6d34;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-option-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1a2d1f;
+}
+
+.payment-radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #b3ccb9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.payment-option-pill.active .payment-radio-circle {
+  border-color: #1e6d34;
+  background: #1e6d34;
+}
+
+.payment-radio-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: none;
+}
+
+.payment-option-pill.active .payment-radio-dot {
+  display: block;
+}
+
+/* Docked Bottom Summary & Order Action Bar */
+.payment-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #e6eee8;
+  padding: 12px 16px 8px 16px;
+  box-shadow: 0 -8px 24px rgba(18, 48, 25, 0.08);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Order Total Row */
+.payment-summary-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.payment-total-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #16281a;
+}
+
+.payment-total-group {
+  text-align: right;
+}
+
+.payment-total-usd {
+  font-size: 20px;
+  font-weight: 900;
+  color: #1e6d34;
+  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
+  letter-spacing: -0.3px;
+}
+
+.payment-khr-rate-row {
+  font-size: 11.5px;
+  color: #637d6b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.khr-amount {
+  font-weight: 700;
+  color: #1e6d34;
+}
+
+/* Dual Buttons Row */
+.payment-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-payment-alt {
+  flex: 1;
+  height: 46px;
+  border: 1.5px solid #1e6d34;
+  background: #f0fdf4;
+  color: #1e6d34;
+  border-radius: 12px;
+  font-family: 'Siemreap', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-payment-alt:hover {
+  background: #e0f8e6;
+  transform: translateY(-1px);
+}
+
+.btn-payment-submit {
+  flex: 1.3;
+  height: 46px;
+  border: none;
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  font-family: 'Siemreap', sans-serif;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(30, 109, 52, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-payment-submit:hover {
+  background: linear-gradient(135deg, #165629 0%, #23763a 100%);
+  transform: translateY(-1px);
+}
+
+.btn-payment-submit:active {
+  transform: scale(0.98);
+}
+
+.payment-bottom-bar .ios-home-indicator {
+  width: 136px;
+  height: 4.5px;
+  background-color: #c0d1c5;
+  border-radius: 4px;
+  margin: 4px auto 0 auto;
+  opacity: 0.8;
+  flex-shrink: 0;
+}

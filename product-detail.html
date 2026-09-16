@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="km">
 
 <head>
@@ -57,8 +57,10 @@
         </div>
       </div>
 
-      <!-- 1. Top Hero Banner from Product Card with Floating Nav Controls -->
-      <div class="store-hero-banner-wrap">
+      <!-- Scrollable Store & Product List Content -->
+      <div class="store-scroll-content">
+        <!-- 1. Top Hero Banner from Product Card with Floating Nav Controls -->
+        <div class="store-hero-banner-wrap">
         <img id="storeBannerImg" src="assets/images/banner (3).jpg" alt="Store Banner" class="store-hero-img" />
 
         <!-- Floating Nav Bar: Back, Search, Favorite, Share -->
@@ -191,13 +193,15 @@
               <span>1034 Like</span>
             </div>
 
-            <!-- Price with discount & + Button -->
+            <!-- Price with discount & + Button / Stepper -->
             <div class="h-prod-price-row">
               <div class="h-price-group">
                 <span class="h-current-price">$24.00</span>
                 <span class="h-old-price">$32.00</span>
               </div>
-              <button class="btn-h-add-cart" onclick="addToCart('ជីកសិកម្ម ១', 24.00)" title="បន្ថែម">+</button>
+              <div class="prod-qty-wrapper" id="qtyWrap-f1">
+                <button class="btn-h-add-cart" onclick="changeQty('f1', 1, 'ជីកសិកម្ម ១', 24.00)" title="បន្ថែម">+</button>
+              </div>
             </div>
           </div>
         </article>
@@ -225,13 +229,15 @@
               <span>2530 Like</span>
             </div>
 
-            <!-- Price with discount & + Button -->
+            <!-- Price with discount & + Button / Stepper -->
             <div class="h-prod-price-row">
               <div class="h-price-group">
                 <span class="h-current-price">$26.50</span>
                 <span class="h-old-price">$35.00</span>
               </div>
-              <button class="btn-h-add-cart" onclick="addToCart('ជីកសិកម្ម ២', 26.50)" title="បន្ថែម">+</button>
+              <div class="prod-qty-wrapper" id="qtyWrap-f2">
+                <button class="btn-h-add-cart" onclick="changeQty('f2', 1, 'ជីកសិកម្ម ២', 26.50)" title="បន្ថែម">+</button>
+              </div>
             </div>
           </div>
         </article>
@@ -259,13 +265,15 @@
               <span>366 Like</span>
             </div>
 
-            <!-- Price with discount & + Button -->
+            <!-- Price with discount & + Button / Stepper -->
             <div class="h-prod-price-row">
               <div class="h-price-group">
                 <span class="h-current-price">$14.00</span>
                 <span class="h-old-price">$20.00</span>
               </div>
-              <button class="btn-h-add-cart" onclick="addToCart('ជីកសិកម្ម ៣', 14.00)" title="បន្ថែម">+</button>
+              <div class="prod-qty-wrapper" id="qtyWrap-f3">
+                <button class="btn-h-add-cart" onclick="changeQty('f3', 1, 'ជីកសិកម្ម ៣', 14.00)" title="បន្ថែម">+</button>
+              </div>
             </div>
           </div>
         </article>
@@ -293,13 +301,15 @@
               <span>1890 Like</span>
             </div>
 
-            <!-- Price with discount & + Button -->
+            <!-- Price with discount & + Button / Stepper -->
             <div class="h-prod-price-row">
               <div class="h-price-group">
                 <span class="h-current-price">$12.50</span>
                 <span class="h-old-price">$18.00</span>
               </div>
-              <button class="btn-h-add-cart" onclick="addToCart('ថ្នាំការពារដំណាំ Neem', 12.50)" title="បន្ថែម">+</button>
+              <div class="prod-qty-wrapper" id="qtyWrap-f4">
+                <button class="btn-h-add-cart" onclick="changeQty('f4', 1, 'ថ្នាំការពារដំណាំ Neem', 12.50)" title="បន្ថែម">+</button>
+              </div>
             </div>
           </div>
         </article>
@@ -327,38 +337,40 @@
               <span>3210 Like</span>
             </div>
 
-            <!-- Price with discount & + Button -->
+            <!-- Price with discount & + Button / Stepper -->
             <div class="h-prod-price-row">
               <div class="h-price-group">
                 <span class="h-current-price">$22.00</span>
                 <span class="h-old-price">$28.00</span>
               </div>
-              <button class="btn-h-add-cart" onclick="addToCart('គ្រាប់ពូជស្រូវផ្ការំដួល', 22.00)" title="បន្ថែម">+</button>
+              <div class="prod-qty-wrapper" id="qtyWrap-f5">
+                <button class="btn-h-add-cart" onclick="changeQty('f5', 1, 'គ្រាប់ពូជស្រូវផ្ការំដួល', 22.00)" title="បន្ថែម">+</button>
+              </div>
             </div>
           </div>
         </article>
 
       </div>
+      <!-- End of Scrollable Store & Product List Content -->
+      </div>
 
-      <!-- Floating Bottom Cart Bar -->
-      <div class="floating-bottom-cart-bar" id="floatingCartBar" style="display: none;" onclick="openCheckout()">
-        <div class="cart-bar-left">
-          <div class="cart-icon-badge">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            <span class="cart-items-count" id="cartItemCount">0</span>
+      <!-- Docked Bottom Cart Bar (Hidden initially until user adds items) -->
+      <div class="docked-bottom-cart-bar" id="floatingCartBar" style="display: none;">
+        <div class="cart-bar-content-row">
+          <!-- Left Black Info Area: Types Count + Total Price -->
+          <div class="cart-bar-left-black">
+            <span class="cart-items-types" id="cartTypesCount">1 មុខ</span>
+            <span class="cart-total-price" id="cartPriceSum">សរុប:$26.50</span>
           </div>
-          <span class="cart-price-sum" id="cartPriceSum">$0.00</span>
+
+          <!-- Right Orange Action Area: Buy / Done Button -->
+          <button class="cart-bar-btn-buy" id="btnCartBuy" onclick="openCheckout()" title="ទិញ / រួចរាល់">
+            <span>រួចរាល់</span>
+          </button>
         </div>
-        <div class="cart-bar-right">
-          <span>ពិនិត្យកន្ត្រកទំនិញ</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
+
+        <!-- iOS Home Indicator bar -->
+        <div class="ios-home-indicator"></div>
       </div>
 
       <!-- Toast Alert -->

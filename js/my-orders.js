@@ -1,301 +1,174 @@
 /**
- * my-orders.js - Logic for Farmer Order History & Pending Purchases
+ * my-orders.js - Logic for Orders Page (Dam Ey Agriculture App)
  */
 
-const mockOrdersData = [
+const ordersList = [
   {
-    id: '#ORD-9821',
-    status: 'pending',
-    statusLabel: 'កំពុងរង់ចាំការបញ្ជាក់',
-    statusClass: 'status-pending',
-    date: 'ថ្ងៃនេះ, 09:15 ព្រឹក',
-    seller: {
-      name: 'ដេប៉ូ ជីកសិកម្ម អង្គរ',
-      province: 'ខេត្តកណ្តាល',
-      phone: '012 345 678'
-    },
-    items: [
-      {
-        name: 'ជីអ៊ុយរ៉េ N-P-K 46-0-0 (50kg)',
-        qty: '2 បាវ',
-        price: '$48.00',
-        img: 'assets/images/fertilize (1) .jpg'
-      },
-      {
-        name: 'ជីប៉ូតាស្យូម K₂O 0-0-60 (50kg)',
-        qty: '1 បាវ',
-        price: '$28.00',
-        img: 'assets/images/fertilizer (2) .jpg'
-      }
-    ],
-    totalCount: 'ទំនិញសរុប ៣ បាវ',
-    totalPrice: '$76.00',
-    hint: '⏳ អ្នកលក់កំពុងពិនិត្យស្តុក និងរៀបចំឥវ៉ាន់'
-  },
-  {
-    id: '#ORD-9804',
-    status: 'pending',
-    statusLabel: 'កំពុងរៀបចំឥវ៉ាន់',
-    statusClass: 'status-pending',
-    date: 'ម្សិលមិញ, 03:40 រសៀល',
-    seller: {
-      name: 'ហាង ខ្មែរ អាហ្គ្រោ បៃតង',
-      province: 'ខេត្តកំពង់ចាម',
-      phone: '098 765 432'
-    },
-    items: [
-      {
-        name: 'ថ្នាំការពារជំងឺផ្សិត និងស្លឹកត្នោត (1L)',
-        qty: '3 ដប',
-        price: '$24.00',
-        img: 'assets/images/fertilize (3) .jpg'
-      }
-    ],
-    totalCount: 'ទំនិញសរុប ៣ ដប',
-    totalPrice: '$24.00',
-    hint: '📦 ហាងកំពុងវេចខ្ចប់ និងរៀបចំប្រគល់ឱ្យដឹកជញ្ជូន'
-  },
-  {
-    id: '#ORD-9750',
-    status: 'shipping',
+    id: 'ORD-104',
+    status: 'delivering',
     statusLabel: 'កំពុងដឹកជញ្ជូន',
-    statusClass: 'status-shipping',
-    date: '12 កញ្ញា 2026',
-    orderDate: '2 May',
-    dispatchDate: '2 May',
-    trackingProgress: 68,
-    seller: {
-      name: 'មជ្ឈមណ្ឌល ធាតុចូលកសិកម្ម សៀមរាប',
-      province: 'ខេត្តសៀមរាប',
-      phone: '077 889 900'
-    },
-    items: [
-      {
-        name: 'ជីកំប៉ុសធម្មជាតិ និងសារធាតុសរីរាង្គ (25kg)',
-        qty: '4 បាវ',
-        price: '$40.00',
-        img: 'assets/images/fertilize (1) .jpg'
-      }
-    ],
-    totalCount: 'ទំនិញសរុប ៤ បាវ',
-    totalPrice: '$40.00',
-    hint: '🚚 ទំនិញកំពុងស្ថិតនៅលើផ្លូវមកកាន់ទីតាំងរបស់អ្នក'
+    isPulse: true,
+    date: '2026-09-16 14:25:10',
+    store: 'ដេប៉ូ ជីកសិកម្ម អង្គរ',
+    title: 'ជីសរីរាង្គកំប៉ុស្ត៍ជន្លេន ធម្មជាតិ 100% (25kg)',
+    img: 'assets/images/fertilize (1)  (1).jpg',
+    tag: '',
+    price: '$14.00',
+    qty: 'x1',
+    hasTrackBtn: true
   },
   {
-    id: '#ORD-9610',
+    id: 'ORD-101',
+    status: 'cancelled',
+    statusLabel: 'ការកុម្ម៉ង់ត្រូវបានលុបចោល',
+    isPulse: false,
+    date: '2026-09-15 14:41:44',
+    store: 'ហាងកសិកម្ម បឹងកេងកង / Green Agri',
+    title: 'ជីអ៊ុយរ៉េ កំហាប់ខ្ពស់ Urea 46-0-0 (50kg)',
+    img: 'assets/images/fertilize (1) .jpg',
+    tag: '70%',
+    price: '$26.50',
+    qty: 'x1',
+    hasTrackBtn: false
+  },
+  {
+    id: 'ORD-102',
+    status: 'cancelled',
+    statusLabel: 'ការកុម្ម៉ង់ត្រូវបានលុបចោល',
+    isPulse: false,
+    date: '2026-09-15 14:37:35',
+    store: 'ហាងកសិកម្ម បាត់ដំបង Green Agri',
+    title: 'Bio-NPK 16-16-8 + Humic Acid (50kg)',
+    img: 'assets/images/fertilizer (2) .jpg',
+    tag: '',
+    price: '$24.00',
+    qty: 'x1',
+    hasTrackBtn: false
+  },
+  {
+    id: 'ORD-103',
     status: 'completed',
-    statusLabel: 'បានទទួលជោគជ័យ',
-    statusClass: 'status-completed',
-    date: '08 កញ្ញា 2026',
-    seller: {
-      name: 'ហាង កសិកម្ម រតនៈ',
-      province: 'ខេត្តបាត់ដំបង',
-      phone: '010 112 233'
-    },
-    items: [
-      {
-        name: 'ជីបំប៉នស្លឹក និងជំនួយឫស 500ml',
-        qty: '2 ដប',
-        price: '$18.00',
-        img: 'assets/images/fertilizer (2) .jpg'
-      }
-    ],
-    totalCount: 'ទំនិញសរុប ២ ដប',
-    totalPrice: '$18.00',
-    hint: '✅ បានប្រគល់ទំនិញ និងទូទាត់រួចរាល់'
+    statusLabel: 'ការកុម្ម៉ង់បានបញ្ចប់',
+    isPulse: false,
+    date: '2026-05-09 13:36:17',
+    store: 'ហាងកសិកម្ម សៀមរាប ដាំអី Organic',
+    title: 'ថ្នាំការពារដំណាំ Neem Bio-Defense Spray (1L)',
+    img: 'assets/images/fertilize (3) .jpg',
+    tag: '',
+    price: '$12.50',
+    qty: 'x2',
+    hasTrackBtn: false
   }
 ];
 
-let currentFilter = 'pending';
-let activeTargetOrderId = '#ORD-9750';
+let currentSearchTerm = '';
 
-function renderOrders() {
-  const container = document.getElementById('ordersCardsContainer');
+function renderOrdersCards(items) {
+  const container = document.getElementById('ordersScrollContent');
   if (!container) return;
 
-  const filtered = mockOrdersData.filter(ord => {
-    if (currentFilter === 'all') return true;
-    return ord.status === currentFilter;
-  });
-
-  if (filtered.length === 0) {
+  if (items.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 40px 20px; color: #6a8071;">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9bb1a1" stroke-width="1.8" style="margin-bottom: 12px;">
+      <div class="empty-orders-box">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9bb1a1" stroke-width="1.8">
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="8" y1="12" x2="16" y2="12"></line>
         </svg>
-        <p style="font-family: 'Siemreap', sans-serif; font-size: 13.5px; font-weight: 600; margin: 0;">មិនមានការបញ្ជាទិញក្នុងប្រអប់នេះទេ</p>
+        <p>រកមិនឃើញការកុម្ម៉ង់ដែលត្រូវនឹង "${currentSearchTerm}"</p>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = filtered.map(ord => `
-    <div class="order-card-box">
-      <div class="order-card-header">
-        <div class="order-seller-info">
-          <div class="order-seller-avatar">
-            <img src="assets/icons/home-color-icon.svg" alt="Shop" />
-          </div>
-          <div class="order-seller-names">
-            <h3 class="order-seller-title">${ord.seller.name}</h3>
-            <span class="order-seller-location">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              ${ord.seller.province}
-            </span>
-          </div>
+  container.innerHTML = items.map(ord => `
+    <article class="order-history-card">
+      <!-- Status & Timestamp Header -->
+      <div class="order-card-status-header">
+        <div class="order-status-row">
+          <span class="order-status-text ${ord.status}">
+            ${ord.isPulse ? '<span class="pulse-green-dot"></span>' : ''}
+            ${ord.statusLabel}
+          </span>
         </div>
-        <span class="order-status-badge ${ord.statusClass}">${ord.statusLabel}</span>
+        <span class="order-timestamp">${ord.date}</span>
       </div>
 
-      <div class="order-meta-row">
-        <span>កូដបញ្ជាទិញ: <strong class="order-id-tag">${ord.id}</strong></span>
-        <span>${ord.date}</span>
+      <!-- Store Container Row -->
+      <div class="order-store-row" onclick="openToast('${ord.store}')" title="មើលហាង">
+        <div class="order-store-info-left">
+          <div class="order-store-avatar">🌿</div>
+          <span class="order-store-name">${ord.store}</span>
+        </div>
+        <svg class="order-store-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
       </div>
 
-      ${ord.status === 'shipping' ? `
-        <!-- Delivery Tracking Widget (Matching Reference Design) -->
-        <div class="delivery-tracking-card">
-          <div class="dt-header-row">
-            <div class="dt-title-group" onclick="location.href='order-tracking.html?id=${encodeURIComponent(ord.id)}'" style="cursor: pointer;">
-              <h3 class="dt-title">Delivery Tracking</h3>
-            </div>
-            <div class="dt-status-group">
-              <div class="dt-arriving-badge" onclick="location.href='order-tracking.html?id=${encodeURIComponent(ord.id)}'" style="cursor: pointer;">Arriving today</div>
-              <div class="dt-action-links">
-                <button type="button" class="dt-link-btn" onclick="openCancellationModal('${ord.id}')">Request cancellation</button>
-                <span class="dt-pipe">|</span>
-                <button type="button" class="dt-link-btn" onclick="openInstructionsModal('${ord.id}')">Provide delivery instructions</button>
-              </div>
-              <div class="dt-out-delivery">It's out for delivery</div>
-            </div>
-          </div>
-
-          <!-- Progress Tracker Bar (Clickable to view detail) -->
-          <div class="dt-progress-wrapper" onclick="location.href='order-tracking.html?id=${encodeURIComponent(ord.id)}'" style="cursor: pointer;" title="ចុចដើម្បីមើលព័ត៌មានលម្អិត">
-            <div class="dt-track">
-              <div class="dt-track-fill" style="width: ${ord.trackingProgress || 68}%;"></div>
-              <div class="dt-track-dot" style="left: ${ord.trackingProgress || 68}%;"></div>
-              <div class="dt-track-target"></div>
-            </div>
-
-            <!-- Milestones Below Progress Bar -->
-            <div class="dt-milestones-row">
-              <div class="dt-milestone dt-start">
-                <span class="dt-step-name">Ordered</span>
-                <span class="dt-step-date">${ord.orderDate || '2 May'}</span>
-              </div>
-              <div class="dt-milestone dt-mid">
-                <span class="dt-step-name">Dispatched</span>
-                <span class="dt-step-date">${ord.dispatchDate || '2 May'}</span>
-              </div>
-              <div class="dt-milestone dt-end">
-                <span class="dt-step-name dt-green">Arriving today</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Live Route Details CTA Banner -->
-          <a href="order-tracking.html?id=${encodeURIComponent(ord.id)}" class="dt-view-live-btn" title="មើលផ្លូវដឹកជញ្ជូនបន្តផ្ទាល់">
-            <div class="dt-live-tag">
-              <span class="pulse-dot-green"></span>
-              <span>Live Route: Battambang Farmland</span>
-            </div>
-            <span class="dt-view-text">មើលលម្អិត & ផែនទី →</span>
-          </a>
+      <!-- Product Details Row -->
+      <div class="order-prod-details-row">
+        <div class="order-prod-img-wrap">
+          <img src="${ord.img}" alt="${ord.title}" class="order-prod-img" />
+          ${ord.tag ? `<span class="order-prod-promo-tag">${ord.tag}</span>` : ''}
         </div>
-      ` : ''}
-
-      <div class="order-items-list">
-        ${ord.items.map(it => `
-          <div class="order-item-row">
-            <img src="${it.img}" alt="${it.name}" class="order-item-thumb" />
-            <div class="order-item-details">
-              <span class="order-item-name">${it.name}</span>
-              <span class="order-item-qty">ចំនួន៖ ${it.qty}</span>
-            </div>
-            <span class="order-item-price">${it.price}</span>
-          </div>
-        `).join('')}
-      </div>
-
-      <div class="order-card-footer">
-        <div class="order-total-group">
-          <span class="order-total-count">${ord.totalCount}</span>
-          <span class="order-total-price">${ord.totalPrice}</span>
+        <div class="order-prod-meta">
+          <h4 class="order-prod-title">${ord.title}</h4>
         </div>
-        <div class="order-status-hint">
-          <span>${ord.hint}</span>
+        <div class="order-prod-price-col">
+          <div class="order-prod-price-group">
+            <span>${ord.price}</span>
+            <span class="price-chevron">∨</span>
+          </div>
+          <span class="order-prod-qty">${ord.qty}</span>
         </div>
       </div>
-    </div>
+
+      <!-- Action Buttons Row -->
+      <div class="order-card-actions">
+        ${ord.hasTrackBtn ? `
+          <button type="button" class="btn-track-order" onclick="trackOrder('${ord.id}')">
+            តាមដានការដឹក
+          </button>
+        ` : ''}
+        <button type="button" class="btn-reorder" onclick="reorderItem('${ord.id}', '${ord.title}')">
+          កុម្ម៉ង់ទៀត
+        </button>
+      </div>
+    </article>
   `).join('');
 }
 
-function switchOrderTab(status) {
-  currentFilter = status;
-  document.querySelectorAll('.order-tab-chip').forEach(tab => {
-    if (tab.getAttribute('data-status') === status) {
-      tab.classList.add('active');
-    } else {
-      tab.classList.remove('active');
-    }
+function filterOrders(query) {
+  currentSearchTerm = (query || '').trim().toLowerCase();
+  if (!currentSearchTerm) {
+    renderOrdersCards(ordersList);
+    return;
+  }
+
+  const filtered = ordersList.filter(ord => {
+    return (
+      ord.title.toLowerCase().includes(currentSearchTerm) ||
+      ord.store.toLowerCase().includes(currentSearchTerm) ||
+      ord.statusLabel.toLowerCase().includes(currentSearchTerm) ||
+      ord.date.toLowerCase().includes(currentSearchTerm) ||
+      ord.price.toLowerCase().includes(currentSearchTerm)
+    );
   });
-  renderOrders();
+
+  renderOrdersCards(filtered);
 }
 
-// Modal Handlers
-function openInstructionsModal(orderId) {
-  activeTargetOrderId = orderId;
-  const modal = document.getElementById('deliveryInstructionsModal');
-  if (modal) {
-    modal.style.display = 'flex';
-    const input = document.getElementById('deliveryNotesInput');
-    if (input) input.value = '';
-  }
+function reorderItem(orderId, prodTitle) {
+  openToast(`✓ បានបន្ថែម "${prodTitle}" ទៅកន្ត្រកកុម្ម៉ង់ឡើងវិញ!`);
+  setTimeout(() => {
+    window.location.href = 'product-detail.html';
+  }, 1000);
 }
 
-function closeInstructionsModal() {
-  const modal = document.getElementById('deliveryInstructionsModal');
-  if (modal) modal.style.display = 'none';
+function trackOrder(orderId) {
+  window.location.href = `order-tracking.html?id=${encodeURIComponent(orderId)}`;
 }
 
-function setInstructionText(text) {
-  const input = document.getElementById('deliveryNotesInput');
-  if (input) {
-    input.value = text;
-  }
-}
-
-function saveDeliveryInstructions() {
-  const input = document.getElementById('deliveryNotesInput');
-  closeInstructionsModal();
-  openToast('✓ បានរក្សាទុកការណែនាំដឹកជញ្ជូនដោយជោគជ័យ!');
-}
-
-function openCancellationModal(orderId) {
-  activeTargetOrderId = orderId;
-  const modal = document.getElementById('requestCancellationModal');
-  const text = document.getElementById('cancelOrderIdText');
-  if (text) text.textContent = orderId;
-  if (modal) modal.style.display = 'flex';
-}
-
-function closeCancellationModal() {
-  const modal = document.getElementById('requestCancellationModal');
-  if (modal) modal.style.display = 'none';
-}
-
-function confirmCancellationRequest() {
-  closeCancellationModal();
-  openToast('✓ បានផ្ញើសំណើសុំបោះបង់ទៅកាន់អ្នកផ្គត់ផ្គង់រួចរាល់!');
-}
-
-// Toast Alert Helper
+// Toast Popup Controller
 let toastTimeout = null;
 function openToast(message) {
   const toast = document.getElementById('toastPopup');
@@ -311,20 +184,6 @@ function openToast(message) {
   }, 2600);
 }
 
-function goBack() {
-  if (window.history.length > 1) {
-    window.history.back();
-  } else {
-    window.location.href = 'index.html';
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const tabParam = urlParams.get('tab') || urlParams.get('status');
-  if (tabParam && ['pending', 'shipping', 'completed', 'all'].includes(tabParam)) {
-    switchOrderTab(tabParam);
-  } else {
-    renderOrders();
-  }
+  renderOrdersCards(ordersList);
 });

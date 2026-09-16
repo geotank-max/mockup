@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ការកុម្ម៉ង់ & ទូទាត់ប្រាក់ - Dam Ey</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Siemreap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link rel="stylesheet" href="css/payment.css?v=1" />
+
+  <!-- Auth Guard -->
+  <script>
+    (function() {
+      const isLoggedIn = localStorage.getItem('cropwise_logged_in') === 'true';
+      const userRole = localStorage.getItem('cropwise_user_role');
+      if (!isLoggedIn) {
+        window.location.replace('login.html');
+      } else if (userRole === 'seller') {
+        window.location.replace('seller-dashboard.html');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="device-wrapper">
+    <div class="mobile-frame">
+
+      <!-- iOS Status Bar with Dynamic Island -->
+      <div class="ios-status-bar sage-bg">
+        <span class="status-time">9:41</span>
+        <div class="dynamic-island"></div>
+        <div class="status-icons">
+          <svg class="status-icon" width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+            <rect x="0" y="8" width="2.4" height="3" rx="0.6"/>
+            <rect x="4" y="5.5" width="2.4" height="5.5" rx="0.6"/>
+            <rect x="8" y="3" width="2.4" height="8" rx="0.6"/>
+            <rect x="12" y="0.5" width="2.4" height="10.5" rx="0.6"/>
+          </svg>
+          <svg class="status-icon" width="15" height="11" viewBox="0 0 16 12" fill="currentColor">
+            <path d="M8 12a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5-3a5.002 5.002 0 017 0 .75.75 0 101.06-1.06 6.502 6.502 0 00-9.12 0 .75.75 0 101.06 1.06zm-2.5-3a8.503 8.503 0 0112 0 .75.75 0 101.06-1.06 10.003 10.003 0 00-14.12 0 .75.75 0 101.06 1.06z"/>
+          </svg>
+          <div class="battery-icon">
+            <div class="battery-body">
+              <div class="battery-level"></div>
+            </div>
+            <div class="battery-tip"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Header Navigation -->
+      <header class="payment-header">
+        <button class="payment-back-btn" onclick="goBack()" title="ត្រឡប់ក្រោយ" aria-label="ត្រឡប់ក្រោយ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h1 class="payment-page-title">ការកុម្ម៉ង់</h1>
+        <div class="header-placeholder"></div>
+      </header>
+
+      <!-- Scrollable Content Area -->
+      <main class="payment-scroll-content">
+
+        <!-- ==============================================
+             CARD 1: DELIVERY LOCATION & MODE
+             ============================================== -->
+        <section class="payment-card delivery-card">
+          <!-- Choose Location Row (No page created yet, opens select prompt) -->
+          <div class="delivery-location-row" onclick="selectLocation()" title="ជ្រើសរើសទីតាំង">
+            <div class="location-info-left">
+              <div class="location-icon-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <h3 class="location-title" id="selectedLocationText">សូមជ្រើសរើសទីតាំងដឹកជញ្ជូន</h3>
+                <p class="location-subtext" id="selectedLocationDetail">ផ្ទះលេខ ១២, ផ្លូវ ៣១០, បឹងកេងកង ១, ភ្នំពេញ</p>
+              </div>
+            </div>
+            <div class="location-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Delivery Mode Options: Immediate vs Scheduled -->
+          <div class="delivery-mode-options">
+            <div class="delivery-mode-pill active" id="modeImmediate" onclick="selectDeliveryMode('immediate')">
+              <span class="delivery-mode-pill-text">ដឹកជញ្ជូនភ្លាម</span>
+              <span class="delivery-time-select" style="color: #1e6d34; font-weight: 700;">(២៥-៣០ នាទី)</span>
+            </div>
+
+            <div class="delivery-mode-pill" id="modeScheduled" onclick="selectDeliveryMode('scheduled')">
+              <span class="delivery-mode-pill-text">ការកក់ដឹកជញ្ជូន</span>
+              <div class="delivery-time-select">
+                <span id="scheduleTimeText">ជ្រើសរើសពេលវេលា</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             CARD 2: STORE & ORDER ITEMS
+             ============================================== -->
+        <section class="payment-card store-order-card">
+          <!-- Store Header -->
+          <div class="store-header-row" onclick="openToast('ព័ត៌មានហាង')">
+            <div class="store-header-left">
+              <span class="store-uplus-badge">U+</span>
+              <h2 class="store-name-title" id="paymentStoreName">ហាងកសិកម្ម បឹងកេងកង</h2>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9cb1a2" stroke-width="2.4">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+
+          <!-- Ordered Items Dynamic List -->
+          <div class="order-items-list" id="orderItemsContainer">
+            <!-- Rendered by payment.js -->
+          </div>
+
+          <!-- Price Calculation Rows (No discount paper, no coupon, no notes) -->
+          <div class="price-breakdown-list">
+            <div class="price-breakdown-row">
+              <span>សរុបមុខទំនិញ</span>
+              <span id="breakdownSubtotal" style="font-weight: 700; color: #152619;">$26.50</span>
+            </div>
+            <div class="price-breakdown-row">
+              <span>ថ្លៃដឹកជញ្ជូន <span class="info-fee-icon" onclick="openToast('តម្លៃដឹកជញ្ជូនតាមរយៈម៉ូតូដឹកជញ្ជូន')">ⓘ</span></span>
+              <span class="breakdown-fee-val" id="breakdownDeliveryFee">+$0.45</span>
+            </div>
+            <div class="price-breakdown-row total-row">
+              <span>សរុបការទូទាត់</span>
+              <span class="breakdown-fee-val" id="breakdownTotal" style="font-size: 16px;">$26.95</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             CARD 3: PAYMENT METHOD SELECTION
+             ============================================== -->
+        <section class="payment-card payment-methods-card" onclick="window.location.href='payment-methods.html'" style="cursor: pointer;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <h3 class="payment-method-title" style="margin: 0;">វិធីសាស្ត្រទូទាត់ប្រាក់</h3>
+            <span style="font-size: 12.5px; color: #1e6d34; font-weight: 700; display: flex; align-items: center; gap: 2px;">
+              <span>ផ្លាស់ប្តូរ</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Selected Method Display -->
+          <div class="payment-option-pill active" id="payMethodSelected">
+            <div class="payment-option-left">
+              <div class="payment-logo-badge" id="selectedPayBadge" style="background: #004f71;">ABA</div>
+              <span class="payment-option-name" id="selectedPayName">ABA PAY / ធនាគារចល័ត</span>
+            </div>
+            <div class="payment-radio-circle">
+              <div class="payment-radio-dot"></div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- ==============================================
+           DOCKED BOTTOM SUMMARY & ORDER ACTION BAR
+           ============================================== -->
+      <div class="payment-bottom-bar">
+        <!-- Order Summary Row with KHR conversion -->
+        <div class="payment-summary-row">
+          <span class="payment-total-label">ការកុម្ម៉ង់</span>
+          <div class="payment-total-group">
+            <div class="payment-total-usd" id="bottomTotalUsd">$26.95</div>
+            <div class="payment-khr-rate-row">
+              <span>1USD=4070KHR</span>
+              <span class="khr-amount" id="bottomTotalKhr">៛109,686.50</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dual Action Buttons in Brand Green Theme -->
+        <div class="payment-action-buttons">
+          <button class="btn-payment-alt" onclick="openAltPaymentModal()" title="ការទូទាត់ជំនួស">
+            <span>ការទូទាត់ជំនួស</span>
+          </button>
+          <button class="btn-payment-submit" onclick="submitOrder()" title="ធ្វើការកុម្ម៉ង់ឥឡូវនេះ">
+            <span>ធ្វើការកុម្ម៉ង់ឥឡូវនេះ</span>
+          </button>
+        </div>
+
+        <!-- iOS Home Indicator -->
+        <div class="ios-home-indicator"></div>
+      </div>
+
+      <!-- Toast Popup -->
+      <div class="toast-popup" id="toastPopup">
+        <span class="toast-icon">✓</span>
+        <span class="toast-msg" id="toastMsg">Action completed</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/payment.js"></script>
+</body>
+
+</html>

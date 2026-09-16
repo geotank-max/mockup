@@ -1,4 +1,4 @@
-﻿/* ====================================================
+/* ====================================================
    PRODUCT DETAIL PAGE STYLES (Store & Menu - Dam Ey Green Theme)
    ==================================================== */
 
@@ -22,16 +22,27 @@
   border-radius: 48px;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3), 0 0 0 11px #141c15, 0 0 0 12.5px #273729;
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  scrollbar-width: none;
   font-family: 'Siemreap', 'Plus Jakarta Sans', sans-serif;
 }
 
-.mobile-frame::-webkit-scrollbar {
+/* Scrollable Container inside Phone Frame */
+.store-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.store-scroll-content::-webkit-scrollbar {
   display: none;
 }
 
@@ -484,26 +495,36 @@
   text-decoration: line-through;
 }
 
-/* Plus button (+) - Green theme */
+/* Quantity Stepper & Add Button Container */
+.prod-qty-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 32px;
+}
+
+/* Plus button (+) */
 .btn-h-add-cart {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
-  color: #ffffff;
-  border: none;
+  background: #ffffff;
+  color: #1e6d34;
+  border: 1.5px solid #bbf7d0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(30, 109, 52, 0.35);
-  transition: transform 0.15s ease;
-  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(30, 109, 52, 0.12);
+  transition: all 0.15s ease;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1;
 }
 
 .btn-h-add-cart:hover {
+  background: #f0fdf4;
+  border-color: #1e6d34;
   transform: scale(1.1);
 }
 
@@ -511,67 +532,166 @@
   transform: scale(0.92);
 }
 
-/* Floating Bottom Cart Bar */
-.floating-bottom-cart-bar {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
-  color: #ffffff;
-  border-radius: 30px;
-  padding: 10px 18px;
-  display: flex;
+/* Quantity Stepper Pill (- 1 +) in Green Theme */
+.qty-stepper-pill {
+  display: inline-flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 8px 24px rgba(30, 109, 52, 0.4);
-  z-index: 50;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  background: #ffffff;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 24px;
+  padding: 2px 6px;
+  min-width: 82px;
+  height: 30px;
+  box-shadow: 0 2px 8px rgba(30, 109, 52, 0.08);
+  transition: all 0.2s ease;
+  user-select: none;
 }
 
-.floating-bottom-cart-bar:hover {
-  transform: translateY(-1px);
-}
-
-.cart-bar-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.cart-icon-badge {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.cart-items-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #ff5252;
-  color: #ffffff;
-  font-size: 10.5px;
+.btn-qty-minus,
+.btn-qty-plus {
+  background: transparent;
+  border: none;
+  color: #1e6d34;
+  font-size: 17px;
   font-weight: 800;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid #1e6d34;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
-.cart-price-sum {
-  font-size: 14.5px;
+.btn-qty-minus:hover,
+.btn-qty-plus:hover {
+  background: #f0fdf4;
+  transform: scale(1.15);
+}
+
+.btn-qty-minus:active,
+.btn-qty-plus:active {
+  transform: scale(0.9);
+}
+
+.qty-value {
+  font-size: 13.5px;
   font-weight: 800;
+  color: #14281a;
+  min-width: 18px;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', 'Siemreap', sans-serif;
 }
 
-.cart-bar-right {
+/* Docked Bottom Cart Bar (Dark Green/Black Left & Primary Green Right) */
+.docked-bottom-cart-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0d1a11;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -6px 24px rgba(10, 30, 15, 0.4);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  animation: cartSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cartSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cart-bar-content-row {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  height: 62px;
+}
+
+/* Left Dark Section: Types Count + Total Price */
+.cart-bar-left-black {
+  flex: 1;
+  background: #0d1a11;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.cart-items-types {
+  font-size: 12px;
+  color: #9cb8a3;
+  font-family: 'Siemreap', sans-serif;
+  line-height: 1.2;
+}
+
+.cart-total-price {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Siemreap', 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+/* Right Green Section: Buy Button */
+.cart-bar-btn-buy {
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 100%);
+  border: none;
+  min-width: 140px;
+  padding: 0 28px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 700;
+  justify-content: center;
+  color: #ffffff;
+  font-family: 'Siemreap', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+.cart-bar-btn-buy:hover {
+  background: linear-gradient(135deg, #17572a 0%, #23763a 100%);
+}
+
+.cart-bar-btn-buy:active {
+  background: #134822;
+  transform: scale(0.98);
+}
+
+.docked-bottom-cart-bar .ios-home-indicator {
+  width: 136px;
+  height: 4.5px;
+  background-color: #55725d;
+  border-radius: 4px;
+  margin: 4px auto 6px auto;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+@keyframes cartBump {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.cart-bump {
+  animation: cartBump 0.25s ease-out;
 }
