@@ -987,18 +987,19 @@ body {
 }
 
 /* --- BOTTOM NAVIGATION BAR --- */
+/* --- BOTTOM NAVIGATION BAR (5 Tabs with Standout Center Run Button) --- */
 .bottom-nav {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 72px;
+  height: 74px;
   background: #ffffff;
   border-top: 1px solid #e1e9e3;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding: 6px 16px;
+  padding: 4px 8px 6px 8px;
   z-index: 50;
   box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
 }
@@ -1012,10 +1013,11 @@ body {
   justify-content: center;
   cursor: pointer;
   color: #7b9181;
-  padding: 4px 14px;
-  border-radius: 14px;
+  padding: 3px 4px;
+  border-radius: 12px;
   transition: all 0.2s;
   flex: 1;
+  text-decoration: none;
 }
 
 .nav-icon-container {
@@ -1028,9 +1030,10 @@ body {
 
 .nav-label {
   font-family: 'Siemreap', var(--font-family);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .nav-sublabel {
@@ -1052,30 +1055,46 @@ body {
   color: var(--primary-green);
 }
 
-/* Special styling for "Run" center button */
+/* Special styling for "Run" center button - elevated standout FAB */
+.run-tab {
+  position: relative;
+  overflow: visible;
+}
+
 .run-tab .run-btn-pill {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, #1b632e 0%, #2c8e45 100%);
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #1e6d34 0%, #2a8b44 60%, #34a853 100%);
   border-radius: 50%;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(27, 99, 46, 0.35);
-  margin-bottom: 3px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 3.5px solid #ffffff;
+  box-shadow: 0 6px 18px rgba(30, 109, 52, 0.4), 0 2px 6px rgba(0, 0, 0, 0.12);
+  margin-top: -22px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.run-tab .nav-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #1e6d34;
 }
 
 .run-tab:hover .run-btn-pill {
-  transform: scale(1.08);
-  box-shadow: 0 6px 16px rgba(27, 99, 46, 0.45);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 10px 24px rgba(30, 109, 52, 0.5), 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .run-tab:active .run-btn-pill {
-  transform: scale(0.95);
+  transform: translateY(-1px) scale(0.95);
 }
 
 .run-tab.active .run-btn-pill {
-  border: 2px solid #ffffff;
-  outline: 2px solid var(--primary-green);
+  background: linear-gradient(135deg, #145226 0%, #1e6d34 100%);
+  box-shadow: 0 0 0 3px rgba(30, 109, 52, 0.25), 0 6px 18px rgba(30, 109, 52, 0.45);
 }
 
 /* --- MODAL FOR FARMER TESTING FORM --- */

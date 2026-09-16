@@ -382,7 +382,7 @@
         <span class="toast-msg" id="toastMsg">Action completed</span>
       </div>
 
-      <!-- Bottom Navigation Bar: Home, Products, Orders, Profile -->
+      <!-- Bottom Navigation Bar: Home, Products (Active), Run (Center), Orders, Profile -->
       <nav class="bottom-nav">
         <!-- 1. Home Tab -->
         <a href="index.html" class="nav-tab" id="tabHome">
@@ -406,7 +406,17 @@
           <span class="nav-label">ផលិតផល</span>
         </a>
 
-        <!-- 3. Orders Tab -->
+        <!-- 3. Run Tab (Center Standout Action Center) -->
+        <a href="run-test.html" class="nav-tab run-tab" id="tabRun">
+          <div class="nav-icon-container run-btn-pill" title="រត់តេស្តដី & ដំណាំ">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </div>
+          <span class="nav-label">រត់តេស្ត</span>
+        </a>
+
+        <!-- 4. Orders Tab -->
         <a href="my-orders.html" class="nav-tab" id="tabOrders">
           <div class="nav-icon-container">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -420,7 +430,7 @@
           <span class="nav-label">ការកុម្ម៉ង់</span>
         </a>
 
-        <!-- 4. Profile Tab -->
+        <!-- 5. Profile Tab -->
         <button class="nav-tab" id="tabProfile" onclick="openToast('គណនីកសិករ')">
           <div class="nav-icon-container">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
