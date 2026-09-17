@@ -269,143 +269,142 @@
         </section>
 
         <!-- ==============================================
-             STEP 2: SOIL CONDITIONS (Field & terrain properties)
+             STEP 2: AI SOIL SCANNER (ML Computer Vision Soil Detection)
              ============================================== -->
         <section class="wizard-step" id="step2">
           <div class="step-intro-box">
             <div class="step-badge">ជំហានទី ២</div>
-            <h2 class="step-heading">ស្ថានភាពដី</h2>
-            <p class="step-desc">ព័ត៌មានពីលក្ខណៈដី និងការបង្ហូរទឹកក្នុងស្រែ/ចម្ការ</p>
+            <h2 class="step-heading">ស្កេនវិភាគដីដោយ AI (AI Soil Scanner)</h2>
+            <p class="step-desc">ប្រើប្រាស់ AI Computer Vision ដើម្បីវិភាគប្រភេទសាច់ដី កម្រិត pH និងសំណើមដីភ្លាមៗ</p>
           </div>
 
-          <!-- ==============================================
-               SATELLITE SOIL SCAN (Auto-detect soil for the farmer)
-               ============================================== -->
-          <div class="sat-scan-card" id="satScanCard">
-            <div class="sat-scan-viewport" id="satScanViewport" role="button" tabindex="0"
-              title="ចុចដើម្បីមើលផែនទីពេញ" aria-label="បើកផែនទីអន្តរកម្ម">
-              <img src="assets/images/map1.png" alt="ផ្ទៃដីតាមផ្កាយរណប" class="sat-scan-img">
-              <div class="sat-scan-overlay"></div>
+          <!-- Camera Soil Scanner Box -->
+          <div class="sat-scan-card soil-ai-card" id="satScanCard">
+            <!-- Viewport with Camera Framing & Telemetry -->
+            <div class="sat-scan-viewport soil-camera-viewport" id="satScanViewport">
+              <img src="assets/images/soil.webp" alt="សាច់ដីកសិដ្ឋាន" class="sat-scan-img soil-cam-img" id="soilCamImg">
+              <div class="sat-scan-overlay soil-cam-overlay"></div>
 
-              <!-- Tap-to-expand hint -->
-              <div class="sat-expand-hint">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="15 3 21 3 21 9"></polyline>
-                  <polyline points="9 21 3 21 3 15"></polyline>
-                  <line x1="21" y1="3" x2="14" y2="10"></line>
-                  <line x1="3" y1="21" x2="10" y2="14"></line>
-                </svg>
-                <span>មើលផែនទីពេញ</span>
+              <!-- Top Telemetry Badges -->
+              <div class="soil-cam-badge-top-left">
+                <span class="sat-live-dot pulse-dot"></span>
+                <span>AI VISION LIVE</span>
+              </div>
+              <div class="soil-cam-badge-top-right">
+                <span id="satFpsDisplay">FPS: 60 | CONF: 94%</span>
               </div>
 
-              <!-- Corner framing brackets -->
+              <!-- Corner Framing Brackets -->
               <span class="sat-frame-corner tl"></span>
               <span class="sat-frame-corner tr"></span>
               <span class="sat-frame-corner bl"></span>
               <span class="sat-frame-corner br"></span>
 
-              <!-- Sweeping scan line (animated during scan) -->
-              <div class="sat-scan-line" id="satScanLine"></div>
-
-              <!-- Plot pin -->
-              <div class="sat-plot-pin">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="#1f6b32" stroke="#ffffff" stroke-width="1.8">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3" fill="#ffffff"></circle>
-                </svg>
+              <!-- Target Reticle Grid -->
+              <div class="soil-target-reticle">
+                <div class="reticle-line h-line"></div>
+                <div class="reticle-line v-line"></div>
+                <div class="reticle-circle"></div>
               </div>
 
-              <!-- Idle state badge -->
-              <div class="sat-status-tag" id="satIdleTag">
-                <span class="sat-live-dot"></span>
-                <span>ផ្កាយរណប Sentinel-2</span>
-              </div>
+              <!-- Laser Scanning Line -->
+              <div class="sat-scan-line soil-laser-line" id="satScanLine"></div>
 
-              <!-- Scanning progress text (hidden until scanning) -->
+              <!-- Scanning Progress Spinner & Text -->
               <div class="sat-progress-box" id="satProgressBox" style="display:none;">
                 <div class="sat-spinner"></div>
-                <span class="sat-progress-text" id="satProgressText">កំពុងវិភាគរូបភាពផ្កាយរណប...</span>
+                <span class="sat-progress-text" id="satProgressText">កំពុងស្កេនសាច់ដីតាមរយៈ ML Vision...</span>
               </div>
             </div>
 
-            <!-- Info + trigger row -->
-            <div class="sat-scan-body">
+            <!-- Action Controls Row -->
+            <div class="sat-scan-body soil-scan-actions">
               <div class="sat-scan-info">
-                <div class="sat-scan-icon-box">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 12h5l2 6 4-14 2 8h7" />
+                <div class="sat-scan-icon-box ai-pulse-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
                   </svg>
                 </div>
                 <div class="sat-scan-copy">
-                  <strong class="sat-scan-title">ស្កេនដីស្វ័យប្រវត្តិ</strong>
-                  <span class="sat-scan-sub">មិនដឹងប្រភេទដី? ចុចស្កេនតាមផ្កាយរណប យើងវិភាគសាច់ដីជូនអ្នក</span>
+                  <strong class="sat-scan-title font-kh">ស្កេនផ្ទៃដីដោយ AI Camera</strong>
+                  <span class="sat-scan-sub font-kh">តម្រង់កាមេរ៉ាលើដីកសិដ្ឋានរបស់អ្នក រួចចុចស្កេន</span>
                 </div>
               </div>
-              <button type="button" class="sat-scan-btn" id="satScanBtn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="7"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <span id="satScanBtnText">ស្កេនដីតាមផ្កាយរណប</span>
-              </button>
+
+              <div class="soil-btn-group">
+                <button type="button" class="sat-scan-btn ai-scan-trigger" id="satScanBtn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <span id="satScanBtnText">ស្កេនដី (Scan Soil)</span>
+                </button>
+              </div>
             </div>
 
-            <!-- Detected result panel (hidden until scan completes) -->
-            <div class="sat-result-panel" id="satResultPanel" style="display:none;">
+            <!-- Detected AI Result Card -->
+            <div class="sat-result-panel ai-result-card" id="satResultPanel" style="display:block;">
               <div class="sat-result-head">
-                <div class="sat-result-check">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
-                    stroke-linecap="round" stroke-linejoin="round">
+                <div class="sat-result-check ai-badge-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
                 <div class="sat-result-title-col">
-                  <span class="sat-result-label">ប្រភេទដីដែលរកឃើញ</span>
-                  <strong class="sat-result-value" id="satDetectedSoil">ដីល្បាប់</strong>
+                  <span class="sat-result-label font-kh">លទ្ធផលវិភាគដីពី AI ML:</span>
+                  <strong class="sat-result-value font-kh" id="satDetectedSoil">ដីល្បាប់ (Loam Soil)</strong>
                 </div>
-                <span class="sat-confidence" id="satConfidence">ទំនុកចិត្ត ៩២%</span>
+                <span class="sat-confidence" id="satConfidence">ទំនុកចិត្ត ៩៤%</span>
               </div>
+
               <div class="sat-metrics-row">
                 <div class="sat-metric">
-                  <span class="sat-metric-label">កម្រិត pH</span>
-                  <strong class="sat-metric-val">៦.៥</strong>
+                  <span class="sat-metric-label font-kh">កម្រិត pH</span>
+                  <strong class="sat-metric-val" id="soilMetricPh">៦.៥ (ដីល្មម)</strong>
                 </div>
                 <div class="sat-metric">
-                  <span class="sat-metric-label">សំណើមដី</span>
-                  <strong class="sat-metric-val">៣៨%</strong>
+                  <span class="sat-metric-label font-kh">សំណើមដី</span>
+                  <strong class="sat-metric-val" id="soilMetricMoisture">៣៨%</strong>
                 </div>
                 <div class="sat-metric">
-                  <span class="sat-metric-label">ស្ថានភាព</span>
-                  <strong class="sat-metric-val sat-ok">ល្អ</strong>
+                  <span class="sat-metric-label font-kh">ការបង្ហូរទឹក</span>
+                  <strong class="sat-metric-val sat-ok" id="soilMetricDrainage">ល្អ</strong>
                 </div>
               </div>
-              <p class="sat-result-note">
-                ✓ បានបំពេញព័ត៌មានដីជូនអ្នកដោយស្វ័យប្រវត្តិ។ អ្នកអាចកែប្រែខាងក្រោមបើចង់។
+              <p class="sat-result-note font-kh" id="soilAiNote">
+                ✓ AI បានគណនាកម្រិតជីជាតិសមស្រប និងកំណត់ប្រភេទដីស្វ័យប្រវត្តិតាមរូបភាពស្កេន!
               </p>
             </div>
           </div>
 
-          <!-- Drainage & pH Condition -->
-          <div class="form-section-card">
-            <div class="form-group">
-              <label>ការបង្ហូរទឹក & សំណើម</label>
-              <div class="pill-options-row" id="drainageSelector">
-                <button type="button" class="pill-btn selected" data-drainage="well">បង្ហូរទឹកល្អ</button>
-                <button type="button" class="pill-btn" data-drainage="waterlogged">ដក់ទឹក/ជាំ</button>
-                <button type="button" class="pill-btn" data-drainage="dry">ស្ងួតហួតលឿន</button>
+          <!-- Manual Override Accordion / Toggle -->
+          <div class="form-section-card manual-override-card" style="margin-top:14px;">
+            <button type="button" class="manual-toggle-btn" id="manualSoilToggle">
+              <span class="font-kh">⚙️ កែប្រែព័ត៌មានដីដោយផ្ទាល់ដៃ (Manual Fallback)</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="chevron-icon" id="manualChevron">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="manual-form-body" id="manualSoilBody" style="display:none;">
+              <div class="form-group mt-2">
+                <label>ការបង្ហូរទឹក & សំណើម</label>
+                <div class="pill-options-row" id="drainageSelector">
+                  <button type="button" class="pill-btn selected" data-drainage="well">បង្ហូរទឹកល្អ</button>
+                  <button type="button" class="pill-btn" data-drainage="waterlogged">ដក់ទឹក/ជាំ</button>
+                  <button type="button" class="pill-btn" data-drainage="dry">ស្ងួតហួតលឿន</button>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group mt-3">
-              <label>កម្រិតជាតិជូរដី</label>
-              <div class="pill-options-row" id="phSelector">
-                <button type="button" class="pill-btn" data-ph="acidic">ដីជូរ (&lt; 5.5)</button>
-                <button type="button" class="pill-btn selected" data-ph="neutral">ដីល្មម (6.0 - 7.0)</button>
-                <button type="button" class="pill-btn" data-ph="alkaline">ដីប្រៃ (&gt; 7.5)</button>
-                <button type="button" class="pill-btn" data-ph="unknown">មិនច្បាស់</button>
+              <div class="form-group mt-3">
+                <label>កម្រិតជាតិជូរដី (pH)</label>
+                <div class="pill-options-row" id="phSelector">
+                  <button type="button" class="pill-btn" data-ph="acidic">ដីជូរ (&lt; 5.5)</button>
+                  <button type="button" class="pill-btn selected" data-ph="neutral">ដីល្មម (6.0 - 7.0)</button>
+                  <button type="button" class="pill-btn" data-ph="alkaline">ដីប្រៃ (&gt; 7.5)</button>
+                  <button type="button" class="pill-btn" data-ph="unknown">មិនច្បាស់</button>
+                </div>
               </div>
             </div>
           </div>

@@ -98,76 +98,123 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==============================================
-  // Satellite Soil Scan (Step 2 auto-detect)
+  // AI Soil Camera Scanner
   // ==============================================
   const satScanCard = document.getElementById('satScanCard');
   const satScanBtn = document.getElementById('satScanBtn');
   const satScanBtnText = document.getElementById('satScanBtnText');
-  const satIdleTag = document.getElementById('satIdleTag');
   const satProgressBox = document.getElementById('satProgressBox');
   const satProgressText = document.getElementById('satProgressText');
   const satResultPanel = document.getElementById('satResultPanel');
+  const satDetectedSoil = document.getElementById('satDetectedSoil');
+  const satConfidence = document.getElementById('satConfidence');
+  const soilMetricPh = document.getElementById('soilMetricPh');
+  const soilMetricMoisture = document.getElementById('soilMetricMoisture');
+  const soilMetricDrainage = document.getElementById('soilMetricDrainage');
+  const manualSoilToggle = document.getElementById('manualSoilToggle');
+  const manualSoilBody = document.getElementById('manualSoilBody');
 
-  // Detected values for the demo (Khmer only, auto-fill loam + neutral pH)
-  const SAT_DETECTED = { soil: 'loam', ph: 'neutral' };
-  const SAT_PROGRESS_STEPS = [
-    'កំពុងភ្ជាប់ផ្កាយរណប Sentinel-2...',
-    'កំពុងវិភាគរូបភាពផ្កាយរណប...',
-    'កំពុងវាស់សំណើម និងកម្រិត pH...',
-    'កំពុងកំណត់ប្រភេទសាច់ដី...'
+  const AI_SCAN_MESSAGES = [
+    'កំពុងស្កេនសាច់ដីតាមរយៈ ML Vision...',
+    'កំពុងវិភាគ Spectral Color & Texture...',
+    'កំពុងគណនាកម្រិត pH និងសំណើមដី...',
+    'បញ្ចប់ការវិភាគដីដោយជោគជ័យ!'
   ];
 
-  function selectSoilByValue(value) {
-    // Soil type is now detected by the satellite scan (manual selector removed)
-    testState.soil = value;
-  }
-
-  function selectPhByValue(value) {
-    phBtns.forEach(b => {
-      const match = b.getAttribute('data-ph') === value;
-      b.classList.toggle('selected', match);
-    });
-    testState.ph = value;
-  }
-
-  if (satScanBtn && satScanCard) {
-    satScanBtn.addEventListener('click', () => {
-      // Enter scanning state
-      satScanCard.classList.add('scanning');
+  function runSoilScanAnimation(onComplete) {
+    if (!satScanCard) return;
+    satScanCard.classList.add('scanning');
+    if (satScanBtn) {
       satScanBtn.disabled = true;
-      satScanBtnText.textContent = 'កំពុងស្កេន...';
-      if (satIdleTag) satIdleTag.style.display = 'none';
-      if (satResultPanel) satResultPanel.style.display = 'none';
-      if (satProgressBox) satProgressBox.style.display = 'flex';
+      if (satScanBtnText) satScanBtnText.textContent = 'កំពុងស្កេន...';
+    }
+    if (satResultPanel) satResultPanel.style.display = 'none';
+    if (satProgressBox) satProgressBox.style.display = 'flex';
 
-      // Cycle progress messages
-      let stepIdx = 0;
-      if (satProgressText) satProgressText.textContent = SAT_PROGRESS_STEPS[0];
-      const progressTimer = setInterval(() => {
-        stepIdx += 1;
-        if (stepIdx < SAT_PROGRESS_STEPS.length && satProgressText) {
-          satProgressText.textContent = SAT_PROGRESS_STEPS[stepIdx];
-        }
-      }, 650);
+    let msgIdx = 0;
+    if (satProgressText) satProgressText.textContent = AI_SCAN_MESSAGES[0];
+    const interval = setInterval(() => {
+      msgIdx++;
+      if (msgIdx < AI_SCAN_MESSAGES.length && satProgressText) {
+        satProgressText.textContent = AI_SCAN_MESSAGES[msgIdx];
+      }
+    }, 380);
 
-      // Complete scan after ~2.6s
-      setTimeout(() => {
-        clearInterval(progressTimer);
-        satScanCard.classList.remove('scanning');
-        if (satProgressBox) satProgressBox.style.display = 'none';
-        if (satIdleTag) satIdleTag.style.display = 'inline-flex';
-
-        // Auto-fill the form for the farmer
-        selectSoilByValue(SAT_DETECTED.soil);
-        selectPhByValue(SAT_DETECTED.ph);
-
-        // Reveal detected result panel
-        if (satResultPanel) satResultPanel.style.display = 'block';
-
-        // Update button to allow re-scan
+    setTimeout(() => {
+      clearInterval(interval);
+      satScanCard.classList.remove('scanning');
+      if (satProgressBox) satProgressBox.style.display = 'none';
+      if (satResultPanel) satResultPanel.style.display = 'block';
+      if (satScanBtn) {
         satScanBtn.disabled = false;
-        satScanBtnText.textContent = 'ស្កេនម្តងទៀត';
-      }, 2600);
+        if (satScanBtnText) satScanBtnText.textContent = 'ស្កេនម្តងទៀត';
+      }
+      if (onComplete) onComplete();
+    }, 1500);
+  }
+
+  function applyDetectedSoilData(data) {
+    const soil = data?.soil || 'loam';
+    const ph = data?.ph || 'neutral';
+    const drainage = data?.drainage || 'well';
+    const confidence = data?.confidence || '៩៤%';
+    const moisture = data?.moisture || '៣៨%';
+    const khName = data?.khName || 'ដីល្បាប់ (Loam Soil)';
+    const metricPh = data?.metricPh || '៦.៥ (ដីល្មម)';
+    const metricDrainage = data?.metricDrainage || 'ល្អ';
+
+    // Update state
+    testState.soil = soil;
+    testState.ph = ph;
+    testState.drainage = drainage;
+
+    // Sync manual override selectors if present
+    if (drainageBtns) {
+      drainageBtns.forEach(b => {
+        b.classList.toggle('selected', b.getAttribute('data-drainage') === drainage);
+      });
+    }
+    if (phBtns) {
+      phBtns.forEach(b => {
+        b.classList.toggle('selected', b.getAttribute('data-ph') === ph);
+      });
+    }
+
+    // Update UI elements
+    if (satDetectedSoil) satDetectedSoil.textContent = khName;
+    if (satConfidence) satConfidence.textContent = 'ទំនុកចិត្ត ' + confidence;
+    if (soilMetricPh) soilMetricPh.textContent = metricPh;
+    if (soilMetricMoisture) soilMetricMoisture.textContent = moisture;
+    if (soilMetricDrainage) {
+      soilMetricDrainage.textContent = metricDrainage;
+      soilMetricDrainage.className = 'sat-metric-val ' + (drainage === 'waterlogged' ? '' : 'sat-ok');
+    }
+  }
+
+  // Handle Scan Soil Trigger button
+  if (satScanBtn) {
+    satScanBtn.addEventListener('click', () => {
+      runSoilScanAnimation(() => {
+        applyDetectedSoilData({
+          soil: 'loam',
+          ph: 'neutral',
+          drainage: 'well',
+          confidence: '៩៤%',
+          moisture: '៣៨%',
+          khName: 'ដីល្បាប់ (Loam Soil)',
+          metricPh: '៦.៥ (ដីល្មម)',
+          metricDrainage: 'ល្អ'
+        });
+      });
+    });
+  }
+
+  // Handle manual override accordion toggle
+  if (manualSoilToggle && manualSoilBody) {
+    manualSoilToggle.addEventListener('click', () => {
+      const isOpen = manualSoilBody.style.display !== 'none';
+      manualSoilBody.style.display = isOpen ? 'none' : 'block';
+      manualSoilToggle.classList.toggle('open', !isOpen);
     });
   }
 

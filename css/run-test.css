@@ -1826,3 +1826,266 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   border: 1.5px solid #ffffff;
 }
+
+/* ==============================================
+   AI SOIL CAMERA SCANNER STYLES
+   ============================================== */
+.soil-ai-card {
+  border: 1.5px solid #238b45;
+  box-shadow: 0 8px 24px rgba(35, 139, 69, 0.15);
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.soil-camera-viewport {
+  position: relative;
+  height: 190px;
+  background: #09170e;
+  overflow: hidden;
+}
+
+.soil-cam-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1) brightness(0.95);
+  transition: opacity 0.3s ease;
+}
+
+.soil-cam-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(9, 23, 14, 0.65) 100%);
+  pointer-events: none;
+}
+
+.soil-cam-badge-top-left {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  background: rgba(10, 28, 16, 0.75);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 230, 118, 0.4);
+  color: #00e676;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.5px;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  background: #00e676;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00e676;
+  animation: pulseDot 1.2s infinite alternate;
+}
+
+@keyframes pulseDot {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.soil-cam-badge-top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  background: rgba(10, 28, 16, 0.75);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #a3e6b5;
+  font-size: 9.5px;
+  font-family: monospace;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* Target Reticle in center */
+.soil-target-reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.reticle-circle {
+  width: 100%;
+  height: 100%;
+  border: 1.5px dashed rgba(0, 230, 118, 0.6);
+  border-radius: 50%;
+  animation: rotateReticle 15s linear infinite;
+}
+
+@keyframes rotateReticle {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.reticle-line {
+  position: absolute;
+  background: rgba(0, 230, 118, 0.5);
+}
+
+.reticle-line.h-line {
+  top: 50%;
+  left: -10px;
+  right: -10px;
+  height: 1px;
+}
+
+.reticle-line.v-line {
+  left: 50%;
+  top: -10px;
+  bottom: -10px;
+  width: 1px;
+}
+
+.soil-laser-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #00e676 50%, transparent 100%);
+  box-shadow: 0 0 12px #00e676, 0 0 4px #ffffff;
+  z-index: 5;
+  display: none;
+}
+
+.sat-scan-card.scanning .soil-laser-line {
+  display: block;
+  animation: laserScan 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes laserScan {
+  0% { top: 5%; }
+  100% { top: 92%; }
+}
+
+/* Preset Chips Bar */
+.soil-preset-bar {
+  padding: 10px 14px;
+  background: #f4faf6;
+  border-bottom: 1px solid #e1eee5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preset-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2e5939;
+}
+
+.preset-chips-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.preset-chip {
+  background: #ffffff;
+  border: 1.5px solid #cce4d3;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-family: 'Siemreap', var(--font-family);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #2b5435;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.preset-chip:hover {
+  background: #e8f5ec;
+  border-color: #238b45;
+}
+
+.preset-chip.active {
+  background: #238b45;
+  border-color: #238b45;
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(35, 139, 69, 0.3);
+}
+
+/* Actions & Buttons */
+.soil-scan-actions {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #ffffff;
+}
+
+.ai-pulse-icon {
+  background: #e6f6eb;
+  color: #238b45;
+}
+
+.ai-scan-trigger {
+  background: linear-gradient(135deg, #1f6b32 0%, #299247 100%);
+  box-shadow: 0 4px 14px rgba(31, 107, 50, 0.35);
+}
+
+.ai-result-card {
+  border-top: 1.5px solid #238b45;
+  background: linear-gradient(180deg, #f2f9f4 0%, #ffffff 100%);
+}
+
+.ai-badge-icon {
+  background: linear-gradient(135deg, #238b45 0%, #15692f 100%);
+}
+
+/* Manual Override Card */
+.manual-override-card {
+  background: #fafdfa;
+  border: 1px solid #dbe8de;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.manual-toggle-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #2d4f36;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.chevron-icon {
+  transition: transform 0.25s ease;
+}
+
+.manual-toggle-btn.open .chevron-icon {
+  transform: rotate(180deg);
+}
+
+.manual-form-body {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #cfe0d3;
+}
