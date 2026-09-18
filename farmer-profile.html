@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dam Ey - ប្រវត្តិរូបកសិករ</title>
+  <meta name="description" content="Dam Ey ប្រវត្តិរូបកសិករ – គ្រប់គ្រងព័ត៌មានកសិកម្ម ព័ត៌មានដី និងចំណូលចិត្តដំណាំ។">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Siemreap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/farmer-profile.css">
+</head>
+
+<body>
+
+  <div class="device-wrapper">
+    <div class="mobile-frame" style="background: #faf8f5;">
+
+      <!-- iOS Status Bar & Dynamic Island -->
+      <div class="ios-status-bar" style="background: #faf8f5;">
+        <span class="status-time">9:41</span>
+        <div class="dynamic-island"></div>
+        <div class="status-icons">
+          <svg class="status-icon" width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+            <rect x="0" y="8" width="2.4" height="3" rx="0.6"/>
+            <rect x="4" y="5.5" width="2.4" height="5.5" rx="0.6"/>
+            <rect x="8" y="3" width="2.4" height="8" rx="0.6"/>
+            <rect x="12" y="0.5" width="2.4" height="10.5" rx="0.6"/>
+          </svg>
+          <svg class="status-icon" width="15" height="11" viewBox="0 0 16 12" fill="currentColor">
+            <path d="M8 12a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5-3a5.002 5.002 0 017 0 .75.75 0 101.06-1.06 6.502 6.502 0 00-9.12 0 .75.75 0 101.06 1.06zm-2.5-3a8.503 8.503 0 0112 0 .75.75 0 101.06-1.06 10.003 10.003 0 00-14.12 0 .75.75 0 101.06 1.06z"/>
+          </svg>
+          <div class="battery-icon">
+            <div class="battery-body">
+              <div class="battery-level"></div>
+            </div>
+            <div class="battery-tip"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Page Content Wrapper -->
+      <div class="profile-wrapper">
+
+        <!-- Top Navigation Bar -->
+        <div class="profile-nav-bar">
+          <button class="profile-nav-back" id="btnBack" onclick="history.back()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span class="profile-nav-title">ប្រវត្តិរូប</span>
+          <button class="profile-nav-action" id="btnNotifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-dot"></span>
+          </button>
+        </div>
+
+        <!-- Profile Photo Section -->
+        <div class="profile-photo-section">
+          <div class="profile-photo-container">
+            <div class="profile-photo-ring">
+              <img src="assets/images/farmer_avatar.jpg" alt="រូបថតប្រវត្តិរូបកសិករ" class="profile-photo-img" id="profilePhoto">
+            </div>
+            <div class="profile-photo-camera" id="btnChangePhoto">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+            </div>
+          </div>
+          <span class="profile-change-label">ប្តូររូបថត</span>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="profile-form-area">
+
+          <!-- Full Name -->
+          <div class="profile-field-group">
+            <label class="profile-field-label" for="fullName">ឈ្មោះពេញ</label>
+            <div class="profile-input-box">
+              <input type="text" class="profile-input" id="fullName" value="សុខា វណ្ណ" readonly>
+              <span class="profile-input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="profile-field-group">
+            <label class="profile-field-label" for="phoneNumber">លេខទូរសព្ទ</label>
+            <div class="profile-input-box">
+              <input type="tel" class="profile-input" id="phoneNumber" value="+855 12 345 678" readonly>
+              <span class="profile-input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Province -->
+          <div class="profile-field-group">
+            <label class="profile-field-label" for="province">ខេត្ត</label>
+            <div class="profile-input-box">
+              <select class="profile-select" id="province">
+                <option value="battambang" selected>បាត់ដំបង</option>
+                <option value="siemreap">សៀមរាប</option>
+                <option value="phnompenh">ភ្នំពេញ</option>
+                <option value="kampongcham">កំពង់ចាម</option>
+                <option value="kandal">កណ្ដាល</option>
+                <option value="takeo">តាកែវ</option>
+                <option value="preyveng">ព្រៃវែង</option>
+                <option value="svayrieng">ស្វាយរៀង</option>
+                <option value="banteaymeanchey">បន្ទាយមានជ័យ</option>
+                <option value="pursat">ពោធិ៍សាត់</option>
+                <option value="kampongthom">កំពង់ធំ</option>
+                <option value="kampongspeu">កំពង់ស្ពឺ</option>
+                <option value="kampongchhnang">កំពង់ឆ្នាំង</option>
+                <option value="kratie">ក្រចេះ</option>
+                <option value="stungtreng">ស្ទឹងត្រែង</option>
+                <option value="ratanakiri">រតនគិរី</option>
+                <option value="mondulkiri">មណ្ឌលគិរី</option>
+                <option value="preahvihear">ព្រះវិហារ</option>
+                <option value="oddarmeanchey">ឧត្តរមានជ័យ</option>
+                <option value="pailin">ប៉ៃលិន</option>
+                <option value="kohkong">កោះកុង</option>
+                <option value="preahsihanouk">ព្រះសីហនុ</option>
+                <option value="kampot">កំពត</option>
+                <option value="kep">កែប</option>
+                <option value="tbongkhmum">ត្បូងឃ្មុំ</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Land Size -->
+          <div class="profile-field-group">
+            <label class="profile-field-label" for="landSize">ទំហំដី</label>
+            <div class="profile-input-box">
+              <input type="text" class="profile-input" id="landSize" value="5.2 ហិកតា" readonly>
+              <span class="profile-input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                  <line x1="9" y1="3" x2="9" y2="21"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Preferences (Crops) -->
+          <div class="profile-field-group">
+            <label class="profile-field-label">ចំណូលចិត្ត — ចង់ដាំអ្វី</label>
+            <div class="preference-tags-container" id="preferenceTags">
+              <span class="preference-tag active" data-crop="jasmine-rice" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ស្រូវផ្កាម្លិះ
+              </span>
+              <span class="preference-tag active" data-crop="sticky-rice" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ស្រូវដំណើប
+              </span>
+              <span class="preference-tag" data-crop="corn" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ពោត
+              </span>
+              <span class="preference-tag" data-crop="cassava" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ដំឡូងមី
+              </span>
+              <span class="preference-tag active" data-crop="vegetables" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>បន្លែ
+              </span>
+              <span class="preference-tag" data-crop="pepper" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ម្រេច
+              </span>
+              <span class="preference-tag" data-crop="mango" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ស្វាយ
+              </span>
+              <span class="preference-tag" data-crop="banana" onclick="toggleTag(this)">
+                <span class="tag-dot"></span>ចេក
+              </span>
+            </div>
+          </div>
+
+          <!-- Specific Crop Type (Textarea) -->
+          <div class="profile-field-group">
+            <label class="profile-field-label" for="specificType">ព័ត៌មានលម្អិតអំពីដំណាំ</label>
+            <textarea class="profile-textarea" id="specificType" rows="3" maxlength="150">ស្រូវផ្កាម្លិះសម្រាប់ទីផ្សារនាំចេញ ស្រូវដំណើបសែនពិដោរសម្រាប់លក់ក្នុងស្រុក ត្រកួន និងបន្លែទឹកសម្រាប់គ្រួសារ និងទីផ្សារភូមិជិតខាង។</textarea>
+            <div class="profile-char-count" id="charCount">128/150 តួអក្សរ</div>
+          </div>
+
+          <!-- Years of Experience (Slider) -->
+          <div class="profile-field-group">
+            <label class="profile-field-label">បទពិសោធន៍កសិកម្ម</label>
+            <div class="experience-slider-wrap">
+              <div class="experience-value-display">
+                <span class="experience-number" id="expValue">12</span>
+                <span class="experience-unit">ឆ្នាំ</span>
+              </div>
+              <input type="range" class="experience-slider" id="expSlider" min="0" max="40" value="12" oninput="updateExperience(this)">
+              <div class="experience-labels">
+                <span>ថ្មីថ្មោង</span>
+                <span>ជំនាញ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <button class="profile-save-btn" id="btnSaveProfile" onclick="saveProfile()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            រក្សាទុកប្រវត្តិរូប
+          </button>
+
+        </div>
+
+        <!-- Version Footer -->
+        <div class="profile-version-footer">
+          កំណែ 2.4.0 (Build 1042)
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="profile-toast" id="profileToast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    រក្សាទុកប្រវត្តិរូបដោយជោគជ័យ!
+  </div>
+
+  <script>
+    // --- Toggle Preference Tags ---
+    function toggleTag(el) {
+      el.classList.toggle('active');
+    }
+
+    // --- Experience Slider ---
+    function updateExperience(slider) {
+      const val = slider.value;
+      document.getElementById('expValue').textContent = val;
+      const pct = (val / 40) * 100;
+      slider.style.setProperty('--slider-pct', pct + '%');
+    }
+
+    // Initialize slider fill on load
+    (function() {
+      const slider = document.getElementById('expSlider');
+      if (slider) {
+        const pct = (slider.value / 40) * 100;
+        slider.style.setProperty('--slider-pct', pct + '%');
+      }
+    })();
+
+    // --- Textarea Character Counter ---
+    const textarea = document.getElementById('specificType');
+    const charCount = document.getElementById('charCount');
+    if (textarea && charCount) {
+      function updateCharCount() {
+        const len = textarea.value.length;
+        charCount.textContent = len + '/150 តួអក្សរ';
+      }
+      textarea.addEventListener('input', updateCharCount);
+      updateCharCount();
+    }
+
+    // --- Save Profile with Toast ---
+    function saveProfile() {
+      const toast = document.getElementById('profileToast');
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+    }
+  </script>
+
+</body>
+
+</html>

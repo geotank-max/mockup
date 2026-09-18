@@ -16,7 +16,7 @@
       const isLoggedIn = localStorage.getItem('cropwise_logged_in') === 'true';
       const userRole = localStorage.getItem('cropwise_user_role');
       if (!isLoggedIn) {
-        window.location.replace('login.html');
+        window.location.replace('welcome.html');
       } else if (userRole === 'seller') {
         window.location.replace('seller-dashboard.html');
       }
@@ -473,7 +473,7 @@
         </a>
 
         <!-- 5. Profile Tab -->
-        <button class="nav-tab" data-tab="profile" id="tabProfile">
+        <a href="farmer-profile.html" class="nav-tab" id="tabProfile">
           <div class="nav-icon-container">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -481,7 +481,7 @@
             </svg>
           </div>
           <span class="nav-label">គណនី</span>
-        </button>
+        </a>
       </nav>
 
     </div>

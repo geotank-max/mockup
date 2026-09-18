@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dam Ey - ស្វាគមន៍មកកាន់ Dam Ey</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Siemreap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Siemreap&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hook.css">
+</head>
+
+<body class="bg-pattern">
+
+  <div class="device-wrapper">
+    <div class="mobile-frame hook-frame">
+
+      <!-- Ambient Vignette Overlay -->
+      <div class="hook-overlay"></div>
+
+      <!-- Translucent iOS Status Bar & Dynamic Island -->
+      <div class="ios-status-bar">
+        <span class="status-time">9:41</span>
+        <div class="dynamic-island"></div>
+        <div class="status-icons">
+          <svg class="status-icon" width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+            <rect x="0" y="8" width="2.4" height="3" rx="0.6"/>
+            <rect x="4" y="5.5" width="2.4" height="5.5" rx="0.6"/>
+            <rect x="8" y="3" width="2.4" height="8" rx="0.6"/>
+            <rect x="12" y="0.5" width="2.4" height="10.5" rx="0.6"/>
+          </svg>
+          <svg class="status-icon" width="15" height="11" viewBox="0 0 16 12" fill="currentColor">
+            <path d="M8 12a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5-3a5.002 5.002 0 017 0 .75.75 0 101.06-1.06 6.502 6.502 0 00-9.12 0 .75.75 0 101.06 1.06zm-2.5-3a8.503 8.503 0 0112 0 .75.75 0 101.06-1.06 10.003 10.003 0 00-14.12 0 .75.75 0 101.06 1.06z"/>
+          </svg>
+          <div class="battery-icon">
+            <div class="battery-body">
+              <div class="battery-level"></div>
+            </div>
+            <div class="battery-tip"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Standalone Round Logo -->
+      <div class="hook-logo-wrap">
+        <div class="hook-main-logo-box">
+          <img src="assets/images/logo.png" alt="Dam Ey Sprout Logo" class="hook-main-logo-img" />
+        </div>
+      </div>
+
+      <!-- Bottom Action Area (Sign In & Learn More) -->
+      <div class="hook-actions-area">
+        <a href="login.html" class="hook-btn-primary">Sign In</a>
+        <button type="button" class="hook-link-secondary" onclick="openLearnMoreModal()">Learn more</button>
+      </div>
+
+      <!-- Learn More Slide-Up Modal Sheet -->
+      <div class="hook-modal-backdrop" id="learnMoreModal">
+        <div class="hook-modal-sheet">
+          <div class="hook-modal-drag-pill"></div>
+          <h3 class="hook-modal-title">ស្វែងយល់បន្ថែមអំពី Dam Ey</h3>
+          <p class="hook-modal-desc">
+            Dam Ey គឺជាបច្ចេកវិទ្យាកសិកម្មឈានមុខគេ ដែលជួយកសិករវិភាគដី ណែនាំជីជាតិ និងភ្ជាប់ទៅកាន់អ្នកផ្គត់ផ្គង់ដែលទុកចិត្តបាន។
+          </p>
+
+          <div class="hook-feature-grid">
+            <div class="hook-feature-card">
+              <div class="hook-feature-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+              <div class="hook-feature-heading">AI Soil Scanner</div>
+              <div class="hook-feature-text">ស្កេនប្រភេទដី pH និងសំណើមដីដោយ AI</div>
+            </div>
+
+            <div class="hook-feature-card">
+              <div class="hook-feature-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <path d="M12 22v-9"/>
+                  <path d="M12 13c0-4.5 3-8 8-8 0 5-3.5 8-8 8z"/>
+                  <path d="M12 13c0-4-2.5-7-7-7 0 4.5 3 7 7 7z"/>
+                </svg>
+              </div>
+              <div class="hook-feature-heading">ជីជាតិ & ដូសសមស្រប</div>
+              <div class="hook-feature-text">គណនាតម្រូវការជីជាតិត្រឹមត្រូវតាមទំហំដី</div>
+            </div>
+          </div>
+
+          <button type="button" class="hook-modal-close-btn" onclick="closeLearnMoreModal()">យល់ព្រម / ត្រឡប់ក្រោយ</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function openLearnMoreModal() {
+      const modal = document.getElementById('learnMoreModal');
+      if (modal) modal.classList.add('show');
+    }
+
+    function closeLearnMoreModal() {
+      const modal = document.getElementById('learnMoreModal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    // Close on backdrop click
+    document.getElementById('learnMoreModal')?.addEventListener('click', function(e) {
+      if (e.target === this) closeLearnMoreModal();
+    });
+  </script>
+</body>
+
+</html>
